@@ -31,11 +31,12 @@ import {useMainStore} from "@/store";
 const store = useMainStore()
 
 const places = ref([
-    { id: 1, title: 'Областная 1', coords: { latitude: 59.91663480805622, longitude: 30.507474479558404 }, radius: 30 },
-    { id: 2, title: 'Ростелеком', coords: { latitude: 60.0211456, longitude: 30.3497216 }, radius: 30 },
-    { id: 3, title: 'Прибрежная 1', coords: { latitude: 59.837910, longitude: 30.509150 }, radius: 30 },
-    { id: 4, title: 'Цех', coords: { latitude: 59.912761, longitude: 30.506377 }, radius: 30 },
-    { id: 5, title: 'Каток', coords: { latitude: 59.884099, longitude: 30.438722 }, radius: 30 },
+    { id: 1, title: 'Областная 1', coords: { latitude: 59.91663480805622, longitude: 30.507474479558404 }, radius: 100 },
+    { id: 2, title: 'Ростелеком', coords: { latitude: 60.0211456, longitude: 30.3497216 }, radius: 100 },
+    { id: 3, title: 'Прибрежная 1', coords: { latitude: 59.837910, longitude: 30.509150 }, radius: 100 },
+    { id: 4, title: 'Хатка', coords: { latitude: 59.834103, longitude: 30.515492 }, radius: 100 },
+    { id: 5, title: 'Цех', coords: { latitude: 59.912761, longitude: 30.506377 }, radius: 100 },
+    { id: 6, title: 'Каток', coords: { latitude: 59.884099, longitude: 30.438722 }, radius: 100 },
 ]);
 
 function isDisabled(place: any): boolean {
