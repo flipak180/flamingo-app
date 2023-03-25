@@ -27,7 +27,7 @@ import {onMounted, ref} from "vue";
 
 const printCurrentPosition = async () => {
     const coordinates = await Geolocation.getCurrentPosition({
-        enableHighAccuracy: true,
+        enableHighAccuracy: false,
         maximumAge: 5000,
     });
 
