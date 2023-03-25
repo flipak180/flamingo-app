@@ -13,8 +13,8 @@
             </ion-header>
 
             <div id="container">
-                <strong>{{ latitude }}</strong> <br>
-                <strong>{{ longitude }}</strong>
+                <strong>{{ store.coords.latitude }}</strong> <br>
+                <strong>{{ store.coords.longitude }}</strong>
             </div>
         </ion-content>
     </ion-page>
@@ -23,7 +23,14 @@
 <script setup lang="ts">
 import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
 import {Geolocation} from '@capacitor/geolocation';
-import {onMounted, ref} from "vue";
+import {onMounted} from "vue";
+import {useMainStore} from "@/store";
+
+const store = useMainStore()
+
+onMounted(() => {
+    printCurrentPosition();
+})
 
 const printCurrentPosition = async () => {
     const coordinates = await Geolocation.getCurrentPosition({
@@ -32,17 +39,8 @@ const printCurrentPosition = async () => {
     });
 
     console.log('Current position:', coordinates);
-
-    latitude.value = coordinates.coords.latitude;
-    longitude.value = coordinates.coords.longitude;
+    store.setCoords(coordinates.coords.latitude, coordinates.coords.longitude);
 }
-
-onMounted(() => {
-    printCurrentPosition();
-})
-
-const latitude = ref(0)
-const longitude = ref(0)
 </script>
 
 <style scoped>
