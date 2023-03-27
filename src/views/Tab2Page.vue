@@ -15,6 +15,7 @@
             <ion-card v-for="place in places" :key="place.id">
                 <ion-card-header>
                     <ion-card-title>{{ place.title }}</ion-card-title>
+                    <ion-card-subtitle>{{ place.coords.latitude }}, {{ place.coords.longitude }}</ion-card-subtitle>
                 </ion-card-header>
 
                 <ion-button :disabled="isDisabled(place)">Я тут</ion-button>
@@ -24,30 +25,46 @@
 </template>
 
 <script setup lang="ts">
-import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardTitle, IonCardHeader, IonButton} from '@ionic/vue';
+import {
+    IonButton,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonTitle,
+    IonToolbar
+} from '@ionic/vue';
 import {ref} from "vue";
 import {useMainStore} from "@/store";
+import axios from "axios";
+import Place, {ApiPlace, GeoPoint} from "@/models/Place";
 
 const store = useMainStore()
 
-const places = ref([
-    { id: 1, title: 'Областная 1', coords: { latitude: 59.91663480805622, longitude: 30.507474479558404 }, radius: 100 },
-    { id: 2, title: 'Ростелеком', coords: { latitude: 60.0211456, longitude: 30.3497216 }, radius: 100 },
-    { id: 3, title: 'Прибрежная 1', coords: { latitude: 59.837910, longitude: 30.509150 }, radius: 100 },
-    { id: 4, title: 'Хатка', coords: { latitude: 59.834103, longitude: 30.515492 }, radius: 100 },
-    { id: 5, title: 'Цех', coords: { latitude: 59.912761, longitude: 30.506377 }, radius: 100 },
-    { id: 6, title: 'Каток', coords: { latitude: 59.884099, longitude: 30.438722 }, radius: 100 },
-]);
+const places = ref<Place[]>([]);
 
-function isDisabled(place: any): boolean {
+axios.get('https://flamingo.spb.ru/api/places').then(res => {
+    res.data.forEach((place: ApiPlace) => {
+        places.value.push({
+            id: place.id,
+            title: place.title,
+            coords: { latitude: place.latitude, longitude: place.longitude },
+            radius: place.radius || 100
+        });
+    })
+});
+
+function isDisabled(place: Place): boolean {
     const distance = calcCrow(place.coords, store.coords);
-    console.log(calcCrow(place.coords, store.coords));
     return distance > place.radius;
 }
 
 //This function takes in latitude and longitude of two locations
 // and returns the distance between them as the crow flies (in meters)
-function calcCrow(coords1: any, coords2: any) {
+function calcCrow(coords1: GeoPoint, coords2: GeoPoint) {
     const R = 6371; // Radius of the earth in km
     const dLat = deg2rad(coords2.latitude - coords1.latitude); // deg2rad below
     const dLon = deg2rad(coords2.longitude - coords1.longitude);
@@ -60,7 +77,7 @@ function calcCrow(coords1: any, coords2: any) {
     return d * 1000;
 }
 
-function deg2rad(deg:number):number {
+function deg2rad(deg: number): number {
     return deg * (Math.PI / 180)
 }
 </script>
