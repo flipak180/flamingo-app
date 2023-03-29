@@ -32,8 +32,10 @@
                         </ion-buttons>
                     </ion-toolbar>
                 </ion-header>
-                <ion-content class="ion-padding">
-                    <p>123</p>
+                <ion-content>
+                    <YandexMap :settings="settings" :coordinates="[store.coords.latitude, store.coords.longitude]" :zoom="14" :controls="['zoomControl']">
+                        <YandexMarker :coordinates="[store.coords.latitude, store.coords.longitude]" :marker-id="1" />
+                    </YandexMap>
                 </ion-content>
             </ion-modal>
         </ion-content>
@@ -59,6 +61,7 @@ import {mapOutline} from 'ionicons/icons';
 import {Geolocation} from '@capacitor/geolocation';
 import {onMounted, ref} from "vue";
 import {useMainStore} from "@/store";
+import { YandexMap, YandexMarker } from 'vue-yandex-maps';
 
 const store = useMainStore()
 
@@ -66,6 +69,14 @@ const isLoading = ref(false);
 const presentingElement = ref(null);
 const modal = ref(null)
 const page = ref(null)
+
+const settings = {
+    apiKey: '048d2b9a-9e4a-481c-9799-c8f42c0ce65a', // Индивидуальный ключ API
+    lang: 'ru_RU', // Используемый язык
+    coordorder: 'latlong', // Порядок задания географических координат
+    debug: false, // Режим отладки
+    version: '2.1' // Версия Я.Карт
+}
 
 onMounted(() => {
     printCurrentPosition();
@@ -116,5 +127,9 @@ const dismiss = () => {
 
 #container a {
     text-decoration: none;
+}
+
+.yandex-container {
+    height: 100%;
 }
 </style>

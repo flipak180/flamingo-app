@@ -25,7 +25,8 @@
     "ionicons": "^6.0.3",
     "pinia": "^2.0.33",
     "vue": "^3.2.21",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "vue-yandex-maps": "^1.0.8"
   },
   "devDependencies": {
     "@capacitor/assets": "^2.0.4",
