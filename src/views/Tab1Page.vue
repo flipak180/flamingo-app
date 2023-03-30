@@ -11,16 +11,9 @@
             </ion-toolbar>
         </ion-header>
         <ion-content>
-            <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
-                <ion-refresher-content />
-            </ion-refresher>
-            <div class="ion-margin-top ion-text-center" v-if="isLoading">
-                <ion-spinner />
-            </div>
-
             <div id="container">
-                <strong>{{ store.coords.latitude }}</strong> <br>
-                <strong>{{ store.coords.longitude }}</strong>
+                <strong>{{ coords.latitude }}</strong> <br>
+                <strong>{{ coords.longitude }}</strong>
             </div>
 
             <ion-modal ref="modal" trigger="open-modal" :presenting-element="presentingElement">
@@ -33,8 +26,8 @@
                     </ion-toolbar>
                 </ion-header>
                 <ion-content>
-                    <YandexMap :settings="settings" :coordinates="[store.coords.latitude, store.coords.longitude]" :zoom="14" :controls="['zoomControl']">
-                        <YandexMarker :coordinates="[store.coords.latitude, store.coords.longitude]" :marker-id="1" />
+                    <YandexMap :settings="settings" :coordinates="[coords.latitude, coords.longitude]" :zoom="14" :controls="['zoomControl']" @created="onInit">
+                        <YandexMarker :coordinates="[coords.latitude, coords.longitude]" :marker-id="1" />
                     </YandexMap>
                 </ion-content>
             </ion-modal>
@@ -42,7 +35,10 @@
     </ion-page>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
+import {Geolocation} from '@capacitor/geolocation';
+import {useMainStore} from "@/store";
+import {loadYmap, YandexMap, YandexMarker} from 'vue-yandex-maps';
 import {
     IonButton,
     IonButtons,
@@ -51,24 +47,13 @@ import {
     IonIcon,
     IonModal,
     IonPage,
-    IonRefresher,
-    IonRefresherContent,
-    IonSpinner,
     IonTitle,
     IonToolbar
-} from '@ionic/vue';
-import {mapOutline} from 'ionicons/icons';
-import {Geolocation} from '@capacitor/geolocation';
-import {onMounted, ref} from "vue";
-import {useMainStore} from "@/store";
-import { YandexMap, YandexMarker } from 'vue-yandex-maps';
+} from "@ionic/vue";
+import {mapOutline} from "ionicons/icons";
+import {mapState} from "pinia";
 
 const store = useMainStore()
-
-const isLoading = ref(false);
-const presentingElement = ref(null);
-const modal = ref(null)
-const page = ref(null)
 
 const settings = {
     apiKey: '048d2b9a-9e4a-481c-9799-c8f42c0ce65a', // Индивидуальный ключ API
@@ -78,29 +63,71 @@ const settings = {
     version: '2.1' // Версия Я.Карт
 }
 
-onMounted(() => {
-    printCurrentPosition();
-    presentingElement.value = page.value.$el;
-})
+export default {
+    components: {
+        IonButtons,
+        IonButton,
+        IonContent,
+        IonHeader,
+        IonPage,
+        IonTitle,
+        IonToolbar,
+        IonIcon,
+        IonModal,
+        YandexMap,
+        YandexMarker
+    },
+    data() {
+        return {
+            presentingElement: null,
+            modal: null,
+            page: null,
+            mapInstance: null,
+            YMap: null,
+            mapOutline,
+        }
+    },
+    computed: {
+        ...mapState(useMainStore, {
+            coords: "coords",
+        })
+    },
+    async mounted() {
+        this.presentingElement = this.$refs.page.$el;
+        await this.printCurrentPosition();
+        await loadYmap(settings);
+        // eslint-disable-next-line no-undef
+        this.YMap = ymaps;
+    },
+    methods: {
+        async printCurrentPosition() {
+            const coordinates = await Geolocation.getCurrentPosition({
+                enableHighAccuracy: false,
+                maximumAge: 5000,
+            });
 
-const printCurrentPosition = async () => {
-    const coordinates = await Geolocation.getCurrentPosition({
-        enableHighAccuracy: false,
-        maximumAge: 5000,
-    });
+            console.log('Current position:', coordinates);
+            store.setCoords(coordinates.coords.latitude, coordinates.coords.longitude);
+        },
+        refresh(e) {
+            e.target.complete();
+        },
+        dismiss() {
+            this.modal.$el.dismiss();
+        },
+        onInit(e) {
+            this.mapInstance = e;
+            console.log(e);
+            console.log(this.mapInstance);
+            console.log(this.YMap);
 
-    console.log('Current position:', coordinates);
-    store.setCoords(coordinates.coords.latitude, coordinates.coords.longitude);
+            const circle = new this.YMap.Circle([[50, 75], 1000000], {}, {
+                geodesic: true
+            });
+            this.mapInstance.geoObjects.add(circle);
+        }
+    }
 }
-
-const refresh = (event) => {
-    event.target.complete();
-}
-
-const dismiss = () => {
-    modal.value.$el.dismiss();
-}
-
 </script>
 
 <style scoped>
