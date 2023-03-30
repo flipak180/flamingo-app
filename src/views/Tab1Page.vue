@@ -26,8 +26,8 @@
                     </ion-toolbar>
                 </ion-header>
                 <ion-content>
-                    <YandexMap :settings="settings" :coordinates="[coords.latitude, coords.longitude]" :zoom="14" :controls="['zoomControl']" @created="onInit">
-                        <YandexMarker :coordinates="[coords.latitude, coords.longitude]" :marker-id="1" />
+                    <YandexMap :settings="settings" :coordinates="[coords.latitude, coords.longitude]" :zoom="16" :controls="['zoomControl']" @created="onInit">
+<!--                        <YandexMarker :coordinates="[coords.latitude, coords.longitude]" :marker-id="1" type="Circle" />-->
                     </YandexMap>
                 </ion-content>
             </ion-modal>
@@ -35,7 +35,8 @@
     </ion-page>
 </template>
 
-<script lang="ts">
+<script>
+/* eslint-disable */
 import {Geolocation} from '@capacitor/geolocation';
 import {useMainStore} from "@/store";
 import {loadYmap, YandexMap, YandexMarker} from 'vue-yandex-maps';
@@ -52,16 +53,11 @@ import {
 } from "@ionic/vue";
 import {mapOutline} from "ionicons/icons";
 import {mapState} from "pinia";
+import {toRaw} from "vue";
 
 const store = useMainStore()
 
-const settings = {
-    apiKey: '048d2b9a-9e4a-481c-9799-c8f42c0ce65a', // Индивидуальный ключ API
-    lang: 'ru_RU', // Используемый язык
-    coordorder: 'latlong', // Порядок задания географических координат
-    debug: false, // Режим отладки
-    version: '2.1' // Версия Я.Карт
-}
+let mapInstance;
 
 export default {
     components: {
@@ -82,9 +78,15 @@ export default {
             presentingElement: null,
             modal: null,
             page: null,
-            mapInstance: null,
             YMap: null,
             mapOutline,
+            settings: {
+                apiKey: '048d2b9a-9e4a-481c-9799-c8f42c0ce65a', // Индивидуальный ключ API
+                lang: 'ru_RU', // Используемый язык
+                coordorder: 'latlong', // Порядок задания географических координат
+                debug: false, // Режим отладки
+                version: '2.1' // Версия Я.Карт
+            }
         }
     },
     computed: {
@@ -95,9 +97,7 @@ export default {
     async mounted() {
         this.presentingElement = this.$refs.page.$el;
         await this.printCurrentPosition();
-        await loadYmap(settings);
-        // eslint-disable-next-line no-undef
-        this.YMap = ymaps;
+        await loadYmap(this.settings);
     },
     methods: {
         async printCurrentPosition() {
@@ -113,18 +113,15 @@ export default {
             e.target.complete();
         },
         dismiss() {
-            this.modal.$el.dismiss();
+            this.$refs.modal.$el.dismiss();
         },
         onInit(e) {
-            this.mapInstance = e;
-            console.log(e);
-            console.log(this.mapInstance);
-            console.log(this.YMap);
+            mapInstance = e;
 
-            const circle = new this.YMap.Circle([[50, 75], 1000000], {}, {
+            const circle = new ymaps.Circle([[this.coords.latitude, this.coords.longitude], 100], {}, {
                 geodesic: true
             });
-            this.mapInstance.geoObjects.add(circle);
+            mapInstance.geoObjects.add(circle);
         }
     }
 }
