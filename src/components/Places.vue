@@ -63,7 +63,7 @@ export default {
                     lat: place.latitude,
                     lon: place.longitude,
                 },
-                presentingElement: document.querySelector('.ion-page'),
+                presentingElement: document.querySelector('.page-wrap'),
             });
             await modal.present();
         }

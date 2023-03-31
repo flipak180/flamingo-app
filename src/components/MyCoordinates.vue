@@ -38,7 +38,7 @@ export default {
                     lat: this.coords.latitude,
                     lon: this.coords.longitude,
                 },
-                presentingElement: document.querySelector('.ion-page'),
+                presentingElement: document.querySelector('.page-wrap'),
             });
             await modal.present();
         }

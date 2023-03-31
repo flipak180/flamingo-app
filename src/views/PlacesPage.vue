@@ -1,5 +1,5 @@
 <template>
-    <ion-page ref="page">
+    <ion-page class="page-wrap">
         <ion-header>
             <ion-toolbar>
                 <ion-title>Места</ion-title>
@@ -27,10 +27,6 @@ export default {
         MyCoordinates,
         Places,
     },
-    mounted() {
-        console.log(this.$refs.page.$el);
-        console.log(document.querySelector('.ion-page'));
-    }
 }
 </script>
 
