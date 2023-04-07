@@ -8,7 +8,7 @@
         </ion-toolbar>
     </ion-header>
     <ion-content>
-        <YandexMap :settings="settings" :coordinates="[this.lat, this.lon]" :zoom="16" :controls="['zoomControl']" @created="onInit">
+        <YandexMap :settings="settings" :coordinates="[59.938955, 30.315644]" :zoom="11" :controls="['zoomControl']" @created="onInit">
             <!--                        <YandexMarker :coordinates="[coords.latitude, coords.longitude]" :marker-id="1" type="Circle" />-->
         </YandexMap>
     </ion-content>
@@ -29,7 +29,7 @@ import {
 import {YandexMap, YandexMarker} from "vue-yandex-maps";
 import {YmapSettings} from "@/models/Ymap";
 
-let mapInstance;
+let map;
 
 export default {
     name: "MapModal",
@@ -45,7 +45,7 @@ export default {
         IonToolbar,
         IonContent,
     },
-    props: ['lat', 'lon'],
+    props: ['location'],
     data() {
         return {
             settings: YmapSettings,
@@ -56,13 +56,36 @@ export default {
             modalController.dismiss(null, 'cancel');
         },
         onInit(e) {
-            console.log(e);
+            map = e;
+            // console.log(this.location);
 
-            mapInstance = e;
-            const circle = new ymaps.Circle([[this.lat, this.lon], 100], {}, {
-                geodesic: true
+            map.geoObjects.removeAll();
+
+            if (this.location.length === 1) {
+                console.log([59.938955, 30.315644]);
+                console.log(this.location[0]);
+                const circle = new ymaps.Circle([this.location[0], 15], {}, {
+                    geodesic: true
+                });
+                map.geoObjects.add(circle);
+                console.log('circle');
+            }
+
+            if (this.location.length > 1) {
+                const polygon = new ymaps.Polygon([this.location], {}, {
+                    fillColor: '#e05baa',
+                    fillOpacity: 0.4,
+                    strokeColor: '#212529',
+                    strokeWidth: 1
+                });
+                map.geoObjects.add(polygon);
+                console.log('polygon');
+            }
+
+            map.setBounds(map.geoObjects.getBounds(), {
+                checkZoomRange: true,
+                zoomMargin: 10
             });
-            mapInstance.geoObjects.add(circle);
         }
     }
 }

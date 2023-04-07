@@ -35,8 +35,7 @@ export default {
             const modal = await modalController.create({
                 component: MapModal,
                 componentProps: {
-                    lat: this.coords.latitude,
-                    lon: this.coords.longitude,
+                    location: [[this.coords.latitude, this.coords.longitude]],
                 },
                 presentingElement: document.querySelector('.page-wrap'),
             });

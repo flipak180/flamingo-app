@@ -2,7 +2,6 @@
     <ion-card v-for="place in places" :key="place.id">
         <ion-card-header>
             <ion-card-title>{{ place.title }}</ion-card-title>
-            <ion-card-subtitle>{{ place.latitude }}, {{ place.longitude }}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
             <ion-button size="small" :disabled="!atPlace(place)">Я тут</ion-button>
@@ -28,6 +27,7 @@ import {mapOutline} from "ionicons/icons";
 import axios from "axios";
 import {atPlace} from "@/models/Place";
 import MapModal from "@/components/MapModal";
+import {toRaw} from "vue";
 
 export default {
     name: "Places",
@@ -60,8 +60,7 @@ export default {
             const modal = await modalController.create({
                 component: MapModal,
                 componentProps: {
-                    lat: place.latitude,
-                    lon: place.longitude,
+                    location: toRaw(place.location)[0],
                 },
                 presentingElement: document.querySelector('.page-wrap'),
             });
