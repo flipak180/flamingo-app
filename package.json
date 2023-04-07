@@ -24,6 +24,7 @@
         "core-js": "^3.6.5",
         "ionicons": "^6.0.3",
         "pinia": "^2.0.33",
+        "robust-point-in-polygon": "^1.0.3",
         "vue": "^3.2.47",
         "vue-router": "^4.1.6"
     },
