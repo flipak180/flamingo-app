@@ -1,5 +1,5 @@
 <template>
-    <ion-page class="page-wrap">
+    <ion-page>
         <ion-header>
             <ion-toolbar>
                 <ion-title>Места</ion-title>

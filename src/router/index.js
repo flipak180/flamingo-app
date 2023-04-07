@@ -16,14 +16,19 @@ const routes = [
             },
             {
                 path: 'places',
-                component: () => import('@/views/PlacesPage.vue')
+                component: () => import('@/views/PlacesPage.vue'),
             },
             {
                 path: 'profile',
                 component: () => import('@/views/ProfilePage.vue')
             },
         ]
-    }
+    },
+    {
+        path: '/map/:place_id?',
+        name: 'map',
+        component: () => import('@/views/PlaceMapPage.vue'),
+    },
 ]
 
 const router = createRouter({

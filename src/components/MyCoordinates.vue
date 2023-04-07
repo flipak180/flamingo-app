@@ -12,7 +12,6 @@ import {mapState} from "pinia";
 import {useMainStore} from "@/store";
 import {IonButton, IonIcon, modalController} from "@ionic/vue";
 import {mapOutline} from "ionicons/icons";
-import MapModal from "@/components/MapModal";
 
 export default {
     name: "MyCoordinates",
@@ -26,20 +25,11 @@ export default {
         }
     },
     computed: {
-        ...mapState(useMainStore, {
-            coords: "coords",
-        })
+        ...mapState(useMainStore, ['coords'])
     },
     methods: {
-        async openMap() {
-            const modal = await modalController.create({
-                component: MapModal,
-                componentProps: {
-                    location: [[this.coords.latitude, this.coords.longitude]],
-                },
-                presentingElement: document.querySelector('.page-wrap'),
-            });
-            await modal.present();
+        openMap() {
+            this.$router.push({ name: 'map' });
         }
     }
 }

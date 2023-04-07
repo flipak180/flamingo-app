@@ -13,21 +13,10 @@
 </template>
 
 <script>
-import {
-    IonButton,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonCardTitle,
-    IonIcon,
-    modalController
-} from "@ionic/vue";
+import {IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonIcon} from "@ionic/vue";
 import {mapOutline} from "ionicons/icons";
 import axios from "axios";
 import {atPlace} from "@/models/Place";
-import MapModal from "@/components/MapModal";
-import {toRaw} from "vue";
 
 export default {
     name: "Places",
@@ -57,14 +46,7 @@ export default {
             });
         },
         async openMap(place) {
-            const modal = await modalController.create({
-                component: MapModal,
-                componentProps: {
-                    location: toRaw(place.location)[0],
-                },
-                presentingElement: document.querySelector('.page-wrap'),
-            });
-            await modal.present();
+            this.$router.push({ name: 'map', params: { place_id: place.id } });
         }
     }
 }
