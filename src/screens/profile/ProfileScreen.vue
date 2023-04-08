@@ -2,18 +2,20 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
+                <LogoutButton />
                 <ion-title>Профиль</ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content>
-            <ion-button expand="block" color="primary" @click="logout">Выход</ion-button>
+            <Visits />
         </ion-content>
     </ion-page>
 </template>
 
 <script>
-import {IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
-import {useProfileStore} from "@/store/profile";
+import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
+import Visits from "@/components/Visits";
+import LogoutButton from "@/components/LogoutButton";
 
 export default {
     components: {
@@ -22,15 +24,9 @@ export default {
         IonPage,
         IonTitle,
         IonToolbar,
-        IonButton,
+        Visits,
+        LogoutButton,
     },
-    methods: {
-        logout() {
-            const store = useProfileStore();
-            store.phone = null;
-            this.$router.replace({ name: 'login' });
-        }
-    }
 }
 </script>
 

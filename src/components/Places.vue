@@ -63,16 +63,22 @@ export default {
             await axios.post(`https://flamingo.spb.ru/api/places/visit`, {
                 place_id: place.id,
                 phone: store.phone,
-            }).then(res => {
-
+            }).then(async (res) => {
+                const toast = await toastController.create({
+                    message: 'Визит сохранен',
+                    duration: 1500,
+                });
+                await toast.present();
+            }).catch(async (res) => {
+                const toast = await toastController.create({
+                    message: res?.response?.data?.message || 'Произошла ошибка',
+                    color: 'danger',
+                    duration: 1500,
+                });
+                await toast.present();
             });
 
-            const toast = await toastController.create({
-                message: 'Визит сохранен',
-                duration: 1500,
-            });
 
-            await toast.present();
         }
     }
 }
