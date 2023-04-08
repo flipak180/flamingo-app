@@ -1,7 +1,5 @@
-import { CapacitorConfig } from '@capacitor/cli';
-
-const config: CapacitorConfig = {
-    appId: 'io.skav.lets-go',
+const config = {
+    appId: 'com.app.flamingo',
     appName: 'Пойдём гулять',
     webDir: 'dist',
     bundledWebRuntime: false
