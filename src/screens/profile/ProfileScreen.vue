@@ -6,13 +6,14 @@
             </ion-toolbar>
         </ion-header>
         <ion-content>
-            <p>Profile</p>
+            <ion-button expand="block" color="primary" @click="logout">Выход</ion-button>
         </ion-content>
     </ion-page>
 </template>
 
 <script>
-import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
+import {IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
+import {useProfileStore} from "@/store/profile";
 
 export default {
     components: {
@@ -21,7 +22,15 @@ export default {
         IonPage,
         IonTitle,
         IonToolbar,
+        IonButton,
     },
+    methods: {
+        logout() {
+            const store = useProfileStore();
+            store.phone = null;
+            this.$router.replace({ name: 'login' });
+        }
+    }
 }
 </script>
 

@@ -47,6 +47,7 @@ import {
 } from "@ionic/vue";
 import axios from "axios";
 import {useProfileStore} from "@/store/profile";
+import storage from "@/plugins/storage";
 
 export default {
     name: "LoginScreen",
@@ -79,6 +80,7 @@ export default {
             }).then((res) => {
                 const store = useProfileStore()
                 store.phone = res.data.phone;
+                storage.set('phone', res.data.phone);
                 this.$router.replace({ name: 'home' });
             }).catch(err => {
                 toastController.create({

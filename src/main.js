@@ -24,14 +24,23 @@ import '@ionic/vue/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import storage from "@/plugins/storage";
+import {useProfileStore} from "@/store/profile";
 
-const pinia = createPinia()
-const app = createApp(App)
-    .use(IonicVue)
-    .use(router)
-    .use(pinia)
-    .use(VueTheMask);
+storage.get('phone').then(phone => {
+    const pinia = createPinia()
 
-router.isReady().then(() => {
-    app.mount('#app');
-});
+    const app = createApp(App)
+        .use(IonicVue)
+        .use(router)
+        .use(pinia)
+        .use(VueTheMask);
+
+    const store = useProfileStore();
+    store.phone = phone;
+    console.log(phone);
+
+    router.isReady().then(() => {
+        app.mount('#app');
+    });
+})
