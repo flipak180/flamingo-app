@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
 
 export const useProfileStore = defineStore('profile', {
-    state: () => ({ phone: null }),
+    state: () => ({ phone: null, user_id: null }),
 })

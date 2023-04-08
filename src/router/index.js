@@ -52,7 +52,7 @@ router.beforeEach(async (to, from, next) => {
     }
 
     if (store.phone && to.name === 'login') {
-        next({ name: 'aForm' });
+        next({ name: 'home' });
         return;
     }
 

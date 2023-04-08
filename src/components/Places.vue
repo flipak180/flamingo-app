@@ -26,6 +26,7 @@ import {
 import {mapOutline} from "ionicons/icons";
 import axios from "axios";
 import {atPlace} from "@/models/Place";
+import {useProfileStore} from "@/store/profile";
 
 export default {
     name: "Places",
@@ -58,7 +59,11 @@ export default {
             this.$router.push({ name: 'map', params: { place_id: place.id } });
         },
         async visit(place) {
-            await axios.get(`https://flamingo.spb.ru/api/places/visit?place_id=${place.id}`).then(res => {
+            const store = useProfileStore();
+            await axios.post(`https://flamingo.spb.ru/api/places/visit`, {
+                place_id: place.id,
+                phone: store.phone,
+            }).then(res => {
 
             });
 
