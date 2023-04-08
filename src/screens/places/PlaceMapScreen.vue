@@ -44,14 +44,14 @@ export default {
     mounted() {
         ymaps.ready(() => {
             this.setupMap();
-            this.fetch();
+            this.fetchLocation();
         })
     },
     computed: {
         ...mapState(useMainStore, ['coords'])
     },
     methods: {
-        fetch() {
+        fetchLocation() {
             if (!this.$route.params.place_id) {
                 return;
             }
@@ -69,6 +69,19 @@ export default {
             });
 
             map.geoObjects.removeAll();
+
+            this.renderSelf();
+        },
+        renderSelf() {
+            const placemark = new ymaps.Placemark([this.coords.latitude, this.coords.longitude], {}, {
+                preset: "islands#circleDotIcon",
+                iconColor: '#ff0000'
+            });
+            map.geoObjects.add(placemark);
+
+            if (!this.$route.params.place_id) {
+                this.setCenter(placemark);
+            }
         },
         renderLocation() {
             const location = this.place.location[0];
@@ -79,15 +92,11 @@ export default {
                 strokeWidth: 1
             });
             map.geoObjects.add(polygon);
-
-            const placemark = new ymaps.Placemark([this.coords.latitude, this.coords.longitude], {}, {
-                preset: "islands#circleDotIcon",
-                iconColor: '#ff0000'
-            });
-            map.geoObjects.add(placemark);
-
+            this.setCenter(polygon);
+        },
+        setCenter(geoObject) {
             setTimeout(() => {
-                map.setBounds(polygon.geometry.getBounds(), {
+                map.setBounds(geoObject.geometry.getBounds(), {
                     checkZoomRange: true,
                     zoomMargin: 10
                 });

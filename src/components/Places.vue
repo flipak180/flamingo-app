@@ -1,4 +1,11 @@
 <template>
+    <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
+        <ion-refresher-content />
+    </ion-refresher>
+    <div class="ion-margin-top ion-text-center" v-if="isLoading">
+        <ion-spinner />
+    </div>
+
     <ion-card v-for="place in places" :key="place.id">
         <ion-card-header>
             <ion-card-title>{{ place.title }}</ion-card-title>
@@ -10,6 +17,8 @@
             </ion-button>
         </ion-card-content>
     </ion-card>
+
+    <p class="ion-padding" v-if="!isLoading && !places.length">Здесь пока пусто.</p>
 </template>
 
 <script>
@@ -20,7 +29,7 @@ import {
     IonCardHeader,
     IonCardSubtitle,
     IonCardTitle,
-    IonIcon,
+    IonIcon, IonRefresher, IonRefresherContent, IonSpinner,
     toastController
 } from "@ionic/vue";
 import {mapOutline} from "ionicons/icons";
@@ -38,22 +47,24 @@ export default {
         IonCardContent,
         IonButton,
         IonIcon,
+        IonSpinner, IonRefresher, IonRefresherContent
     },
     data() {
         return {
             mapOutline,
             places: [],
+            isLoading: true,
             atPlace,
         }
     },
     mounted() {
-        this.loadPlaces();
+        this.fetch();
     },
     methods: {
-        loadPlaces() {
-            axios.get('https://flamingo.spb.ru/api/places').then(res => {
+        fetch() {
+            return axios.get('https://flamingo.spb.ru/api/places').then(res => {
                 this.places = res.data;
-            });
+            }).finally(() => this.isLoading = false);
         },
         async openMap(place) {
             this.$router.push({ name: 'map', params: { place_id: place.id } });
@@ -77,9 +88,12 @@ export default {
                 });
                 await toast.present();
             });
-
-
-        }
+        },
+        refresh(event) {
+            this.fetch(false).then(() => {
+                event.target.complete();
+            });
+        },
     }
 }
 </script>

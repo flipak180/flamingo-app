@@ -5,6 +5,7 @@
     <div class="ion-margin-top ion-text-center" v-if="isLoading">
         <ion-spinner />
     </div>
+
     <ion-list>
         <ion-item v-for="visit in visits" :key="visit.id">
             <ion-label>
@@ -13,6 +14,8 @@
             </ion-label>
         </ion-item>
     </ion-list>
+
+    <p class="ion-padding" v-if="!isLoading && !visits.length">Пока пусто. Посетите место!</p>
 </template>
 
 <script>
