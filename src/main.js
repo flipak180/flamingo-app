@@ -2,6 +2,7 @@ import {createApp} from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router';
+import VueTheMask from 'vue-the-mask';
 
 import {IonicVue} from '@ionic/vue';
 
@@ -28,7 +29,8 @@ const pinia = createPinia()
 const app = createApp(App)
     .use(IonicVue)
     .use(router)
-    .use(pinia);
+    .use(pinia)
+    .use(VueTheMask);
 
 router.isReady().then(() => {
     app.mount('#app');

@@ -17,6 +17,20 @@
     </ion-page>
 </template>
 
-<script setup>
+<script>
 import {IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/vue';
-import {navigateCircleOutline, personCircleOutline} from 'ionicons/icons';</script>
+import {navigateCircleOutline, personCircleOutline} from 'ionicons/icons';
+
+export default {
+    name: "Tabs",
+    components: {
+        IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs,
+    },
+    data() {
+        return {
+            navigateCircleOutline,
+            personCircleOutline,
+        }
+    },
+}
+</script>
