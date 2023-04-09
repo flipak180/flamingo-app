@@ -7,7 +7,7 @@
     </div>
 
     <ion-list>
-        <ion-item v-for="visit in visits" :key="visit.id">
+        <ion-item v-for="visit in visits" :key="visit.visit_id">
             <ion-label>
                 <h3>{{ visit.place }}</h3>
                 <p>{{ visit.date }}</p>
@@ -20,8 +20,8 @@
 
 <script>
 import {IonItem, IonLabel, IonList, IonRefresher, IonRefresherContent, IonSpinner} from "@ionic/vue";
-import axios from "axios";
 import {useProfileStore} from "@/store/profile";
+import api from "@/plugins/api";
 
 export default {
     name: "Visits",
@@ -38,7 +38,7 @@ export default {
     methods: {
         fetch() {
             const store = useProfileStore();
-            return axios.post('https://flamingo.spb.ru/api/users/visits', {
+            return api.post('/users/visits', {
                 'phone': store.phone,
             }).then(res => {
                 this.visits = res.data;

@@ -45,9 +45,9 @@ import {
     IonToolbar,
     toastController
 } from "@ionic/vue";
-import axios from "axios";
 import {useProfileStore} from "@/store/profile";
 import storage from "@/plugins/storage";
+import api from "@/plugins/api";
 
 export default {
     name: "LoginScreen",
@@ -75,7 +75,7 @@ export default {
             this.auth();
         },
         auth() {
-            axios.post('https://flamingo.spb.ru/api/users/login', {
+            api.post('/users/login', {
                 phone: this.phone,
             }).then((res) => {
                 const store = useProfileStore()

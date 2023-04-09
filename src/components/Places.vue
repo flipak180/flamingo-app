@@ -6,7 +6,7 @@
         <ion-spinner />
     </div>
 
-    <ion-card v-for="place in places" :key="place.id">
+    <ion-card v-for="place in places" :key="place.place_id">
         <ion-card-header>
             <ion-card-title>{{ place.title }}</ion-card-title>
         </ion-card-header>
@@ -29,13 +29,16 @@ import {
     IonCardHeader,
     IonCardSubtitle,
     IonCardTitle,
-    IonIcon, IonRefresher, IonRefresherContent, IonSpinner,
+    IonIcon,
+    IonRefresher,
+    IonRefresherContent,
+    IonSpinner,
     toastController
 } from "@ionic/vue";
 import {mapOutline} from "ionicons/icons";
-import axios from "axios";
 import {atPlace} from "@/models/Place";
 import {useProfileStore} from "@/store/profile";
+import api from "@/plugins/api";
 
 export default {
     name: "Places",
@@ -62,17 +65,17 @@ export default {
     },
     methods: {
         fetch() {
-            return axios.get('https://flamingo.spb.ru/api/places').then(res => {
+            return api.get('/places').then(res => {
                 this.places = res.data;
             }).finally(() => this.isLoading = false);
         },
         async openMap(place) {
-            this.$router.push({ name: 'map', params: { place_id: place.id } });
+            this.$router.push({ name: 'map', params: { place_id: place.place_id } });
         },
         async visit(place) {
             const store = useProfileStore();
-            await axios.post(`https://flamingo.spb.ru/api/places/visit`, {
-                place_id: place.id,
+            await api.post('/places/visit', {
+                place_id: place.place_id,
                 phone: store.phone,
             }).then(async (res) => {
                 const toast = await toastController.create({

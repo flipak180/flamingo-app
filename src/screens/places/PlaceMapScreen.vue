@@ -18,9 +18,9 @@
 import {IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
 import {YmapSettings} from "@/models/Ymap";
 import BackButton from "@/components/BackButton";
-import axios from "axios";
 import {mapState} from "pinia";
 import {useMainStore} from "@/store";
+import api from "@/plugins/api";
 
 let map;
 
@@ -56,7 +56,7 @@ export default {
                 return;
             }
 
-            axios.get(`https://flamingo.spb.ru/api/places/${this.$route.params.place_id}`).then(res => {
+            api.get(`/places/${this.$route.params.place_id}`).then(res => {
                 this.place = res.data;
                 this.renderLocation();
             });
