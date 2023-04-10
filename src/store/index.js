@@ -15,7 +15,6 @@ export const useMainStore = () => {
                     maximumAge: 5000,
                 });
 
-                console.log('get coords:');
                 this.coords.latitude = coordinates.coords.latitude;
                 this.coords.longitude = coordinates.coords.longitude;
             },

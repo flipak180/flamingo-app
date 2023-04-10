@@ -39,6 +39,7 @@ import {mapOutline} from "ionicons/icons";
 import {atPlace} from "@/models/Place";
 import {useProfileStore} from "@/store/profile";
 import api from "@/plugins/api";
+import {mapState} from "pinia";
 
 export default {
     name: "Places",
@@ -60,6 +61,9 @@ export default {
             atPlace,
         }
     },
+    computed: {
+        ...mapState(useProfileStore, ['phone'])
+    },
     mounted() {
         this.fetch();
     },
@@ -73,10 +77,9 @@ export default {
             this.$router.push({ name: 'map', params: { place_id: place.place_id } });
         },
         async visit(place) {
-            const store = useProfileStore();
             await api.post('/places/visit', {
                 place_id: place.place_id,
-                phone: store.phone,
+                phone: this.phone,
             }).then(async (res) => {
                 const toast = await toastController.create({
                     message: 'Визит сохранен',

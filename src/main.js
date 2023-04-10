@@ -38,7 +38,6 @@ storage.get('phone').then(phone => {
 
     const store = useProfileStore();
     store.phone = phone;
-    console.log(phone);
 
     router.isReady().then(() => {
         app.mount('#app');
