@@ -18,7 +18,7 @@
         </ion-card-content>
     </ion-card>
 
-    <p class="ion-padding" v-if="!isLoading && !places.length">Здесь пока пусто.</p>
+<!--    <p class="ion-padding" v-if="!isLoading && !places.length">Здесь пока пусто.</p>-->
 </template>
 
 <script>
