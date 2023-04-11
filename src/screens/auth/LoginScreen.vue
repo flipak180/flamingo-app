@@ -17,7 +17,7 @@
                         <form @submit.prevent="phoneSubmit">
                             <ion-item class="ion-margin-bottom">
                                 <ion-label position="stacked">Телефон</ion-label>
-                                <ion-input v-model="phone" type="tel" inputmode="tel"></ion-input>
+                                <ion-input v-model="phone" type="tel" inputmode="tel" placeholder="+7"></ion-input>
                                 <input v-mask="'+7 (###) ###-##-##'" v-model="phone" style="display: none">
                             </ion-item>
                             <ion-button expand="block" type="submit" color="primary">Подтвердить</ion-button>
@@ -54,11 +54,11 @@ export default {
     components: {IonHeader, IonToolbar, IonTitle, IonPage, IonContent, IonButton, IonGrid, IonCol, IonRow, IonItem, IonLabel, IonInput},
     data() {
         return {
-            phone: '',
+            phone: ' ',
         }
     },
     ionViewDidEnter() {
-        this.phone = '';
+        this.phone = ' ';
     },
     methods: {
         async phoneSubmit() {

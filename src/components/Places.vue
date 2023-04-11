@@ -8,7 +8,7 @@
 
     <ion-card v-for="place in places" :key="place.place_id">
         <ion-card-header>
-            <ion-card-title>{{ place.title }}</ion-card-title>
+            <ion-card-subtitle>{{ place.title }}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
             <ion-button size="small" :disabled="!atPlace(place)" @click="visit(place)">Я тут</ion-button>
