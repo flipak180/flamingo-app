@@ -6,13 +6,11 @@
         <ion-spinner />
     </div>
 
-    <ion-card v-for="category in categories" :key="category.category_id">
+    <ion-card v-for="category in categories" :key="category.category_id" :router-link="`/tabs/categories/${category.category_id}`">
+        <img :src="'https://flamingo.spb.ru' + category.image" :alt="category.title" v-if="category.image" />
         <ion-card-header>
             <ion-card-title>{{ category.title }}</ion-card-title>
         </ion-card-header>
-        <ion-card-content>
-            <ion-button size="small" @click="$router.push({ name: 'category', params: { category_id: category.category_id } })">Список мест</ion-button>
-        </ion-card-content>
     </ion-card>
 
     <p class="ion-padding" v-if="!isLoading && !categories.length">Здесь пока пусто.</p>
