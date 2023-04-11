@@ -53,6 +53,7 @@ export default {
         IonIcon,
         IonSpinner, IonRefresher, IonRefresherContent
     },
+    props: ['category_id'],
     data() {
         return {
             mapOutline,
@@ -69,7 +70,7 @@ export default {
     },
     methods: {
         fetch() {
-            return api.get('/places').then(res => {
+            return api.get(`/places/list?category_id=${this.category_id}`).then(res => {
                 this.places = res.data;
             }).finally(() => this.isLoading = false);
         },

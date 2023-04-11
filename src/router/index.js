@@ -19,7 +19,12 @@ const routes = [
             {
                 path: '',
                 name: 'home',
-                redirect: '/tabs/places'
+                redirect: '/tabs/categories'
+            },
+            {
+                path: 'categories/:category_id?',
+                name: 'category',
+                component: () => import('@/screens/places/CategoriesScreen.vue'),
             },
             {
                 path: 'places',
