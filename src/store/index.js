@@ -10,13 +10,21 @@ export const useMainStore = () => {
         }),
         actions: {
             async getCoords() {
-                const coordinates = await Geolocation.getCurrentPosition({
+                // const coordinates = await Geolocation.getCurrentPosition({
+                //     enableHighAccuracy: false,
+                //     maximumAge: 5000,
+                // });
+
+                await Geolocation.watchPosition({
                     enableHighAccuracy: false,
                     maximumAge: 5000,
-                });
+                }, (coordinates) => {
+                    this.coords.latitude = coordinates.coords.latitude;
+                    this.coords.longitude = coordinates.coords.longitude;
+                })
 
-                this.coords.latitude = coordinates.coords.latitude;
-                this.coords.longitude = coordinates.coords.longitude;
+                // this.coords.latitude = coordinates.coords.latitude;
+                // this.coords.longitude = coordinates.coords.longitude;
             },
         },
     });
