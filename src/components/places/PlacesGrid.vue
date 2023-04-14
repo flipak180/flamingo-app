@@ -6,52 +6,24 @@
         <ion-spinner />
     </div>
 
-    <ion-card v-for="place in places" :key="place.place_id">
-        <ion-card-header>
-            <ion-card-subtitle>{{ place.title }}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-            <ion-button size="small" :disabled="!atPlace(place)" @click="visit(place)">Я тут</ion-button>
-            <ion-button size="small" @click="openMap(place)">
-                <ion-icon slot="icon-only" :icon="mapOutline"></ion-icon>
-            </ion-button>
-        </ion-card-content>
-    </ion-card>
-
-<!--    <p class="ion-padding" v-if="!isLoading && !places.length">Здесь пока пусто.</p>-->
+    <div class="places-grid">
+        <PlacesGridItem v-for="place in places" :key="place.place_id" :place="place" />
+    </div>
 </template>
 
 <script>
-import {
-    IonButton,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonCardTitle,
-    IonIcon,
-    IonRefresher,
-    IonRefresherContent,
-    IonSpinner,
-    toastController
-} from "@ionic/vue";
+import {IonRefresher, IonRefresherContent, IonSpinner, toastController} from "@ionic/vue";
+import PlacesGridItem from "@/components/places/PlacesGridItem";
 import {mapOutline} from "ionicons/icons";
 import {atPlace} from "@/models/Place";
+import {mapState} from "pinia";
 import {useProfileStore} from "@/store/profile";
 import api from "@/plugins/api";
-import {mapState} from "pinia";
 
 export default {
-    name: "Places",
+    name: "PlacesGrid",
     components: {
-        IonCard,
-        IonCardHeader,
-        IonCardTitle,
-        IonCardSubtitle,
-        IonCardContent,
-        IonButton,
-        IonIcon,
-        IonSpinner, IonRefresher, IonRefresherContent
+        PlacesGridItem, IonSpinner, IonRefresher, IonRefresherContent,
     },
     props: ['category_id'],
     data() {
@@ -105,6 +77,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .places-grid {
+        padding: 15px;
+    }
 </style>

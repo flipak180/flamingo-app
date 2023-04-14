@@ -7,7 +7,7 @@
         </ion-header>
         <ion-content>
             <MyCoordinates />
-            <Places />
+            <PlacesGrid />
         </ion-content>
     </ion-page>
 </template>
@@ -15,17 +15,17 @@
 <script>
 import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
 import MyCoordinates from "@/components/MyCoordinates";
-import Places from "@/components/Places";
+import PlacesGrid from "@/components/places/PlacesGrid";
 
 export default {
     components: {
+        PlacesGrid,
         IonContent,
         IonHeader,
         IonPage,
         IonTitle,
         IonToolbar,
         MyCoordinates,
-        Places,
     },
 }
 </script>

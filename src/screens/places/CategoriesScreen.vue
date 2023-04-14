@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <ion-header>
+        <ion-header @click="onHeaderClick">
             <ion-toolbar>
                 <ion-buttons slot="start">
                     <BackButton />
@@ -9,9 +9,9 @@
             </ion-toolbar>
         </ion-header>
         <ion-content>
-            <MyCoordinates />
-            <Categories :parent_id="category_id" />
-            <Places :category_id="category_id" />
+            <MyCoordinates v-show="showMyCoords" />
+            <CategoriesGrid :parent_id="category_id" />
+            <PlacesGrid :category_id="category_id" />
         </ion-content>
     </ion-page>
 </template>
@@ -19,26 +19,36 @@
 <script>
 import {IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
 import MyCoordinates from "@/components/MyCoordinates";
-import Categories from "@/components/Categories";
-import Places from "@/components/Places";
 import BackButton from "@/components/BackButton";
+import PlacesGrid from "@/components/places/PlacesGrid";
+import CategoriesGrid from "@/components/categories/CategoriesGrid";
 
 export default {
     components: {
+        CategoriesGrid,
+        PlacesGrid,
         IonContent,
         IonHeader,
         IonPage,
         IonTitle,
         IonToolbar,
         MyCoordinates,
-        Categories,
-        Places,
         IonButtons,
         BackButton,
     },
     data() {
         return {
-            category_id: this.$route.params.category_id
+            category_id: this.$route.params.category_id,
+            showMyCoords: false,
+            totalClicks: 0,
+        }
+    },
+    methods: {
+        onHeaderClick() {
+            this.totalClicks++;
+            if (this.totalClicks >= 3) {
+                this.showMyCoords = true;
+            }
         }
     }
 }
