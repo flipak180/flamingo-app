@@ -68,7 +68,7 @@ export default {
 
 <style lang="scss" scoped>
     .place {
-        background: #fff;
+        background: var(--ion-card-background, var(--ion-item-background, var(--ion-background-color, #fff)));
         box-shadow: rgba(0, 0, 0, 0.12) 0 4px 16px;
         border-radius: 10px;
         overflow: hidden;
@@ -89,6 +89,7 @@ export default {
             font-weight: 700;
             min-height: 35px;
             font-size: 14px;
+            color: var(--ion-text-color, #000);
         }
     }
 </style>
