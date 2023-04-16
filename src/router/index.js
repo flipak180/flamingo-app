@@ -24,11 +24,7 @@ const routes = [
             {
                 path: 'categories/:category_id?',
                 name: 'category',
-                component: () => import('@/screens/places/CategoriesScreen.vue'),
-            },
-            {
-                path: 'places',
-                component: () => import('@/screens/places/PlacesScreen.vue'),
+                component: () => import('@/screens/places/CategoryScreen.vue'),
             },
             {
                 path: 'profile',
