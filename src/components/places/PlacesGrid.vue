@@ -7,31 +7,16 @@
 <script>
 import PlacesGridItem from "@/components/places/PlacesGridItem";
 import {mapOutline} from "ionicons/icons";
-import api from "@/plugins/api";
 
 export default {
     name: "PlacesGrid",
-    components: {
-        PlacesGridItem,
-    },
-    props: ['category_id'],
+    components: { PlacesGridItem },
+    props: ['places'],
     data() {
         return {
             mapOutline,
-            places: [],
-            isLoading: true,
         }
     },
-    mounted() {
-        this.fetch();
-    },
-    methods: {
-        fetch() {
-            return api.get(`/places/list?category_id=${this.category_id}`).then(res => {
-                this.places = res.data;
-            }).finally(() => this.isLoading = false);
-        },
-    }
 }
 </script>
 

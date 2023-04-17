@@ -10,7 +10,6 @@
 
 <script>
 import {IonCol, IonGrid, IonRow} from "@ionic/vue";
-import api from "@/plugins/api";
 import CategoriesGridItem from "@/components/categories/CategoriesGridItem";
 
 export default {
@@ -18,23 +17,7 @@ export default {
     components: {
         IonGrid, IonRow, IonCol, CategoriesGridItem,
     },
-    props: ['parent_id'],
-    data() {
-        return {
-            categories: [],
-            isLoading: true,
-        }
-    },
-    mounted() {
-        this.fetch();
-    },
-    methods: {
-        fetch() {
-            return api.get(`/categories/list?parent_id=${this.parent_id}`).then(res => {
-                this.categories = res.data;
-            }).finally(() => this.isLoading = false);
-        },
-    }
+    props: ['categories'],
 }
 </script>
 

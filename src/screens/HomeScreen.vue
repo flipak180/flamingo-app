@@ -5,7 +5,7 @@
                 <ion-buttons slot="start">
                     <BackButton />
                 </ion-buttons>
-                <ion-title>{{ category?.title || '' }}</ion-title>
+                <ion-title>Главная</ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content>
@@ -16,11 +16,8 @@
                 <ion-spinner />
             </div>
 
-            <div v-if="category">
-                <CatalogCategory :category="category" v-if="category && category.type === TYPE_CATALOG" />
-                <RouteCategory :category="category" v-if="category && category.type === TYPE_ROUTE" />
-                <QuestCategory :category="category" v-if="category && category.type === TYPE_QUEST" />
-            </div>
+            <MyCoordinates v-show="showMyCoords" />
+            <CategoriesGrid :categories="categories" />
         </ion-content>
     </ion-page>
 </template>
@@ -37,7 +34,9 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/vue";
+import MyCoordinates from "@/components/MyCoordinates";
 import BackButton from "@/components/BackButton";
+import CategoriesGrid from "@/components/categories/CategoriesGrid";
 import api from "@/plugins/api";
 import {TYPE_CATALOG, TYPE_QUEST, TYPE_ROUTE} from "@/models/Category";
 import CatalogCategory from "@/components/categories/CatalogCategory";
@@ -45,16 +44,17 @@ import RouteCategory from "@/components/categories/RouteCategory";
 import QuestCategory from "@/components/categories/QuestCategory";
 
 export default {
+    name: "HomeScreen",
     components: {
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
         IonButtons, BackButton,
         IonSpinner, IonRefresher, IonRefresherContent,
+        MyCoordinates, CategoriesGrid,
         CatalogCategory, RouteCategory, QuestCategory,
     },
     data() {
         return {
-            category_id: this.$route.params.category_id,
-            category: null,
+            categories: [],
             isLoading: true,
 
             showMyCoords: false,
@@ -76,9 +76,8 @@ export default {
             }
         },
         fetch() {
-            return api.get(`/categories/${this.category_id}?expand=parent,children,places`).then(res => {
-                console.log(res.data);
-                this.category = res.data;
+            return api.get(`/categories/list`).then(res => {
+                this.categories = res.data;
             }).finally(() => this.isLoading = false);
         },
         refresh(event) {
