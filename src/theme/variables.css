@@ -26,6 +26,15 @@ http://ionicframework.com/docs/theming/ */
 :root {
     --ion-font-family: 'Rubik';
 
+    /* colors */
+    --black: #3A373F;
+    --pink: #FF0682;
+    --pink-light: #FFDCEC;
+    --blue: #20C0FF;
+    --blue-light: #BEE9FA;
+    --grey: #D9D9D9;
+    --grey-light: #F5F5F5;
+
     /** primary **/
     --ion-color-primary: #3880ff;
     --ion-color-primary-rgb: 56, 128, 255;
