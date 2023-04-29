@@ -1,6 +1,6 @@
 <template>
     <div class="splash">
-        <div class="logo"><img :src="require('@/assets/logo.svg')" alt=""></div>
+        <div class="logo"><img :src="require('@/assets/flamingo2x.png')" alt=""></div>
         <div class="title">Flamin<span>GO</span></div>
         <Loader />
     </div>
@@ -55,6 +55,8 @@ export default {
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+            width: 155px;
+            height: 171px;
         }
     }
 
