@@ -28,6 +28,7 @@ http://ionicframework.com/docs/theming/ */
 
     /* colors */
     --black: #3A373F;
+    --black-rgba: 58, 55, 63;
     --pink: #FF0682;
     --pink-light: #FFDCEC;
     --blue: #20C0FF;

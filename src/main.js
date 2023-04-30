@@ -27,15 +27,19 @@ import './theme/variables.css';
 import './theme/main.css';
 import storage from "@/plugins/storage";
 import {useProfileStore} from "@/store/profile";
+import mitt from "mitt";
 
 storage.get('phone').then(phone => {
     const pinia = createPinia()
+    const emitter = mitt()
 
     const app = createApp(App)
         .use(IonicVue)
         .use(router)
         .use(pinia)
         .use(VueTheMask);
+
+    app.config.globalProperties.emitter = emitter;
 
     const store = useProfileStore();
     store.phone = phone;

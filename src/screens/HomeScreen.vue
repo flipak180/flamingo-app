@@ -1,13 +1,13 @@
 <template>
     <ion-page>
-        <ion-header @click="onHeaderClick">
-            <ion-toolbar>
-                <ion-buttons slot="start">
-                    <BackButton />
-                </ion-buttons>
-                <ion-title>Главная</ion-title>
-            </ion-toolbar>
-        </ion-header>
+<!--        <ion-header @click="onHeaderClick">-->
+<!--            <ion-toolbar>-->
+<!--                <ion-buttons slot="start">-->
+<!--                    <BackButton />-->
+<!--                </ion-buttons>-->
+<!--                <ion-title>Главная</ion-title>-->
+<!--            </ion-toolbar>-->
+<!--        </ion-header>-->
         <ion-content>
             <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
                 <ion-refresher-content />
@@ -18,6 +18,8 @@
 
             <MyCoordinates v-show="showMyCoords" />
             <CategoriesGrid :categories="categories" />
+
+            <CardModal />
         </ion-content>
     </ion-page>
 </template>
@@ -42,6 +44,7 @@ import {TYPE_CATALOG, TYPE_QUEST, TYPE_ROUTE} from "@/models/Category";
 import CatalogCategory from "@/components/categories/CatalogCategory";
 import RouteCategory from "@/components/categories/RouteCategory";
 import QuestCategory from "@/components/categories/QuestCategory";
+import CardModal from "@/components/CardModal";
 
 export default {
     name: "HomeScreen",
@@ -51,6 +54,7 @@ export default {
         IonSpinner, IonRefresher, IonRefresherContent,
         MyCoordinates, CategoriesGrid,
         CatalogCategory, RouteCategory, QuestCategory,
+        CardModal,
     },
     data() {
         return {
