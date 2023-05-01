@@ -1,13 +1,13 @@
 <template>
     <ion-page>
-<!--        <ion-header @click="onHeaderClick">-->
-<!--            <ion-toolbar>-->
-<!--                <ion-buttons slot="start">-->
-<!--                    <BackButton />-->
-<!--                </ion-buttons>-->
-<!--                <ion-title>Главная</ion-title>-->
-<!--            </ion-toolbar>-->
-<!--        </ion-header>-->
+        <ion-header @click="onHeaderClick">
+            <ion-toolbar>
+                <ion-buttons slot="start">
+                    <BackButton />
+                </ion-buttons>
+                <ion-title>Главная</ion-title>
+            </ion-toolbar>
+        </ion-header>
         <ion-content>
             <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
                 <ion-refresher-content />

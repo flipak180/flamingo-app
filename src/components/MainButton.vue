@@ -54,10 +54,10 @@ export default {
     color: var(--pink);
     font-weight: bold;
     font-size: 36px;
-    position: fixed;
+    position: absolute;
     width: 80px;
     height: 80px;
-    bottom: 12px;
+    bottom: calc(10px + var(--ion-safe-area-bottom));
     left: 50%;
     transform: translate(-50%, 0);
     z-index: 999;
