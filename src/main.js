@@ -32,11 +32,17 @@ import {useMainStore} from "@/store";
 
 //
 (async function () {
+    const pinia = createPinia()
+    const emitter = mitt()
+
     const phone = await storage.get('phone');
     const onBoardingComplete = await storage.get('onBoardingComplete');
 
-    const pinia = createPinia()
-    const emitter = mitt()
+    const mainStore = useMainStore();
+    mainStore.onBoardingComplete = onBoardingComplete;
+
+    const profileStore = useProfileStore();
+    profileStore.phone = phone;
 
     const app = createApp(App)
         .use(IonicVue)
@@ -45,12 +51,6 @@ import {useMainStore} from "@/store";
         .use(VueTheMask);
 
     app.config.globalProperties.emitter = emitter;
-
-    const mainStore = useMainStore();
-    mainStore.onBoardingComplete = onBoardingComplete;
-
-    const profileStore = useProfileStore();
-    profileStore.phone = phone;
 
     await router.isReady();
 

@@ -7,7 +7,7 @@
                     <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
                 </div>
                 <div class="buttons">
-                    <ion-button fill="clear" color="dark" size="small" router-link="/onboarding/attractions" router-direction="back">Назад</ion-button>
+                    <ion-button fill="clear" color="dark" size="small" router-link="/onboarding/parks" router-direction="back">Назад</ion-button>
                     <ion-button shape="circle" color="primary" router-link="/onboarding/cafe">
                         <ion-icon aria-hidden="true" slot="icon-only" :icon="chevronForward" />
                     </ion-button>
