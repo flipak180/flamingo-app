@@ -28,8 +28,13 @@ import './theme/main.css';
 import storage from "@/plugins/storage";
 import {useProfileStore} from "@/store/profile";
 import mitt from "mitt";
+import {useMainStore} from "@/store";
 
-storage.get('phone').then(phone => {
+//
+(async function () {
+    const phone = await storage.get('phone');
+    const onBoardingComplete = await storage.get('onBoardingComplete');
+
     const pinia = createPinia()
     const emitter = mitt()
 
@@ -41,10 +46,13 @@ storage.get('phone').then(phone => {
 
     app.config.globalProperties.emitter = emitter;
 
-    const store = useProfileStore();
-    store.phone = phone;
+    const mainStore = useMainStore();
+    mainStore.onBoardingComplete = onBoardingComplete;
 
-    router.isReady().then(() => {
-        app.mount('#app');
-    });
-})
+    const profileStore = useProfileStore();
+    profileStore.phone = phone;
+
+    await router.isReady();
+
+    app.mount('#app');
+}());

@@ -6,13 +6,18 @@ body {
     font-weight: bold;
     font-size: 24px;
     margin-bottom: 15px;
+    color: var(--black);
 }
 .h2 {
     font-weight: bold;
     font-size: 20px;
     margin-bottom: 15px;
+    color: var(--black);
 }
 
 .text-center {
     text-align: center;
+}
+.color-pink {
+    color: var(--pink);
 }
