@@ -18,8 +18,6 @@
 
             <MyCoordinates v-show="showMyCoords" />
             <CategoriesGrid :categories="categories" />
-
-            <CardModal />
         </ion-content>
     </ion-page>
 </template>
@@ -44,7 +42,6 @@ import {TYPE_CATALOG, TYPE_QUEST, TYPE_ROUTE} from "@/models/Category";
 import CatalogCategory from "@/components/categories/CatalogCategory";
 import RouteCategory from "@/components/categories/RouteCategory";
 import QuestCategory from "@/components/categories/QuestCategory";
-import CardModal from "@/components/CardModal";
 
 export default {
     name: "HomeScreen",
@@ -54,7 +51,6 @@ export default {
         IonSpinner, IonRefresher, IonRefresherContent,
         MyCoordinates, CategoriesGrid,
         CatalogCategory, RouteCategory, QuestCategory,
-        CardModal,
     },
     data() {
         return {
