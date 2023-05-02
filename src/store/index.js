@@ -7,7 +7,7 @@ export const useMainStore = () => {
         state: () => ({
             coords: { latitude: 0, longitude: 0 },
             init: false,
-            onBoardingComplete: false,
+            onBoardingComplete: null,
         }),
         actions: {
             async getCoords() {

@@ -34,9 +34,9 @@ export default {
     methods: {
         async skip() {
             const mainStore = useMainStore();
-            mainStore.onBoardingComplete = true;
-            await storage.set('onBoardingComplete', true);
-            this.$router.push({ name: 'login' });
+            mainStore.onBoardingComplete = 1;
+            await storage.set('onboarding', '1');
+            this.$router.replace({ name: 'login' });
         }
     }
 }

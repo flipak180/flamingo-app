@@ -36,13 +36,9 @@ import {useMainStore} from "@/store";
     const emitter = mitt()
 
     const phone = await storage.get('phone');
-    const onBoardingComplete = await storage.get('onBoardingComplete');
+    const onBoardingComplete = await storage.get('onboarding');
 
-    const mainStore = useMainStore();
-    mainStore.onBoardingComplete = onBoardingComplete;
-
-    const profileStore = useProfileStore();
-    profileStore.phone = phone;
+    console.log('onboarding: ' + onBoardingComplete);
 
     const app = createApp(App)
         .use(IonicVue)
@@ -51,6 +47,12 @@ import {useMainStore} from "@/store";
         .use(VueTheMask);
 
     app.config.globalProperties.emitter = emitter;
+
+    const mainStore = useMainStore();
+    mainStore.onBoardingComplete = onBoardingComplete;
+
+    const profileStore = useProfileStore();
+    profileStore.phone = phone;
 
     await router.isReady();
 
