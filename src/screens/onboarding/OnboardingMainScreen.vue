@@ -1,14 +1,56 @@
 <template>
-    <ion-page class="onboarding-page">
+    <ion-page class="onboarding">
         <ion-content>
-            <div class="onboarding-content">
-                <div class="h1 text-center">Знакомьтесь, Flamin<span class="color-pink">GO</span></div>
-                <div class="text">
-                    <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
+            <swiper class="onboarding__slider" @swiper="onSwiper" :allowTouchMove="false">
+                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${require('@/assets/onboarding-pink.png')})` }">
+                    <div class="onboarding__content">
+                        <div class="h1 text-center">Парки</div>
+                        <div class="onboarding__text">
+                            <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
+                        </div>
+                    </div>
+                </swiper-slide>
+                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${require('@/assets/onboarding1.png')})` }">
+                    <div class="onboarding__content">
+                        <div class="h1 text-center">Парки</div>
+                        <div class="onboarding__text">
+                            <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
+                        </div>
+                    </div>
+                </swiper-slide>
+                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${require('@/assets/onboarding2.png')})` }">
+                    <div class="onboarding__content">
+                        <div class="h1 text-center">Достопримечательности</div>
+                        <div class="onboarding__text">
+                            <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
+                        </div>
+                    </div>
+                </swiper-slide>
+                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${require('@/assets/onboarding3.png')})` }">
+                    <div class="onboarding__content">
+                        <div class="h1 text-center">Рестораны, кафе, бары</div>
+                        <div class="onboarding__text">
+                            <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
+                        </div>
+                    </div>
+                </swiper-slide>
+                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${require('@/assets/onboarding-blue.png')})` }">
+                    <div class="onboarding__content">
+                        <div class="h1 text-center">Выходи гулять!</div>
+                        <div class="onboarding__text">
+                            <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
+                        </div>
+                    </div>
+                </swiper-slide>
+            </swiper>
+            <div class="onboarding__controls" v-if="swiper">
+                <div>
+                    <ion-button fill="clear" color="dark" size="small" @click="skip" v-if="!activeSlide">Пропустить</ion-button>
+                    <ion-button fill="clear" color="dark" size="small" @click="prev" v-else>Назад</ion-button>
                 </div>
-                <div class="buttons">
-                    <ion-button fill="clear" color="dark" size="small" @click="skip">Пропустить</ion-button>
-                    <ion-button shape="circle" color="primary" router-link="/onboarding/parks">
+                <div class="onboarding__next-wrap">
+                    <span>{{ swiper.activeIndex + 1 }}/{{ swiper.slides.length }}</span>
+                    <ion-button shape="circle" color="primary" @click="next">
                         <ion-icon aria-hidden="true" slot="icon-only" :icon="chevronForward" />
                     </ion-button>
                 </div>
@@ -18,37 +60,68 @@
 </template>
 
 <script>
-import {IonButton, IonContent, IonIcon, IonPage} from "@ionic/vue";
+import {IonButton, IonContent, IonIcon, IonPage, useIonRouter} from "@ionic/vue";
+import {Swiper, SwiperSlide} from "swiper/vue";
+import 'swiper/css';
+import '@ionic/vue/css/ionic-swiper.css';
 import {chevronForward} from "ionicons/icons";
-import storage from "@/plugins/storage";
 import {useMainStore} from "@/store";
+import storage from "@/plugins/storage";
 
 export default {
     name: "OnboardingMainScreen",
-    components: { IonPage, IonContent, IonButton, IonIcon },
+    components: { IonPage, IonContent, IonButton, IonIcon, Swiper, SwiperSlide },
     data() {
         return {
-            chevronForward
+            chevronForward,
+            swiper: null,
+            activeSlide: 0,
         }
     },
-    methods: {
-        async skip() {
+    setup() {
+        const ionRouter = useIonRouter();
+
+        const skip = async () => {
             const mainStore = useMainStore();
             mainStore.onBoardingComplete = 1;
             await storage.set('onboarding', '1');
-            this.$router.replace({ name: 'login' });
+            ionRouter.navigate({ name: 'login' }, 'forward', 'replace');
+        }
+
+        return {
+            skip,
+        }
+    },
+    methods: {
+        onSwiper(swiper) {
+            this.swiper = swiper;
+            console.log(swiper);
+            console.log(swiper.slides);
+        },
+        next() {
+            this.swiper.slideNext();
+            this.activeSlide = this.swiper.activeIndex;
+        },
+        prev() {
+            this.swiper.slidePrev();
+            this.activeSlide = this.swiper.activeIndex;
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.onboarding-page {
+.onboarding {
 
-    ion-content {
-        --background: url('~@/assets/onboarding-pink.png') no-repeat;
+    &__slider {
+        height: 100%;
     }
-    .onboarding-content {
+
+    &__slide {
+        background-repeat: no-repeat;
+    }
+
+    &__content {
         background: #FFFFFF;
         border-radius: 25px 25px 0 0;
         position: fixed;
@@ -59,33 +132,45 @@ export default {
         width: 100%;
         display: flex;
         flex-direction: column;
-
-        .text {
-            text-align: center;
-            max-width: 256px;
-            margin: 0 auto;
-            flex-grow: 1;
-        }
     }
 
-    .buttons {
+    &__text {
+        text-align: center;
+        max-width: 256px;
+        margin: 0 auto;
+        flex-grow: 1;
+    }
+
+    &__controls {
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-    ion-button[shape=circle] {
-        --border-radius: 50%;
-        width: 50px;
-        height: 50px;
+        position: fixed;
+        bottom: 30px;
+        width: 100%;
+        z-index: 10;
+        padding: 0 20px;
 
-        ion-icon {
-            font-size: 32px;
-            width: 32px;
-            height: 32px;
+        ion-button[shape=circle] {
+            --border-radius: 50%;
+            width: 50px;
+            height: 50px;
+
+            ion-icon {
+                font-size: 32px;
+                width: 32px;
+                height: 32px;
+            }
+        }
+        ion-button[fill=clear] {
+            opacity: .5;
         }
     }
-    ion-button[fill=clear] {
-        opacity: .5;
+
+    &__next-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 }
 </style>

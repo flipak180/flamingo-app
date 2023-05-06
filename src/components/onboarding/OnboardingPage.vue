@@ -1,14 +1,16 @@
 <template>
     <ion-page class="onboarding-page">
-        <ion-content>
+        <ion-content :style="{ backgroundImage: `url(${require('@/assets/' + bg)})` }">
             <div class="onboarding-content">
-                <div class="h1 text-center">Выходи гулять!</div>
+                <div class="h1 text-center">
+                    <slot name="title"></slot>
+                </div>
                 <div class="text">
-                    <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
+                    <slot name="content"></slot>
                 </div>
                 <div class="buttons">
-                    <ion-button fill="clear" color="dark" size="small" router-link="/onboarding/cafe" router-direction="back">Назад</ion-button>
-                    <ion-button shape="circle" color="primary" @click="finish">
+                    <ion-button fill="clear" color="dark" size="small" @click="skip">Пропустить</ion-button>
+                    <ion-button shape="circle" color="primary" router-link="/onboarding/parks">
                         <ion-icon aria-hidden="true" slot="icon-only" :icon="chevronForward" />
                     </ion-button>
                 </div>
@@ -18,27 +20,35 @@
 </template>
 
 <script>
-import {IonButton, IonContent, IonIcon, IonPage} from "@ionic/vue";
+import {IonButton, IonContent, IonIcon, IonPage, useIonRouter} from "@ionic/vue";
 import {chevronForward} from "ionicons/icons";
 import {useMainStore} from "@/store";
 import storage from "@/plugins/storage";
+import {Swiper, SwiperSlide} from "swiper/vue";
 
 export default {
-    name: "OnboardingGoScreen",
-    components: { IonPage, IonContent, IonButton, IonIcon },
+    name: "OnboardingPage",
+    props: ['bg'],
+    components: { IonPage, IonContent, IonButton, IonIcon, Swiper, SwiperSlide },
     data() {
         return {
             chevronForward
         }
     },
-    methods: {
-        async finish() {
+    setup() {
+        const ionRouter = useIonRouter();
+
+        const skip = async () => {
             const mainStore = useMainStore();
-            mainStore.onBoardingComplete = true;
-            await storage.set('onboarding', 'complete');
-            this.$router.replace({ name: 'login' });
+            mainStore.onBoardingComplete = 1;
+            await storage.set('onboarding', '1');
+            ionRouter.navigate({ name: 'login' }, 'forward', 'replace');
         }
-    }
+
+        return {
+            skip,
+        }
+    },
 }
 </script>
 
@@ -46,7 +56,7 @@ export default {
 .onboarding-page {
 
     ion-content {
-        --background: url('~@/assets/onboarding-blue.png') no-repeat;
+        //--background: url('~@/assets/onboarding-pink.png') no-repeat;
     }
     .onboarding-content {
         background: #FFFFFF;

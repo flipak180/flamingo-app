@@ -29,6 +29,7 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    display: none;
 
     &.fadeout {
         animation: fadeout 1s forwards;

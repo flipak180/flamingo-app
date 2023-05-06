@@ -38,8 +38,6 @@ import {useMainStore} from "@/store";
     const phone = await storage.get('phone');
     const onBoardingComplete = await storage.get('onboarding');
 
-    console.log('onboarding: ' + onBoardingComplete);
-
     const app = createApp(App)
         .use(IonicVue)
         .use(router)
@@ -49,7 +47,7 @@ import {useMainStore} from "@/store";
     app.config.globalProperties.emitter = emitter;
 
     const mainStore = useMainStore();
-    mainStore.onBoardingComplete = onBoardingComplete;
+    mainStore.onBoardingComplete = !!onBoardingComplete;
 
     const profileStore = useProfileStore();
     profileStore.phone = phone;

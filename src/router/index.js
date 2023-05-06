@@ -77,12 +77,17 @@ router.beforeEach(async (to, from, next) => {
     const profileStore = useProfileStore();
     const mainStore = useMainStore();
 
+    if (!mainStore.onBoardingComplete && !to.path.startsWith('/onboarding')) {
+        next({ name: 'onboarding' });
+        return;
+    }
+
     if (mainStore.onBoardingComplete && to.name === 'onboarding') {
         next({ name: 'login' });
         return;
     }
 
-    if (!profileStore.phone && to.name !== 'login') {
+    if (!profileStore.phone && to.name !== 'login' && !to.path.startsWith('/onboarding')) {
         next({ name: 'login' });
         return;
     }
