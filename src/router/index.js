@@ -19,6 +19,11 @@ const routes = [
         component: () => import('@/screens/OnboardingScreen')
     },
     {
+        path: '/system',
+        name: 'system',
+        component: () => import('@/screens/SystemScreen')
+    },
+    {
         path: '/tabs/',
         component: Tabs,
         children: [

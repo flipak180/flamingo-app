@@ -1,5 +1,5 @@
 <template>
-    <div class="splash">
+    <div class="splash" v-show="!hideSplash">
         <div class="logo"><img :src="require('@/assets/flamingo2x.png')" alt=""></div>
         <div class="title">Flamin<span>GO</span></div>
         <Loader />
@@ -8,12 +8,17 @@
 
 <script>
 import Loader from "@/components/Loader";
+import {mapState} from "pinia";
+import {useSettingsStore} from "@/store/settings";
 
 export default {
     name: "SplashScreen",
     components: {
         Loader
-    }
+    },
+    computed: {
+        ...mapState(useSettingsStore, ['hideSplash'])
+    },
 }
 </script>
 

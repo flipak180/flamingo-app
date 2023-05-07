@@ -6,6 +6,11 @@
                     <BackButton />
                 </ion-buttons>
                 <ion-title>Главная</ion-title>
+                <ion-buttons slot="primary" v-show="isAdminMode">
+                    <ion-button @click="$router.push({ name: 'system' })">
+                        <ion-icon slot="icon-only" :icon="settingsOutline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
             </ion-toolbar>
         </ion-header>
         <ion-content>
@@ -15,8 +20,6 @@
             <div class="ion-margin-top ion-text-center" v-if="isLoading">
                 <ion-spinner />
             </div>
-
-            <MyCoordinates v-show="showMyCoords" />
             <CategoriesGrid :categories="categories" />
         </ion-content>
     </ion-page>
@@ -24,9 +27,10 @@
 
 <script>
 import {
+    IonButton,
     IonButtons,
     IonContent,
-    IonHeader,
+    IonHeader, IonIcon,
     IonPage,
     IonRefresher,
     IonRefresherContent,
@@ -42,12 +46,13 @@ import {TYPE_CATALOG, TYPE_QUEST, TYPE_ROUTE} from "@/models/Category";
 import CatalogCategory from "@/components/categories/CatalogCategory";
 import RouteCategory from "@/components/categories/RouteCategory";
 import QuestCategory from "@/components/categories/QuestCategory";
+import {settingsOutline} from "ionicons/icons";
 
 export default {
     name: "HomeScreen",
     components: {
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
-        IonButtons, BackButton,
+        IonButtons, BackButton, IonIcon, IonButton,
         IonSpinner, IonRefresher, IonRefresherContent,
         MyCoordinates, CategoriesGrid,
         CatalogCategory, RouteCategory, QuestCategory,
@@ -57,12 +62,14 @@ export default {
             categories: [],
             isLoading: true,
 
-            showMyCoords: false,
+            isAdminMode: false,
             totalClicks: 0,
 
             TYPE_CATALOG,
             TYPE_ROUTE,
             TYPE_QUEST,
+
+            settingsOutline,
         }
     },
     mounted() {
@@ -72,7 +79,7 @@ export default {
         onHeaderClick() {
             this.totalClicks++;
             if (this.totalClicks >= 3) {
-                this.showMyCoords = true;
+                this.isAdminMode = true;
             }
         },
         fetch() {
