@@ -1,10 +1,10 @@
 <template>
     <ion-page class="onboarding">
         <ion-content>
-            <swiper class="onboarding__slider" @swiper="onSwiper" :allowTouchMove="false">
+            <swiper class="onboarding__slider" @swiper="onSwiper" :allowTouchMove="false" @slidesLengthChange="onSlidesChange">
                 <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${require('@/assets/onboarding-pink.png')})` }">
                     <div class="onboarding__content">
-                        <div class="h1 text-center">Парки</div>
+                        <div class="h1 text-center">Знакомьтесь, Flamin<span class="color-pink">GO</span></div>
                         <div class="onboarding__text">
                             <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
                         </div>
@@ -48,10 +48,16 @@
                     <ion-button fill="clear" color="dark" size="small" @click="skip" v-if="!activeSlide">Пропустить</ion-button>
                     <ion-button fill="clear" color="dark" size="small" @click="prev" v-else>Назад</ion-button>
                 </div>
-                <div class="onboarding__next-wrap">
-                    <span>{{ swiper.activeIndex + 1 }}/{{ swiper.slides.length }}</span>
-                    <ion-button shape="circle" color="primary" @click="next">
-                        <ion-icon aria-hidden="true" slot="icon-only" :icon="chevronForward" />
+                <div>
+                    <div v-if="activeSlide < totalSlides" class="onboarding__next-wrap">
+                        <span>{{ activeSlide }}/{{ totalSlides }}</span>
+                        <ion-button shape="circle" color="primary" @click="next" >
+                            <ion-icon aria-hidden="true" slot="icon-only" :icon="chevronForward" />
+                        </ion-button>
+                    </div>
+                    <ion-button color="primary" @click="next" v-else>
+                        Начать
+                        <ion-icon aria-hidden="true" slot="end" :icon="chevronForward" />
                     </ion-button>
                 </div>
             </div>
@@ -69,13 +75,14 @@ import {useMainStore} from "@/store";
 import storage from "@/plugins/storage";
 
 export default {
-    name: "OnboardingMainScreen",
+    name: "OnboardingScreen",
     components: { IonPage, IonContent, IonButton, IonIcon, Swiper, SwiperSlide },
     data() {
         return {
             chevronForward,
             swiper: null,
-            activeSlide: 0,
+            activeSlide: 1,
+            totalSlides: 0,
         }
     },
     setup() {
@@ -95,16 +102,21 @@ export default {
     methods: {
         onSwiper(swiper) {
             this.swiper = swiper;
-            console.log(swiper);
-            console.log(swiper.slides);
+        },
+        onSlidesChange(swiper) {
+            this.totalSlides = swiper.slides.length;
         },
         next() {
+            if (this.activeSlide === this.totalSlides) {
+                this.skip();
+            }
+
             this.swiper.slideNext();
-            this.activeSlide = this.swiper.activeIndex;
+            this.activeSlide = this.swiper.activeIndex + 1;
         },
         prev() {
             this.swiper.slidePrev();
-            this.activeSlide = this.swiper.activeIndex;
+            this.activeSlide = this.swiper.activeIndex + 1;
         }
     }
 }

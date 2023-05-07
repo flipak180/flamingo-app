@@ -13,29 +13,11 @@ const routes = [
         name: 'login',
         component: () => import('@/screens/auth/LoginScreen')
     },
-
     {
         path: '/onboarding',
         name: 'onboarding',
-        component: () => import('@/screens/onboarding/OnboardingMainScreen')
+        component: () => import('@/screens/OnboardingScreen')
     },
-    {
-        path: '/onboarding/parks',
-        component: () => import('@/screens/onboarding/OnboardingParksScreen')
-    },
-    {
-        path: '/onboarding/attractions',
-        component: () => import('@/screens/onboarding/OnboardingAttractionsScreen')
-    },
-    {
-        path: '/onboarding/cafe',
-        component: () => import('@/screens/onboarding/OnboardingCafeScreen')
-    },
-    {
-        path: '/onboarding/go',
-        component: () => import('@/screens/onboarding/OnboardingGoScreen')
-    },
-
     {
         path: '/tabs/',
         component: Tabs,
