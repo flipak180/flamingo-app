@@ -6,9 +6,8 @@
 </template>
 
 <script>
-import {IonIcon, modalController} from "@ionic/vue";
+import {IonIcon} from "@ionic/vue";
 import {close} from 'ionicons/icons';
-import SheetModal from "@/components/SheetModal";
 
 export default {
     name: "MainButton",

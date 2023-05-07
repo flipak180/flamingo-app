@@ -21,6 +21,7 @@
                 <ion-spinner />
             </div>
             <CategoriesGrid :categories="categories" />
+            <CardModal />
         </ion-content>
     </ion-page>
 </template>
@@ -47,6 +48,7 @@ import CatalogCategory from "@/components/categories/CatalogCategory";
 import RouteCategory from "@/components/categories/RouteCategory";
 import QuestCategory from "@/components/categories/QuestCategory";
 import {settingsOutline} from "ionicons/icons";
+import CardModal from "@/components/CardModal";
 
 export default {
     name: "HomeScreen",
@@ -54,7 +56,7 @@ export default {
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
         IonButtons, BackButton, IonIcon, IonButton,
         IonSpinner, IonRefresher, IonRefresherContent,
-        MyCoordinates, CategoriesGrid,
+        MyCoordinates, CategoriesGrid, CardModal,
         CatalogCategory, RouteCategory, QuestCategory,
     },
     data() {
