@@ -35,9 +35,9 @@ import {useSettingsStore} from "@/store/settings";
 
 //
 (async function () {
-    await SplashScreen.show({
-        autoHide: false,
-    });
+    // await SplashScreen.show({
+    //     autoHide: false,
+    // });
 
     const pinia = createPinia()
     pinia.use(piniaCapacitorPersist);
@@ -68,5 +68,5 @@ import {useSettingsStore} from "@/store/settings";
 
     app.mount('#app');
 
-    await SplashScreen.hide();
+    // await SplashScreen.hide();
 }());
