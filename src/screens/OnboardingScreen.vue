@@ -45,7 +45,7 @@
             </swiper>
             <div class="onboarding__controls" v-if="swiper">
                 <div>
-                    <ion-button fill="clear" color="dark" size="small" @click="skip" v-if="!activeSlide">Пропустить</ion-button>
+                    <ion-button fill="clear" color="dark" size="small" @click="skip" v-if="activeSlide === 1">Пропустить</ion-button>
                     <ion-button fill="clear" color="dark" size="small" @click="prev" v-else>Назад</ion-button>
                 </div>
                 <div>
