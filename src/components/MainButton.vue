@@ -22,27 +22,28 @@ export default {
     methods: {
         async click() {
             this.isActive = !this.isActive;
+            this.emitter.emit('main-button-click');
 
-            if (this.isActive) {
-                const modal = await modalController.create({
-                    component: SheetModal,
-                    breakpoints: [0, 0.6],
-                    initialBreakpoint: 0.6,
-                });
-
-                // render modal inside active tab page, so tab switch is possible with opened modal
-                // const activeTabPage = document.querySelector('ion-content').closest('.ion-page');
-                const activeTabPage = document.querySelector('.tabs-inner');
-                activeTabPage.appendChild(modal);
-
-                await modal.present();
-
-                await modal.onDidDismiss();
-
-                this.isActive = false;
-            } else {
-                await modalController.dismiss();
-            }
+            // if (this.isActive) {
+            //     const modal = await modalController.create({
+            //         component: SheetModal,
+            //         breakpoints: [0, 0.6],
+            //         initialBreakpoint: 0.6,
+            //     });
+            //
+            //     // render modal inside active tab page, so tab switch is possible with opened modal
+            //     // const activeTabPage = document.querySelector('ion-content').closest('.ion-page');
+            //     const activeTabPage = document.querySelector('.tabs-inner');
+            //     activeTabPage.appendChild(modal);
+            //
+            //     await modal.present();
+            //
+            //     await modal.onDidDismiss();
+            //
+            //     this.isActive = false;
+            // } else {
+            //     await modalController.dismiss();
+            // }
         }
     }
 }
