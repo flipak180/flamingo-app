@@ -30,9 +30,15 @@ import {useProfileStore} from "@/store/profile";
 import mitt from "mitt";
 import {useMainStore} from "@/store";
 import {piniaCapacitorPersist} from "pinia-plugin-capacitor-persist";
+import {SplashScreen} from "@capacitor/splash-screen";
+import {useSettingsStore} from "@/store/settings";
 
 //
 (async function () {
+    await SplashScreen.show({
+        autoHide: false,
+    });
+
     const pinia = createPinia()
     pinia.use(piniaCapacitorPersist);
 
@@ -55,7 +61,12 @@ import {piniaCapacitorPersist} from "pinia-plugin-capacitor-persist";
     const profileStore = useProfileStore();
     profileStore.phone = phone;
 
+    const settingsStore = useSettingsStore();
+    await settingsStore.restored;
+
     await router.isReady();
 
     app.mount('#app');
+
+    await SplashScreen.hide();
 }());

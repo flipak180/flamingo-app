@@ -64,8 +64,6 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const profileStore = useProfileStore();
     const mainStore = useMainStore();
-    const settingsStore = useSettingsStore();
-    await settingsStore.restored;
 
     if (!mainStore.onBoardingComplete && !to.path.startsWith('/onboarding')) {
         next({ name: 'onboarding' });
