@@ -27,6 +27,7 @@
         "mitt": "^3.0.0",
         "moment": "^2.29.4",
         "pinia": "^2.0.33",
+        "pinia-plugin-capacitor-persist": "^1.2.0",
         "robust-point-in-polygon": "^1.0.3",
         "swiper": "^9.2.4",
         "vue": "^3.2.47",

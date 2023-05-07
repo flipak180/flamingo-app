@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from '@ionic/vue-router';
 import Tabs from "@/components/Tabs";
 import {useProfileStore} from "@/store/profile";
 import {useMainStore} from "@/store";
+import {useSettingsStore} from "@/store/settings";
 
 const routes = [
     {
@@ -63,6 +64,8 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const profileStore = useProfileStore();
     const mainStore = useMainStore();
+    const settingsStore = useSettingsStore();
+    await settingsStore.restored;
 
     if (!mainStore.onBoardingComplete && !to.path.startsWith('/onboarding')) {
         next({ name: 'onboarding' });

@@ -4,4 +4,7 @@ export const useSettingsStore = defineStore('settings', {
     state: () => ({
         hideSplash: false,
     }),
+    persist: {
+        enabled: true,
+    },
 })

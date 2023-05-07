@@ -29,10 +29,13 @@ import storage from "@/plugins/storage";
 import {useProfileStore} from "@/store/profile";
 import mitt from "mitt";
 import {useMainStore} from "@/store";
+import {piniaCapacitorPersist} from "pinia-plugin-capacitor-persist";
 
 //
 (async function () {
     const pinia = createPinia()
+    pinia.use(piniaCapacitorPersist);
+
     const emitter = mitt()
 
     const phone = await storage.get('phone');
