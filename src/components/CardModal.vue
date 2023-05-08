@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import {IonAvatar, IonBackdrop, IonButton, IonIcon, IonItem, IonList, IonModal} from "@ionic/vue";
+import {IonAvatar, IonBackdrop, IonButton, IonIcon, IonItem, IonLabel, IonList, IonModal} from "@ionic/vue";
 import {business, camera, footsteps, image, restaurant} from "ionicons/icons";
 
 export default {
@@ -61,6 +61,7 @@ export default {
         IonList,
         IonAvatar,
         IonIcon,
+        IonLabel,
     },
     data() {
         return {

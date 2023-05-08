@@ -21,7 +21,7 @@
                 <ion-spinner />
             </div>
 
-            <div class="ion-padding-horizontal">
+            <div class="ion-padding-horizontal" style="margin-bottom: 50px;">
                 <h2>Актуальное</h2>
                 <div class="places">
                     <div class="place">
@@ -41,13 +41,10 @@
                 </div>
 
                 <h2>Подборки</h2>
+                <CategoriesGrid :categories="categories" />
             </div>
-
-
-
-            <CategoriesGrid :categories="categories" />
-            <CardModal />
         </ion-content>
+        <CardModal />
     </ion-page>
 </template>
 
@@ -130,7 +127,7 @@ h2 {
 
 .places {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 15px;
 }
 

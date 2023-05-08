@@ -1,42 +1,22 @@
 <template>
-<!--    <ion-grid>-->
-<!--        <ion-row>-->
-<!--            <ion-col v-for="category in categories" :key="category.category_id" size="1">-->
-<!--                <CategoriesGridItem :category="category" />-->
-<!--            </ion-col>-->
-<!--        </ion-row>-->
-<!--    </ion-grid>-->
-
-    <div class="ion-padding-horizontal">
-        <div class="places">
-            <div class="place" v-for="category in categories" :key="category.category_id">
-                <div class="place__image" :style="{ backgroundImage: 'url(https://flamingo.spb.ru' + category.image + ')' }"></div>
-                <div class="place__info">
-                    <div class="place__title">{{ category.title }}</div>
-                </div>
+    <div class="places">
+        <div class="place" v-for="category in categories" :key="category.category_id">
+            <div class="place__image" :style="{ backgroundImage: 'url(https://flamingo.spb.ru' + category.image + ')' }"></div>
+            <div class="place__info">
+                <div class="place__title">{{ category.title }}</div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import {IonCol, IonGrid, IonRow} from "@ionic/vue";
-import CategoriesGridItem from "@/components/categories/CategoriesGridItem";
-
 export default {
     name: "CategoriesGrid",
-    components: {
-        IonGrid, IonRow, IonCol, CategoriesGridItem,
-    },
     props: ['categories'],
 }
 </script>
 
 <style lang="scss" scoped>
-ion-grid {
-    --ion-grid-columns: 2;
-}
-
 .places {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
