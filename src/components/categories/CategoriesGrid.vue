@@ -1,6 +1,6 @@
 <template>
     <div class="places">
-        <div class="place" v-for="category in categories" :key="category.category_id">
+        <div class="place" v-for="category in categories" :key="category.category_id" @click="$router.push('/tabs/categories/2')">
             <div class="place__image" :style="{ backgroundImage: 'url(https://flamingo.spb.ru' + category.image + ')' }"></div>
             <div class="place__info">
                 <div class="place__title">{{ category.title }}</div>

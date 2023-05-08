@@ -2,7 +2,6 @@ import {createRouter, createWebHistory} from '@ionic/vue-router';
 import Tabs from "@/components/Tabs";
 import {useProfileStore} from "@/store/profile";
 import {useMainStore} from "@/store";
-import {useSettingsStore} from "@/store/settings";
 
 const routes = [
     {

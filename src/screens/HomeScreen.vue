@@ -21,17 +21,17 @@
                 <ion-spinner />
             </div>
 
-            <div class="ion-padding-horizontal" style="margin-bottom: 50px;">
+            <div class="ion-padding-horizontal">
                 <h2>Актуальное</h2>
                 <div class="places">
-                    <div class="place">
+                    <div class="place" @click="$router.push('/tabs/categories/2')">
                         <div class="place__image" style="background-image: url('https://7oom.ru/powerpoint/fony-dlya-prezentacii-po-istorii-03.jpg')"></div>
                         <div class="place__info">
                             <div class="place__type">Подборка</div>
                             <div class="place__title">Никто не забыт, ничто не забыто!</div>
                         </div>
                     </div>
-                    <div class="place">
+                    <div class="place" @click="$router.push('/tabs/categories/2')">
                         <div class="place__image" style="background-image: url('https://avatars.mds.yandex.net/i?id=1fb54feba749cd90e6b320e2cce0eba6dad6183e-8427413-images-thumbs&n=13')"></div>
                         <div class="place__info">
                             <div class="place__type">Маршрут</div>

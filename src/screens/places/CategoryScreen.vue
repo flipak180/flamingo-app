@@ -76,7 +76,7 @@ export default {
             }
         },
         fetch() {
-            return api.get(`/categories/${this.category_id}?expand=parent,children,places`).then(res => {
+            return api.get(`/categories/details?id=${this.category_id}&expand=parent,children,places`).then(res => {
                 console.log(res.data);
                 this.category = res.data;
             }).finally(() => this.isLoading = false);

@@ -21,3 +21,7 @@ body {
 .color-pink {
     color: var(--pink);
 }
+
+ion-content {
+    --padding-bottom: 50px;
+}
