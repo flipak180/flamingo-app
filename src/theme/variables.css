@@ -25,7 +25,7 @@ http://ionicframework.com/docs/theming/ */
 /** Ionic CSS Variables **/
 :root {
     --ion-font-family: 'Rubik';
-    --ion-text-color: #3A373F;
+    --ion-text-color: #000;
 
     /* colors */
     --black: #3A373F;
