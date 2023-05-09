@@ -1,6 +1,6 @@
 <template>
     <div class="place">
-        <div class="image" :style="{ background: randomColor() }"></div>
+        <div class="image" :style="{ background: randomColor() }" v-once></div>
         <div class="content">
             <div class="title">{{ place.title }}</div>
             <div class="buttons">
