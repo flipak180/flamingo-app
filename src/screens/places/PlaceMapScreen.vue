@@ -8,7 +8,7 @@
                 <ion-title>Карта</ion-title>
             </ion-toolbar>
         </ion-header>
-        <ion-content>
+        <ion-content class="ion-no-padding">
             <div id="map"></div>
         </ion-content>
     </ion-page>
@@ -56,7 +56,7 @@ export default {
                 return;
             }
 
-            api.get(`/places/${this.$route.params.place_id}`).then(res => {
+            api.get(`/places/details?id=${this.$route.params.place_id}`).then(res => {
                 this.place = res.data;
                 this.renderLocation();
             });

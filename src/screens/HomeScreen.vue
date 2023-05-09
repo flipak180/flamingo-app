@@ -134,7 +134,7 @@ h2 {
 .place {
     border-radius: 5px;
     background: #fff;
-    box-shadow: 0 0 10px 0 rgba(var(--black-rgba), 0.1);
+    box-shadow: rgba(0, 0, 0, 0.12) 0 4px 16px;
     // padding: 5px;
 
     &__image {
