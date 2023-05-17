@@ -24,7 +24,7 @@ import '@ionic/vue/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import './theme/main.css';
+import './theme/main.scss';
 import storage from "@/plugins/storage";
 import {useProfileStore} from "@/store/profile";
 import mitt from "mitt";

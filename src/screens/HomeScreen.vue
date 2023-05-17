@@ -1,19 +1,6 @@
 <template>
     <ion-page>
-        <ion-header @click="onHeaderClick">
-            <ion-toolbar>
-                <ion-buttons slot="start">
-                    <BackButton />
-                </ion-buttons>
-                <ion-title>Главная</ion-title>
-                <ion-buttons slot="primary" v-show="isAdminMode">
-                    <ion-button @click="$router.push({ name: 'system' })">
-                        <ion-icon slot="icon-only" :icon="settingsOutline"></ion-icon>
-                    </ion-button>
-                </ion-buttons>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content>
+        <ion-content class="ion-padding">
             <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
                 <ion-refresher-content />
             </ion-refresher>
@@ -21,21 +8,21 @@
                 <ion-spinner />
             </div>
 
-            <div class="ion-padding-horizontal">
+            <div>
                 <h2>Актуальное</h2>
-                <div class="places">
-                    <div class="place" @click="$router.push('/tabs/categories/2')">
-                        <div class="place__image" style="background-image: url('https://7oom.ru/powerpoint/fony-dlya-prezentacii-po-istorii-03.jpg')"></div>
-                        <div class="place__info">
-                            <div class="place__type">Подборка</div>
-                            <div class="place__title">Никто не забыт, ничто не забыто!</div>
+                <div class="cards-list">
+                    <div class="card-item"
+                         @click="$router.push('/tabs/categories/2')" style="background-image: url('https://7oom.ru/powerpoint/fony-dlya-prezentacii-po-istorii-03.jpg')">
+                        <div class="card-item__info">
+                            <div class="card-item__type">Подборка</div>
+                            <div class="card-item__title">Никто не забыт, ничто не забыто!</div>
                         </div>
                     </div>
-                    <div class="place" @click="$router.push('/tabs/categories/2')">
-                        <div class="place__image" style="background-image: url('https://avatars.mds.yandex.net/i?id=1fb54feba749cd90e6b320e2cce0eba6dad6183e-8427413-images-thumbs&n=13')"></div>
-                        <div class="place__info">
-                            <div class="place__type">Маршрут</div>
-                            <div class="place__title">Король и Шут. Между Купчино и Ржевкой</div>
+                    <div class="card-item"
+                         @click="$router.push('/tabs/categories/2')" style="background-image: url('https://avatars.mds.yandex.net/i?id=1fb54feba749cd90e6b320e2cce0eba6dad6183e-8427413-images-thumbs&n=13')">
+                        <div class="card-item__info">
+                            <div class="card-item__type">Маршрут</div>
+                            <div class="card-item__title">Король и Шут. Между Купчино и Ржевкой</div>
                         </div>
                     </div>
                 </div>
@@ -86,9 +73,6 @@ export default {
             categories: [],
             isLoading: true,
 
-            isAdminMode: false,
-            totalClicks: 0,
-
             TYPE_CATALOG,
             TYPE_ROUTE,
             TYPE_QUEST,
@@ -100,12 +84,6 @@ export default {
         this.fetch();
     },
     methods: {
-        onHeaderClick() {
-            this.totalClicks++;
-            if (this.totalClicks >= 3) {
-                this.isAdminMode = true;
-            }
-        },
         fetch() {
             return api.get(`/categories/list`).then(res => {
                 this.categories = res.data;
@@ -123,46 +101,49 @@ export default {
 <style lang="scss" scoped>
 h2 {
     margin: 30px 0 20px;
+
+    &:first-child {
+        margin-top: 0;
+    }
 }
 
-.places {
+.cards-list {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: 1fr;
     gap: 15px;
 }
 
-.place {
-    border-radius: 5px;
-    background: #fff;
+.card-item {
+    border-radius: 10px;
+    background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.12) 0 4px 16px;
-    // padding: 5px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 300px;
+    overflow: hidden;
+    transition: transform 0.1s;
 
-    &__image {
-        height: 135px;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center center;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-
-        //box-shadow: 0 5px 5px -5px rgba(34, 60, 80, 0.6);
-        //border-radius: 5px;
+    &:hover {
+        transform: scale(0.95);
     }
 
     &__info {
-        padding: 10px 5px;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.5);
     }
 
     &__type {
-        color: rgba(var(--black-rgba), 0.6);
+        color: var(--grey);
         text-transform: uppercase;
         font-weight: bold;
-        font-size: 10px;
+        font-size: 13px;
         margin-bottom: 10px;
     }
 
     &__title {
-        font-size: 14px;
+        color: #fff;
+        font-size: 20px;
         font-weight: 700;
         //padding: 10px;
     }
