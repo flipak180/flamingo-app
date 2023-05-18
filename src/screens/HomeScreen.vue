@@ -1,6 +1,9 @@
 <template>
     <ion-page>
-        <ion-content class="ion-padding">
+        <ion-header :translucent="true">
+            <ion-toolbar></ion-toolbar>
+        </ion-header>
+        <ion-content :fullscreen="true" class="ion-padding">
             <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
                 <ion-refresher-content />
             </ion-refresher>
@@ -99,6 +102,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+//ion-content {
+//    --padding-top: calc(var(--ion-padding, 16px) + var(--ion-safe-area-top));
+//}
+ion-toolbar {
+    --min-height: 0;
+}
 h2 {
     margin: 30px 0 20px;
 
@@ -115,17 +124,20 @@ h2 {
 
 .card-item {
     border-radius: 10px;
-    background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.12) 0 4px 16px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
     height: 300px;
     overflow: hidden;
-    transition: transform 0.1s;
+    transition: transform 0.4s;
 
-    &:hover {
-        transform: scale(0.95);
+    @media (prefers-color-scheme: dark) {
+        box-shadow: none;
+    }
+
+    &:active {
+        transform: scale(0.97);
     }
 
     &__info {
