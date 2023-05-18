@@ -14,24 +14,69 @@
             <div>
                 <h2>Актуальное</h2>
                 <div class="cards-list">
-                    <div class="card-item"
-                         @click="$router.push('/tabs/categories/2')" style="background-image: url('https://7oom.ru/powerpoint/fony-dlya-prezentacii-po-istorii-03.jpg')">
-                        <div class="card-item__info">
-                            <div class="card-item__type">Подборка</div>
-                            <div class="card-item__title">Никто не забыт, ничто не забыто!</div>
+                    <div class="card-item" @click="$router.push('/tabs/categories/2')">
+                        <div class="card-item__image" :style="{ backgroundImage: `url(${require('@/assets/images/1.jpg')})` }">
+                            <div class="card-item__info card-item__info_color_light card-item__info_type_bg">
+                                <div class="card-item__type">Подборка</div>
+                                <div class="card-item__title">Никто не забыт, ничто не забыто!</div>
+                            </div>
+                        </div>
+                        <div class="places-list">
+                            <div class="place-item">
+                                <div class="place-item__image" :style="{ background: randomColor() }" v-once></div>
+                                <div class="place-item__title">Парк Победы</div>
+                                <div class="place-item__actions">
+                                    <ion-button size="small">Я тут</ion-button>
+                                </div>
+                            </div>
+                            <div class="place-item">
+                                <div class="place-item__image" :style="{ background: randomColor() }" v-once></div>
+                                <div class="place-item__title">Музей блокады Ленинграда</div>
+                                <div class="place-item__actions">
+                                    <ion-button size="small">Я тут</ion-button>
+                                </div>
+                            </div>
+                            <div class="place-item">
+                                <div class="place-item__image" :style="{ background: randomColor() }" v-once></div>
+                                <div class="place-item__title">Пискаревское мемориальное кладбище</div>
+                                <div class="place-item__actions">
+                                    <ion-button size="small" color="success">
+                                        <ion-icon slot="icon-only" :icon="checkmarkOutline" />
+                                    </ion-button>
+<!--                                    <ion-icon :icon="checkmarkOutline" />-->
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-item"
-                         @click="$router.push('/tabs/categories/2')" style="background-image: url('https://avatars.mds.yandex.net/i?id=1fb54feba749cd90e6b320e2cce0eba6dad6183e-8427413-images-thumbs&n=13')">
-                        <div class="card-item__info">
-                            <div class="card-item__type">Маршрут</div>
-                            <div class="card-item__title">Король и Шут. Между Купчино и Ржевкой</div>
+                    <div class="card-item" @click="$router.push('/tabs/categories/2')">
+                        <div class="card-item__image" :style="{ backgroundImage: `url(${require('@/assets/images/2.jpg')})` }">
+                            <div class="card-item__info card-item__info_color_light card-item__info_position_bottom">
+                                <div class="card-item__type">Маршрут</div>
+                                <div class="card-item__title">Король и Шут. Между Купчино и Ржевкой</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-item" @click="$router.push('/tabs/categories/2')" >
+                        <div class="card-item__image" :style="{ backgroundImage: `url(${require('@/assets/images/3.jpg')})` }">
+                            <div class="card-item__info card-item__info_color_light card-item__info_type_bg">
+                                <div class="card-item__type">Достопримечательность</div>
+                                <div class="card-item__title">Люблю тебя, Петра творенье</div>
+                            </div>
+                        </div>
+                        <div class="places-list">
+                            <div class="place-item">
+                                <div class="place-item__image" :style="{ background: randomColor() }" v-once></div>
+                                <div class="place-item__title">Медный всадник</div>
+                                <div class="place-item__actions">
+                                    <ion-button size="small">Я тут</ion-button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <h2>Подборки</h2>
-                <CategoriesGrid :categories="categories" />
+<!--                <h2>Подборки</h2>-->
+<!--                <CategoriesGrid :categories="categories" />-->
             </div>
         </ion-content>
         <CardModal />
@@ -39,6 +84,7 @@
 </template>
 
 <script>
+import '@/theme/cards.scss';
 import {
     IonButton,
     IonButtons,
@@ -59,7 +105,7 @@ import {TYPE_CATALOG, TYPE_QUEST, TYPE_ROUTE} from "@/models/Category";
 import CatalogCategory from "@/components/categories/CatalogCategory";
 import RouteCategory from "@/components/categories/RouteCategory";
 import QuestCategory from "@/components/categories/QuestCategory";
-import {settingsOutline} from "ionicons/icons";
+import {settingsOutline, checkmarkOutline} from "ionicons/icons";
 import CardModal from "@/components/CardModal";
 
 export default {
@@ -81,6 +127,7 @@ export default {
             TYPE_QUEST,
 
             settingsOutline,
+            checkmarkOutline,
         }
     },
     mounted() {
@@ -97,6 +144,9 @@ export default {
                 event.target.complete();
             });
         },
+        randomColor() {
+            return '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+        }
     }
 }
 </script>
@@ -113,51 +163,6 @@ h2 {
 
     &:first-child {
         margin-top: 0;
-    }
-}
-
-.cards-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
-}
-
-.card-item {
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.12) 0 4px 16px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    height: 300px;
-    overflow: hidden;
-    transition: transform 0.4s;
-
-    @media (prefers-color-scheme: dark) {
-        box-shadow: none;
-    }
-
-    &:active {
-        transform: scale(0.97);
-    }
-
-    &__info {
-        padding: 15px;
-        background: rgba(0, 0, 0, 0.5);
-    }
-
-    &__type {
-        color: var(--grey);
-        text-transform: uppercase;
-        font-weight: bold;
-        font-size: 13px;
-        margin-bottom: 10px;
-    }
-
-    &__title {
-        color: #fff;
-        font-size: 20px;
-        font-weight: 700;
-        //padding: 10px;
     }
 }
 </style>
