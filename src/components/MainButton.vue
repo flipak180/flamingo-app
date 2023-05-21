@@ -48,7 +48,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .main-button {
     background: var(--pink-light);
     color: var(--pink);
@@ -66,6 +66,10 @@ export default {
     justify-content: center;
     border-radius: 50%;
     border: 3px solid var(--grey-light);
+
+    @media (prefers-color-scheme: dark) {
+        border-color: var(--black);
+    }
 }
 ion-icon {
     font-size: 48px;
