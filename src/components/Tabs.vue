@@ -42,15 +42,23 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 ion-tab-bar {
     --background: var(--grey-light);
+
+    @media (prefers-color-scheme: dark) {
+        --background: var(--black);
+    }
 }
 ion-tab-button {
     --color: var(--black);
     --color-focused: var(--pink-light);
     --ripple-color: var(--pink-light);
     --color-selected: var(--pink);
+
+    @media (prefers-color-scheme: dark) {
+        --color: #fff;
+    }
 }
 ion-tab-button.hidden {
     opacity: 0;
