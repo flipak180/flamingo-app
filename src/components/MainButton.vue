@@ -18,9 +18,13 @@ export default {
             isActive: false,
         }
     },
+    mounted() {
+        this.emitter.on('main-button-click', () => {
+            this.isActive = !this.isActive;
+        });
+    },
     methods: {
         async click() {
-            this.isActive = !this.isActive;
             this.emitter.emit('main-button-click');
 
             // if (this.isActive) {

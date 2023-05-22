@@ -22,6 +22,7 @@
                 <QuestCategory :category="category" v-if="category && category.type === TYPE_QUEST" />
             </div>
         </ion-content>
+        <CardModal />
     </ion-page>
 </template>
 
@@ -43,13 +44,14 @@ import {TYPE_CATALOG, TYPE_QUEST, TYPE_ROUTE} from "@/models/Category";
 import CatalogCategory from "@/components/categories/CatalogCategory";
 import RouteCategory from "@/components/categories/RouteCategory";
 import QuestCategory from "@/components/categories/QuestCategory";
+import CardModal from "@/components/CardModal";
 
 export default {
     components: {
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
         IonButtons, BackButton,
         IonSpinner, IonRefresher, IonRefresherContent,
-        CatalogCategory, RouteCategory, QuestCategory,
+        CatalogCategory, RouteCategory, QuestCategory, CardModal
     },
     data() {
         return {

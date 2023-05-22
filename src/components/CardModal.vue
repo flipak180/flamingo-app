@@ -3,7 +3,7 @@
     <div class="card-modal" :class="{ visible: isVisible }">
         <div class="h2 text-center">Категории</div>
         <ion-list>
-            <ion-item lines="none" href="#">
+            <ion-item lines="none" button @click="onCategoryClick">
                 <ion-avatar slot="start">
                     <ion-icon aria-hidden="true" :icon="camera" />
                 </ion-avatar>
@@ -11,7 +11,7 @@
                     <h2>Достопримечательности</h2>
                 </ion-label>
             </ion-item>
-            <ion-item lines="none" href="#">
+            <ion-item lines="none" button @click="onCategoryClick">
                 <ion-avatar slot="start">
                     <ion-icon aria-hidden="true" :icon="footsteps" />
                 </ion-avatar>
@@ -19,7 +19,7 @@
                     <h2>Пешеходные квесты</h2>
                 </ion-label>
             </ion-item>
-            <ion-item lines="none" href="#">
+            <ion-item lines="none" button @click="onCategoryClick">
                 <ion-avatar slot="start">
                     <ion-icon aria-hidden="true" :icon="image" />
                 </ion-avatar>
@@ -27,7 +27,7 @@
                     <h2>Музеи и выставки</h2>
                 </ion-label>
             </ion-item>
-            <ion-item lines="none" href="#">
+            <ion-item lines="none" button @click="onCategoryClick">
                 <ion-avatar slot="start">
                     <ion-icon aria-hidden="true" :icon="restaurant" />
                 </ion-avatar>
@@ -35,7 +35,7 @@
                     <h2>Рестораны, кафе, бары</h2>
                 </ion-label>
             </ion-item>
-            <ion-item lines="none" href="#">
+            <ion-item lines="none" button @click="onCategoryClick">
                 <ion-avatar slot="start">
                     <ion-icon aria-hidden="true" :icon="business" />
                 </ion-avatar>
@@ -73,6 +73,12 @@ export default {
         this.emitter.on('main-button-click', () => {
            this.isVisible = !this.isVisible;
         });
+    },
+    methods: {
+        onCategoryClick() {
+            this.emitter.emit('main-button-click');
+            this.$router.push('/tabs/categories/2');
+        }
     }
 }
 </script>
@@ -94,13 +100,17 @@ ion-backdrop {
 .card-modal {
     background: #FFFFFF;
     border-radius: 25px 25px 0 0;
-    padding: 20px 20px 40px;
+    padding: 15px 15px 40px;
     position: fixed;
     bottom: 0;
     width: 100%;
     transform: translate(0, 100%);
     transition: transform .3s;
     z-index: 5;
+
+    @media (prefers-color-scheme: dark) {
+        background: var(--black);
+    }
 
     &.visible {
         transform: translate(0, 0);
@@ -110,6 +120,14 @@ ion-backdrop {
         text-align: center;
         margin-bottom: 30px;
     }
+
+    ion-list {
+
+        @media (prefers-color-scheme: dark) {
+            background: var(--black);
+        }
+    }
+
     ion-item {
         --detail-icon-color: var(--black);
         --background-focused: var(--blue-light);
@@ -118,9 +136,14 @@ ion-backdrop {
         --ripple-color: var(--blue-light);
         --border-radius: 15px;
         --padding-bottom: 10px;
-        --padding-end: 0;
-        --padding-start: 0;
+        --padding-end: 5px;
+        --padding-start: 5px;
         --padding-top: 10px;
+
+        @media (prefers-color-scheme: dark) {
+            --background: var(--black);
+            --detail-icon-color: #fff;
+        }
 
         ion-avatar {
             background: var(--blue-light);
