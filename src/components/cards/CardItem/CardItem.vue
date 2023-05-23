@@ -8,37 +8,21 @@
             <div class="card-item__image" :style="{ backgroundImage: `url(${require('@/assets/' + card.image)})` }"></div>
         </div>
         <div class="card-item__footer">
-            <div class="places-list" v-if="card.places.length">
-                <div class="place-item" v-for="place in card.places">
-                    <div class="place-item__image" :style="{ background: place.image }" v-once></div>
-                    <div class="place-item__title">{{ place.title }}</div>
-                    <div class="place-item__actions">
-                        <ion-button size="small" v-if="!place.lastVisit">Я тут</ion-button>
-                        <ion-button size="small" color="success" v-else>
-                            <ion-icon slot="icon-only" :icon="checkmarkOutline" />
-                        </ion-button>
-                    </div>
-                </div>
-            </div>
+            <PlacesList :places="card.places" />
         </div>
     </div>
 </template>
 
 <script>
 import {IonButton, IonIcon} from "@ionic/vue";
-import {checkmarkOutline} from "ionicons/icons";
+import PlacesList from "@/components/places/PlacesList/PlacesList";
 
 export default {
     name: "CardItem",
     props: ['card'],
     components: {
-        IonIcon, IonButton,
+        IonIcon, IonButton, PlacesList
     },
-    data() {
-        return {
-            checkmarkOutline
-        }
-    }
 }
 </script>
 
