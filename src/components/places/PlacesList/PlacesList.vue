@@ -2,6 +2,7 @@
     <div class="places-list" v-if="places.length">
         <PlaceItem v-for="place in places" :key="place.id" :place="place" />
     </div>
+    <div v-if="places.length > 2" class="more-places">...</div>
 </template>
 
 <script>

@@ -1,5 +1,7 @@
 import {useMainStore} from "@/store";
 import robustPointInPolygon from "robust-point-in-polygon";
+import api from "@/plugins/api";
+import {toastController} from "@ionic/vue";
 
 const store = useMainStore()
 
@@ -11,6 +13,54 @@ export const atPlace = (place) => {
 
     const distance = calcCrow({latitude: place.latitude, longitude: place.longitude}, store.coords);
     return distance <= place.radius;
+}
+
+export const visit = async (place) => {
+    if (!place.atPlace) {
+        const toast = await toastController.create({
+            message: 'Вы не тут :)',
+            color: 'warning',
+            duration: 1500,
+        });
+        await toast.present();
+        return;
+    }
+
+    if (place.lastVisit) {
+        const toast = await toastController.create({
+            message: 'Вы уже тут были :)',
+            color: 'warning',
+            duration: 1500,
+        });
+        await toast.present();
+        return;
+    }
+
+    const toast = await toastController.create({
+        message: 'Визит сохранен',
+        color: 'success',
+        duration: 1500,
+    });
+    await toast.present();
+    return;
+
+    await api.post('/places/visit', {
+        place_id: place.place_id,
+        phone: this.phone,
+    }).then(async (res) => {
+        const toast = await toastController.create({
+            message: 'Визит сохранен',
+            duration: 1500,
+        });
+        await toast.present();
+    }).catch(async (res) => {
+        const toast = await toastController.create({
+            message: res?.response?.data?.message || 'Произошла ошибка',
+            color: 'danger',
+            duration: 1500,
+        });
+        await toast.present();
+    });
 }
 
 function calcCrow(coords1, coords2) {

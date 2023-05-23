@@ -1,5 +1,7 @@
 <template>
-    <div class="card-item" @click="$router.push('/tabs/categories/2')">
+    <div class="card-item" :class="{'card-item_active': isActive}" @click="$router.push('/tabs/categories/2')"
+         @mousedown="startTouch" @mouseup="endTouch" @mouseout="endTouch"
+         @touchstart="startTouch" @touchend="endTouch" @touchmove="endTouch"  >
         <div class="card-item__header">
             <div class="card-item__type">{{ card.type }}</div>
             <div class="card-item__title">{{ card.title }}</div>
@@ -20,9 +22,22 @@ import PlacesList from "@/components/places/PlacesList/PlacesList";
 export default {
     name: "CardItem",
     props: ['card'],
+    data() {
+        return {
+            isActive: false,
+        }
+    },
     components: {
         IonIcon, IonButton, PlacesList
     },
+    methods: {
+        startTouch() {
+            this.isActive = true;
+        },
+        endTouch() {
+            this.isActive = false;
+        }
+    }
 }
 </script>
 
