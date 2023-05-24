@@ -1,5 +1,5 @@
 <template>
-    <div class="card-item" :class="{'card-item_active': isActive}" @click="$router.push('/tabs/categories/2')"
+    <div class="card-item" :class="{'card-item_active': isActive}" @click="onClick"
          @mousedown="startTouch" @mouseup="endTouch" @mouseout="endTouch"
          @touchstart="startTouch" @touchend="endTouch" @touchmove="endTouch"  >
         <div class="card-item__header">
@@ -36,6 +36,14 @@ export default {
         },
         endTouch() {
             this.isActive = false;
+        },
+        onClick() {
+            if (this.card.type === 'Квест') {
+                this.$router.push('/tabs/quest');
+                return;
+            }
+
+            this.$router.push('/tabs/categories/2');
         }
     }
 }

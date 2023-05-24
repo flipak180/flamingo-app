@@ -1,17 +1,18 @@
 <template>
-    <ion-back-button :icon="arrowBack" text="&nbsp;&nbsp;&nbsp;" style="padding-left: 7px;" class="backButton"></ion-back-button>
+    <ion-back-button :icon="chevronBack" :text="text || '&nbsp;&nbsp;&nbsp;'" style="padding-left: 7px;" class="backButton"></ion-back-button>
 </template>
 
 <script>
-import {arrowBack} from "ionicons/icons";
+import {chevronBack} from "ionicons/icons";
 import {IonBackButton, useBackButton} from "@ionic/vue";
 
 export default {
     name: "BackButton",
+    props: ['text'],
     components: {IonBackButton},
     data() {
         return {
-            arrowBack
+            chevronBack
         }
     },
     mounted() {

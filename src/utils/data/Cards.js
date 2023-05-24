@@ -33,7 +33,7 @@ export default [
     },
     {
         id: 2,
-        type: 'Маршрут',
+        type: 'Квест',
         title: 'Король и Шут. Между Купчино и Ржевкой',
         image: 'images/2.jpg',
         totalPlaces: 0,

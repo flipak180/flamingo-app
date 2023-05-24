@@ -37,6 +37,24 @@ const routes = [
                 name: 'home',
                 component: () => import('@/screens/HomeScreen'),
             },
+
+            {
+                path: 'quest',
+                component: () => import('@/screens/QuestScreen'),
+            },
+            // {
+            //     path: 'compilation',
+            //     component: () => import('@/screens/CompilationScreen'),
+            // },
+            // {
+            //     path: 'place',
+            //     component: () => import('@/screens/PlaceScreen'),
+            // },
+            // {
+            //     path: 'route',
+            //     component: () => import('@/screens/RouteScreen'),
+            // },
+
             {
                 path: 'categories/:category_id',
                 name: 'category',
