@@ -15,7 +15,7 @@ import CloseButton from "@/components/CloseButton";
 
 export default {
     name: "CompilationCard",
-    components: { CloseButton }
+    components: { CloseButton },
 }
 </script>
 
