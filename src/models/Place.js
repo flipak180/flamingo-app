@@ -6,6 +6,9 @@ import {toastController} from "@ionic/vue";
 const store = useMainStore()
 
 export const atPlace = (place) => {
+    if (place.hasOwnProperty('atPlace')) {
+        return place.atPlace;
+    }
     // console.log(place.location[0]);
     // console.log(robustPointInPolygon(place.location[0], [store.coords.latitude, store.coords.longitude]));
 

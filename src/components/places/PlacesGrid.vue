@@ -21,7 +21,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .places-grid {
-        padding: 15px;
-    }
+
 </style>

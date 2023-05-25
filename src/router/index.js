@@ -42,10 +42,10 @@ const routes = [
                 path: 'quest',
                 component: () => import('@/screens/QuestScreen'),
             },
-            // {
-            //     path: 'compilation',
-            //     component: () => import('@/screens/CompilationScreen'),
-            // },
+            {
+                path: 'compilation',
+                component: () => import('@/screens/CompilationScreen'),
+            },
             // {
             //     path: 'place',
             //     component: () => import('@/screens/PlaceScreen'),

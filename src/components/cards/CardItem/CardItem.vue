@@ -42,6 +42,10 @@ export default {
                 this.$router.push('/tabs/quest');
                 return;
             }
+            if (this.card.type === 'Подборка') {
+                this.$router.push('/tabs/compilation');
+                return;
+            }
 
             this.$router.push('/tabs/categories/2');
         }

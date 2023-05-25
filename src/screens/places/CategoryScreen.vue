@@ -16,7 +16,7 @@
                 <ion-spinner />
             </div>
 
-            <div v-if="category">
+            <div v-if="category" class="ion-padding">
                 <CatalogCategory :category="category" v-if="category && category.type === TYPE_CATALOG" />
                 <RouteCategory :category="category" v-if="category && category.type === TYPE_ROUTE" />
                 <QuestCategory :category="category" v-if="category && category.type === TYPE_QUEST" />
@@ -79,7 +79,6 @@ export default {
         },
         fetch() {
             return api.get(`/categories/details?id=${this.category_id}&expand=parent,children,places`).then(res => {
-                console.log(res.data);
                 this.category = res.data;
             }).finally(() => this.isLoading = false);
         },

@@ -1,23 +1,16 @@
 .content-section {
     padding: 10px 0;
+    border-bottom: 1px solid rgba(var(--contrast), 0.2);
+    margin-bottom: 10px;
+
+    &:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
 
     &__title {
         font-size: 20px;
         font-weight: bold;
-        margin-bottom: 5px;
-    }
-
-    &__text {
-        max-height: 95px;
-        overflow: hidden;
-        position: relative;
-
-        &-more {
-            position: absolute;
-            right: 5px;
-            bottom: 3px;
-            color: var(--pink);
-            padding: 0 5px;
-        }
+        margin-bottom: 15px;
     }
 }

@@ -1,6 +1,6 @@
 .props-list {
-    border-top: 1px solid var(--grey);
-    border-bottom: 1px solid var(--grey);
+    border-top: 1px solid rgba(var(--contrast), 0.2);
+    border-bottom: 1px solid rgba(var(--contrast), 0.2);
     padding: 10px 0;
     margin: 10px 0;
     display: flex;
@@ -25,7 +25,7 @@
             transform: translate(0, -50%);
             height: 85%;
             width: 1px;
-            background: var(--grey);
+            background: rgba(var(--contrast), 0.2);
         }
 
         &:last-child:after {

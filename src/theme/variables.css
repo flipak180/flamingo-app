@@ -26,6 +26,7 @@ http://ionicframework.com/docs/theming/ */
 :root {
     --ion-font-family: 'Rubik';
     --ion-text-color: #000;
+    --contrast: 0, 0, 0;
 
     /* colors */
     --black: #3A373F;
@@ -113,6 +114,8 @@ http://ionicframework.com/docs/theming/ */
 @media (prefers-color-scheme: dark) {
 
     body {
+        --contrast: 255, 255, 255;
+
         --ion-color-primary: #FF0682;
         --ion-color-primary-rgb: 255,6,130;
         --ion-color-primary-contrast: #ffffff;
