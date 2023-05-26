@@ -40,14 +40,24 @@ export default {
     width: 32px;
     height: 32px;
     background: rgba(255, 255, 255, 0.8);
+    color: var(--black);
     border-radius: 50%;
     font-size: 20px;
-    color: var(--black);
     transition: all .3s;
+
+    @media (prefers-color-scheme: dark) {
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+    }
 
     &.inverted {
         background: rgba(0, 0, 0, 0.8);
         color: #fff;
+
+        @media (prefers-color-scheme: dark) {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--black);
+        }
     }
 }
 </style>
