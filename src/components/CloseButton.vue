@@ -19,7 +19,7 @@ export default {
     },
     mounted() {
         this.emitter.on('scroll', (e) => {
-            if (e.scrollTop >= 300) {
+            if (e.scrollTop >= 275) {
                 this.inverted = true;
             } else {
                 this.inverted = false;
