@@ -7,7 +7,7 @@
                 </ion-buttons>
             </ion-toolbar>
         </ion-header>-->
-        <ion-content>
+        <ion-content :scroll-events="true" @ionScroll="handleScroll($event)">
             <CompilationCard />
         </ion-content>
     </ion-page>
@@ -32,6 +32,11 @@ export default {
     ionViewWillLeave() {
         StatusBar.show();
     },
+    methods: {
+        handleScroll(e) {
+            this.emitter.emit('scroll', e.detail);
+        },
+    }
 }
 </script>
 

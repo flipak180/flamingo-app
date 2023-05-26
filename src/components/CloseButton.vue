@@ -1,5 +1,5 @@
 <template>
-    <div class="close-button" @click="$router.go(-1)">
+    <div class="close-button" :class="{'inverted': inverted}" @click="$router.go(-1)">
         <ion-icon :icon="closeOutline"></ion-icon>
     </div>
 </template>
@@ -13,13 +13,23 @@ export default {
     components: {IonIcon},
     data() {
         return {
-            closeOutline
+            inverted: false,
+            closeOutline,
         }
-    }
+    },
+    mounted() {
+        this.emitter.on('scroll', (e) => {
+            if (e.scrollTop >= 300) {
+                this.inverted = true;
+            } else {
+                this.inverted = false;
+            }
+        });
+    },
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .close-button {
     position: fixed;
     display: flex;
@@ -33,5 +43,11 @@ export default {
     border-radius: 50%;
     font-size: 20px;
     color: var(--black);
+    transition: all .3s;
+
+    &.inverted {
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+    }
 }
 </style>

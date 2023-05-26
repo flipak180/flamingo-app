@@ -1,5 +1,5 @@
 <template>
-    <div class="quest-card">
+    <div class="quest-card ion-padding">
         <div class="quest-card__header">
             <div class="quest-card__image" :style="{ backgroundImage: `url(${require('@/assets/images/2.jpg')})` }">
 
