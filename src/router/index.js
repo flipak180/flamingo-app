@@ -46,10 +46,10 @@ const routes = [
                 path: 'compilation',
                 component: () => import('@/screens/CompilationScreen'),
             },
-            // {
-            //     path: 'place',
-            //     component: () => import('@/screens/PlaceScreen'),
-            // },
+            {
+                path: 'single-place',
+                component: () => import('@/screens/SinglePlaceScreen'),
+            },
             // {
             //     path: 'route',
             //     component: () => import('@/screens/RouteScreen'),

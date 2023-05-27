@@ -46,6 +46,10 @@ export default {
                 this.$router.push('/tabs/compilation');
                 return;
             }
+            if (this.card.type === 'Достопримечательность') {
+                this.$router.push('/tabs/single-place');
+                return;
+            }
 
             this.$router.push('/tabs/categories/2');
         }
