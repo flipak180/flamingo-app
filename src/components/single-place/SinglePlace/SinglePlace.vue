@@ -1,6 +1,6 @@
 <template>
     <div class="single-place">
-        <div class="single-place__image" :style="{ backgroundImage: `url(${require('@/assets/images/1.jpg')})` }">
+        <div class="single-place__image" :style="{ backgroundImage: `url(${require('@/assets/images/3.jpg')})` }">
             <CloseButton />
         </div>
         <div class="single-place__header">

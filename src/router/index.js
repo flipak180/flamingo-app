@@ -29,7 +29,6 @@ const routes = [
         children: [
             {
                 path: '',
-                name: 'home',
                 redirect: '/tabs/home'
             },
             {
@@ -37,17 +36,16 @@ const routes = [
                 name: 'home',
                 component: () => import('@/screens/HomeScreen'),
             },
-
             {
-                path: 'quest',
+                path: 'home/quest',
                 component: () => import('@/screens/QuestScreen'),
             },
             {
-                path: 'compilation',
+                path: 'home/compilation',
                 component: () => import('@/screens/CompilationScreen'),
             },
             {
-                path: 'single-place',
+                path: 'home/single-place',
                 component: () => import('@/screens/SinglePlaceScreen'),
             },
             // {
