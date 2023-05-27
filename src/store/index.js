@@ -32,7 +32,7 @@ export const useMainStore = () => {
     const s = innerStore();
     if (!s.init) {
         s.init = true;
-        //s.getCoords();
+        s.getCoords();
     }
     return s;
 };
