@@ -1,5 +1,5 @@
 <template>
-    <div class="place">
+    <div class="place" @click="$router.push({ name: 'placeDetails', params: { place_id: place.place_id } });">
         <div class="image" :style="{ background: randomColor() }" v-once></div>
         <div class="content">
             <div class="title">{{ place.title }}</div>

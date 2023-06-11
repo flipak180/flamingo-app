@@ -52,6 +52,11 @@ const routes = [
             //     path: 'route',
             //     component: () => import('@/screens/RouteScreen'),
             // },
+            {
+                path: 'home/places/:place_id?',
+                name: 'placeDetails',
+                component: () => import('@/screens/places/PlaceDetailsScreen'),
+            },
 
             {
                 path: 'categories/:category_id',
