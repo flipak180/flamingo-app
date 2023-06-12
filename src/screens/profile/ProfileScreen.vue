@@ -7,18 +7,15 @@
             </ion-toolbar>
         </ion-header>
         <ion-content>
-            <Visits />
+            <Profile />
         </ion-content>
     </ion-page>
 </template>
 
 <script>
 import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
-import Visits from "@/components/Visits";
+import Profile from "@/components/profile/Profile";
 import LogoutButton from "@/components/LogoutButton";
-import {TYPE_CATALOG, TYPE_QUEST, TYPE_ROUTE} from "@/models/Category";
-import {settingsOutline} from "ionicons/icons";
-import api from "@/plugins/api";
 
 export default {
     components: {
@@ -27,7 +24,7 @@ export default {
         IonPage,
         IonTitle,
         IonToolbar,
-        Visits,
+        Profile,
         LogoutButton,
     },
     data() {

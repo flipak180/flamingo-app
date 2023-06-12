@@ -67,6 +67,21 @@ const routes = [
                 path: 'profile',
                 component: () => import('@/screens/profile/ProfileScreen')
             },
+            {
+                path: 'profile/visits',
+                component: () => import('@/screens/profile/VisitsScreen')
+            },
+            {
+                path: 'profile/planning',
+                name: 'planning',
+                component: () => import('@/screens/profile/PlanningScreen')
+            },
+
+            {
+                path: 'catalog',
+                name: 'catalog',
+                component: () => import('@/screens/places/CatalogScreen')
+            },
         ]
     },
     {

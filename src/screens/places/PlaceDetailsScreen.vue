@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import {IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
+import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
 import BackButton from "@/components/BackButton";
 import {StatusBar} from "@capacitor/status-bar";
 import PlaceDetails from "@/components/single-place/PlaceDetails/PlaceDetails";
@@ -32,7 +32,7 @@ export default {
     name: "PlaceDetailsScreen",
     components: {
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
-        IonButtons, BackButton,
+        IonButtons, BackButton, IonIcon, IonButton,
         PlaceDetails
     },
     data() {
