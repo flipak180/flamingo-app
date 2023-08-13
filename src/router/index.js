@@ -59,6 +59,11 @@ const routes = [
             },
 
             {
+                path: 'categories',
+                name: 'categories',
+                component: () => import('@/screens/CategoriesScreen'),
+            },
+            {
                 path: 'categories/:category_id',
                 name: 'category',
                 component: () => import('@/screens/places/CategoryScreen'),
