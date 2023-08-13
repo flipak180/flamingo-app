@@ -39,11 +39,15 @@ export default {
         },
         onClick() {
             if (this.card.type === 'Квест') {
-                this.$router.push('/tabs/quest');
+                this.$router.push('/tabs/home/quest');
                 return;
             }
             if (this.card.type === 'Подборка') {
-                this.$router.push('/tabs/compilation');
+                this.$router.push('/tabs/home/compilation');
+                return;
+            }
+            if (this.card.type === 'Достопримечательность') {
+                this.$router.push('/tabs/home/single-place');
                 return;
             }
 

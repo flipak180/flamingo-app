@@ -51,10 +51,10 @@ export default {
     methods: {
         async share() {
             await Share.share({
-                title: 'See cool stuff',
-                text: 'Really awesome thing you need to see right meow',
-                url: 'http://ionicframework.com/',
-                dialogTitle: 'Share with buddies',
+                title: 'Король и Шут. Между Купчино и Ржевкой',
+                text: 'Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться',
+                url: 'https://flamingo.spb.ru/tabs/home/quest',
+                dialogTitle: 'Поделиться с друзьями',
             });
         }
     }

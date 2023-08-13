@@ -1,6 +1,6 @@
 <template>
     <div class="props-list">
-        <div class="props-list__item">
+        <div class="props-list__item" @click="$router.push({ name: 'map' });">
             <div class="props-list__name">Локация</div>
             <div class="props-list__value">
                 <ion-icon :icon="mapOutline"></ion-icon>

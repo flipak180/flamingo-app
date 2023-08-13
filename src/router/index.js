@@ -29,7 +29,6 @@ const routes = [
         children: [
             {
                 path: '',
-                name: 'home',
                 redirect: '/tabs/home'
             },
             {
@@ -37,23 +36,27 @@ const routes = [
                 name: 'home',
                 component: () => import('@/screens/HomeScreen'),
             },
-
             {
-                path: 'quest',
+                path: 'home/quest',
                 component: () => import('@/screens/QuestScreen'),
             },
             {
-                path: 'compilation',
+                path: 'home/compilation',
                 component: () => import('@/screens/CompilationScreen'),
             },
-            // {
-            //     path: 'place',
-            //     component: () => import('@/screens/PlaceScreen'),
-            // },
+            {
+                path: 'home/single-place',
+                component: () => import('@/screens/SinglePlaceScreen'),
+            },
             // {
             //     path: 'route',
             //     component: () => import('@/screens/RouteScreen'),
             // },
+            {
+                path: 'home/places/:place_id?',
+                name: 'placeDetails',
+                component: () => import('@/screens/places/PlaceDetailsScreen'),
+            },
 
             {
                 path: 'categories/:category_id',
@@ -63,6 +66,21 @@ const routes = [
             {
                 path: 'profile',
                 component: () => import('@/screens/profile/ProfileScreen')
+            },
+            {
+                path: 'profile/visits',
+                component: () => import('@/screens/profile/VisitsScreen')
+            },
+            {
+                path: 'profile/planning',
+                name: 'planning',
+                component: () => import('@/screens/profile/PlanningScreen')
+            },
+
+            {
+                path: 'catalog',
+                name: 'catalog',
+                component: () => import('@/screens/places/CatalogScreen')
             },
         ]
     },
