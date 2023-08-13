@@ -1,24 +1,14 @@
 <template>
-    <div class="single-place">
-        <div class="single-place__image" :style="{ backgroundImage: `url(${require('@/assets/images/3.jpg')})` }">
+    <div class="single-place" v-if="place">
+        <div class="single-place__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${place.image})` }">
             <CloseButton />
         </div>
         <div class="single-place__header">
-            <div class="single-place__type">Достопримечательность</div>
-            <div class="single-place__title">Люблю тебя, Петра творенье</div>
+            <div class="single-place__type">{{ place.type }}</div>
+            <div class="single-place__title">{{ place.title }}</div>
         </div>
-        <div class="single-place__content ion-padding-horizontal">
-            <p>Равным образом укрепление и развитие структуры в значительной степени обуславливает создание системы обучения кадров, соответствует насущным потребностям. </p>
-            <p>Товарищи! дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание системы обучения кадров, соответствует насущным потребностям. </p>
-            <p>Идейные соображения высшего порядка, а также постоянный количественный рост и сфера.</p>
-            <p>Равным образом укрепление и развитие структуры в значительной степени обуславливает создание системы обучения кадров, соответствует насущным потребностям. </p>
-            <p>Товарищи! дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание системы обучения кадров, соответствует насущным потребностям. </p>
-            <p>Идейные соображения высшего порядка, а также постоянный количественный рост и сфера.</p>
-            <p>Равным образом укрепление и развитие структуры в значительной степени обуславливает создание системы обучения кадров, соответствует насущным потребностям. </p>
-            <p>Товарищи! дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание системы обучения кадров, соответствует насущным потребностям. </p>
-            <p>Идейные соображения высшего порядка, а также постоянный количественный рост и сфера.</p>
-        </div>
-        <PlaceItem :place="place" />
+        <div class="single-place__content ion-padding-horizontal" v-html="place.description"></div>
+        <!-- <PlaceItem :place="place" /> -->
     </div>
 </template>
 
@@ -28,15 +18,32 @@ import PlacesGrid from "@/components/places/PlacesGrid";
 import CollapsedText from "@/components/common/CollapsedText/CollapsedText";
 import Cards from "@/utils/data/Cards";
 import PlaceItem from "@/components/places/PlaceItem/PlaceItem";
+import api from "@/plugins/api";
 
 export default {
     name: "SinglePlace",
     components: { CloseButton, PlacesGrid, CollapsedText, PlaceItem },
     data() {
         return {
-            place: Cards[0].places[0]
+            place_id: this.$route.params.place_id,
+            place: null
         }
     },
+    mounted() {
+        this.fetch();
+    },
+    methods: {
+        fetch() {
+            return api.get(`/events/details?id=${this.place_id}`).then(res => {
+                this.place = res.data;
+            }).finally(() => this.isLoading = false);
+        },
+        refresh(event) {
+            this.fetch(false).then(() => {
+                event.target.complete();
+            });
+        },
+    }
 }
 </script>
 

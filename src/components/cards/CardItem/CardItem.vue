@@ -38,6 +38,9 @@ export default {
             this.isActive = false;
         },
         onClick() {
+            this.$router.push('/tabs/home/single-place/' + this.card.id);
+            return;
+
             if (this.card.type === 'Квест') {
                 this.$router.push('/tabs/home/quest');
                 return;

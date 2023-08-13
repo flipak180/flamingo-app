@@ -45,7 +45,7 @@ const routes = [
                 component: () => import('@/screens/CompilationScreen'),
             },
             {
-                path: 'home/single-place',
+                path: 'home/single-place/:place_id',
                 component: () => import('@/screens/SinglePlaceScreen'),
             },
             // {
