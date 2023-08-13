@@ -25,7 +25,8 @@ export default {
     },
     methods: {
         async click() {
-            this.emitter.emit('main-button-click');
+            this.$router.replace('/tabs/categories');
+            //this.emitter.emit('main-button-click');
 
             // if (this.isActive) {
             //     const modal = await modalController.create({

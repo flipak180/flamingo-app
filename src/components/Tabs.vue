@@ -14,6 +14,11 @@
                     <ion-label>Места</ion-label>
                 </ion-tab-button>
 
+                <ion-tab-button tab="tab-places" href="/tabs/quests">
+                    <ion-icon aria-hidden="true" :icon="compassOutline"/>
+                    <ion-label>Квесты</ion-label>
+                </ion-tab-button>
+
                 <ion-tab-button tab="tab-fake" class="hidden">
 
                 </ion-tab-button>
@@ -29,7 +34,7 @@
 
 <script>
 import {IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/vue';
-import {homeOutline, personOutline, trailSignOutline} from 'ionicons/icons';
+import {compassOutline, homeOutline, personOutline, trailSignOutline} from 'ionicons/icons';
 import MainButton from "@/components/MainButton";
 
 export default {
@@ -43,6 +48,7 @@ export default {
             homeOutline,
             personOutline,
             trailSignOutline,
+            compassOutline,
         }
     },
 }
