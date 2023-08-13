@@ -1,9 +1,9 @@
 <template>
     <ion-page>
-        <MainButton />
+        <!-- <MainButton /> -->
         <ion-tabs>
             <ion-router-outlet></ion-router-outlet>
-            <ion-tab-bar slot="bottom">
+            <!--<ion-tab-bar slot="bottom">
                 <ion-tab-button tab="tab1" href="/tabs/home">
                     <ion-icon aria-hidden="true" :icon="home"/>
                     <ion-label>Главная</ion-label>
@@ -17,7 +17,7 @@
                     <ion-icon aria-hidden="true" :icon="person"/>
                     <ion-label>Профиль</ion-label>
                 </ion-tab-button>
-            </ion-tab-bar>
+            </ion-tab-bar>-->
         </ion-tabs>
     </ion-page>
 </template>
