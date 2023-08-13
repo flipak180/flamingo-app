@@ -1,6 +1,6 @@
 <template>
     <div class="cards-list">
-        <CardItem v-for="card in Cards" :key="card.id" :card="card" />
+        <CardItem v-for="card in events" :key="card.id" :card="card" />
     </div>
 </template>
 
@@ -10,6 +10,7 @@ import Cards from "@/utils/data/Cards";
 
 export default {
     name: "CardsList",
+    props: ['events'],
     components: { CardItem },
     data() {
         return {

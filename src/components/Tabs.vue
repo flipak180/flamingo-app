@@ -1,23 +1,23 @@
 <template>
     <ion-page>
-        <MainButton />
+        <!-- <MainButton /> -->
         <ion-tabs>
             <ion-router-outlet></ion-router-outlet>
-            <ion-tab-bar slot="bottom">
+            <!-- <ion-tab-bar slot="bottom">
                 <ion-tab-button tab="tab-home" href="/tabs/home">
                     <ion-icon aria-hidden="true" :icon="homeOutline"/>
                     <ion-label>Главная</ion-label>
                 </ion-tab-button>
 
-                <!-- <ion-tab-button tab="tab-places" href="/tabs/catalog">
+                <ion-tab-button tab="tab-places" href="/tabs/catalog">
                     <ion-icon aria-hidden="true" :icon="trailSignOutline"/>
                     <ion-label>Места</ion-label>
-                </ion-tab-button> -->
+                </ion-tab-button>
 
-<!--                <ion-tab-button tab="tab-places" href="/tabs/quests">-->
-<!--                    <ion-icon aria-hidden="true" :icon="compassOutline"/>-->
-<!--                    <ion-label>Квесты</ion-label>-->
-<!--                </ion-tab-button>-->
+                <ion-tab-button tab="tab-places" href="/tabs/quests">
+                    <ion-icon aria-hidden="true" :icon="compassOutline"/>
+                    <ion-label>Квесты</ion-label>
+                </ion-tab-button>
 
                 <ion-tab-button tab="tab-fake" class="hidden">
 
@@ -27,7 +27,7 @@
                     <ion-icon aria-hidden="true" :icon="personOutline"/>
                     <ion-label>Профиль</ion-label>
                 </ion-tab-button>
-            </ion-tab-bar>
+            </ion-tab-bar>-->
         </ion-tabs>
     </ion-page>
 </template>

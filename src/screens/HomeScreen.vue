@@ -12,8 +12,8 @@
             </div>
 
             <div>
-                <h2>Актуальное</h2>
-                <CardsList />
+                <!--<h2>Актуальное</h2>-->
+                <CardsList :events="events" />
 
 <!--                <h2>Подборки</h2>-->
 <!--                <CategoriesGrid :categories="categories" />-->
@@ -59,8 +59,8 @@ export default {
     },
     data() {
         return {
-            categories: [],
-            isLoading: true,
+            events: [],
+            isLoading: false,
 
             TYPE_CATALOG,
             TYPE_ROUTE,
@@ -72,8 +72,8 @@ export default {
     },
     methods: {
         fetch() {
-            return api.get(`/categories/list`).then(res => {
-                this.categories = res.data;
+            return api.get(`/events/list`).then(res => {
+                this.events = res.data;
             }).finally(() => this.isLoading = false);
         },
         refresh(event) {

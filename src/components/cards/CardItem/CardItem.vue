@@ -7,7 +7,7 @@
             <div class="card-item__title">{{ card.title }}</div>
         </div>
         <div class="card-item__content">
-            <div class="card-item__image" :style="{ backgroundImage: `url(${require('@/assets/' + card.image)})` }"></div>
+            <div class="card-item__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${card.image})` }"></div>
         </div>
         <div class="card-item__footer">
             <PlacesList :places="card.places" />
