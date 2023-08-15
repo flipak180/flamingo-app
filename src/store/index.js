@@ -16,6 +16,8 @@ export const useMainStore = () => {
                 //     maximumAge: 5000,
                 // });
 
+                /* Это рабочая версия
+
                 await Geolocation.watchPosition({
                     enableHighAccuracy: false,
                     maximumAge: 5000,
@@ -23,6 +25,8 @@ export const useMainStore = () => {
                     this.coords.latitude = coordinates.coords.latitude;
                     this.coords.longitude = coordinates.coords.longitude;
                 })
+
+                 */
 
                 // this.coords.latitude = coordinates.coords.latitude;
                 // this.coords.longitude = coordinates.coords.longitude;

@@ -68,6 +68,7 @@ export default {
     .title {
         font-size: 48px;
         font-weight: bold;
+        color: var(--black);
 
         span {
             color: var(--pink);
