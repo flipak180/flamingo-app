@@ -6,7 +6,8 @@ import {useMainStore} from "@/store";
 const routes = [
     {
         path: '/',
-        redirect: '/onboarding'
+        //redirect: '/onboarding'
+        redirect: '/tabs/home'
     },
     {
         path: '/login',
@@ -101,31 +102,31 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach(async (to, from, next) => {
-    const profileStore = useProfileStore();
-    const mainStore = useMainStore();
-
-    if (!mainStore.onBoardingComplete && !to.path.startsWith('/onboarding')) {
-        next({ name: 'onboarding' });
-        return;
-    }
-
-    if (mainStore.onBoardingComplete && to.name === 'onboarding') {
-        next({ name: 'login' });
-        return;
-    }
-
-    if (!profileStore.phone && to.name !== 'login' && !to.path.startsWith('/onboarding')) {
-        next({ name: 'login' });
-        return;
-    }
-
-    if (profileStore.phone && to.name === 'login') {
-        next({ name: 'home' });
-        return;
-    }
-
-    next();
-});
+// router.beforeEach(async (to, from, next) => {
+//     const profileStore = useProfileStore();
+//     const mainStore = useMainStore();
+//
+//     if (!mainStore.onBoardingComplete && !to.path.startsWith('/onboarding')) {
+//         next({ name: 'onboarding' });
+//         return;
+//     }
+//
+//     if (mainStore.onBoardingComplete && to.name === 'onboarding') {
+//         next({ name: 'login' });
+//         return;
+//     }
+//
+//     if (!profileStore.phone && to.name !== 'login' && !to.path.startsWith('/onboarding')) {
+//         next({ name: 'login' });
+//         return;
+//     }
+//
+//     if (profileStore.phone && to.name === 'login') {
+//         next({ name: 'home' });
+//         return;
+//     }
+//
+//     next();
+// });
 
 export default router
