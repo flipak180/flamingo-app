@@ -1,7 +1,7 @@
 <template>
     <div class="quest-card ion-padding">
         <div class="quest-card__header">
-            <div class="quest-card__image" :style="{ backgroundImage: `url(${require('@/assets/images/2.jpg')})` }">
+            <div class="quest-card__image" :style="{ backgroundImage: `url(${require('@/assets/2.jpg')})` }">
 
             </div>
             <div class="quest-card__heading">

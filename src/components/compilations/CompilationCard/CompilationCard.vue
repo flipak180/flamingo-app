@@ -1,6 +1,6 @@
 <template>
     <div class="compilation-card">
-        <div class="compilation-card__image" :style="{ backgroundImage: `url(${require('@/assets/images/1.jpg')})` }">
+        <div class="compilation-card__image" :style="{ backgroundImage: `url(${require('@/assets/1.jpg')})` }">
             <CloseButton />
         </div>
         <div class="compilation-card__header">
