@@ -33,6 +33,9 @@ export default {
             checkmarkOutline
         }
     },
+    mounted() {
+        console.log(this.place);
+    },
     methods: {
         onButtonClick() {
             visit(this.place);
