@@ -1,6 +1,6 @@
 <template>
     <div class="place-item">
-        <div class="place-item__image" :style="{ background: place.image + ' url(' + require('@/assets/flamingo.png') + ')' }" v-once></div>
+        <div class="place-item__image" :style="{ background: place.image }" v-once></div>
         <div class="place-item__title">{{ place.title }}</div>
         <!--<div class="place-item__actions">
             <ion-button size="small" v-if="!place.lastVisit" :color="place.atPlace ? 'primary' : 'light'"
