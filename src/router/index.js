@@ -1,7 +1,5 @@
 import {createRouter, createWebHistory} from '@ionic/vue-router';
 import Tabs from "@/components/Tabs";
-import {useProfileStore} from "@/store/profile";
-import {useMainStore} from "@/store";
 
 const routes = [
     {
@@ -54,7 +52,7 @@ const routes = [
             //     component: () => import('@/screens/RouteScreen'),
             // },
             {
-                path: 'home/places/:place_id?',
+                path: 'home/places/:place_id',
                 name: 'placeDetails',
                 component: () => import('@/screens/places/PlaceDetailsScreen'),
             },

@@ -16,7 +16,6 @@
 import CloseButton from "@/components/CloseButton";
 import PlacesGrid from "@/components/places/PlacesGrid";
 import CollapsedText from "@/components/common/CollapsedText/CollapsedText";
-import Cards from "@/utils/data/Cards";
 import PlaceItem from "@/components/places/PlaceItem/PlaceItem";
 import api from "@/plugins/api";
 
@@ -26,7 +25,7 @@ export default {
     data() {
         return {
             place_id: this.$route.params.place_id,
-            place: null
+            place: null,
         }
     },
     mounted() {
