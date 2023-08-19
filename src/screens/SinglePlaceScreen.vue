@@ -18,6 +18,7 @@ import {IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "
 import BackButton from "@/components/BackButton";
 import {StatusBar} from "@capacitor/status-bar";
 import SinglePlace from "@/components/single-place/SinglePlace/SinglePlace";
+import {Capacitor} from "@capacitor/core";
 
 export default {
     name: "CompilationScreen",
@@ -27,10 +28,14 @@ export default {
         SinglePlace
     },
     ionViewWillEnter() {
-        StatusBar.hide();
+        if (Capacitor.isNativePlatform()) {
+            StatusBar.hide();
+        }
     },
     ionViewWillLeave() {
-        StatusBar.show();
+        if (Capacitor.isNativePlatform()) {
+            StatusBar.show();
+        }
     },
     methods: {
         handleScroll(e) {
