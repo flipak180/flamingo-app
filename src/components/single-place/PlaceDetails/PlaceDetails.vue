@@ -1,5 +1,5 @@
 <template>
-    <div class="single-place">
+    <div class="single-place" v-if="place">
         <div class="single-place__image" :style="{ backgroundImage: `url(${require('@/assets/3.jpg')})` }">
             <CloseButton />
         </div>
@@ -9,18 +9,8 @@
         </div>
         <div class="single-place__content ion-padding-horizontal">
             <div id="place-details-map"></div>
-
-            <p>Равным образом укрепление и развитие структуры в значительной степени обуславливает создание системы обучения кадров, соответствует насущным потребностям. </p>
-            <p>Товарищи! дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание системы обучения кадров, соответствует насущным потребностям. </p>
-            <p>Идейные соображения высшего порядка, а также постоянный количественный рост и сфера.</p>
-            <p>Равным образом укрепление и развитие структуры в значительной степени обуславливает создание системы обучения кадров, соответствует насущным потребностям. </p>
-            <p>Товарищи! дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание системы обучения кадров, соответствует насущным потребностям. </p>
-            <p>Идейные соображения высшего порядка, а также постоянный количественный рост и сфера.</p>
-            <p>Равным образом укрепление и развитие структуры в значительной степени обуславливает создание системы обучения кадров, соответствует насущным потребностям. </p>
-            <p>Товарищи! дальнейшее развитие различных форм деятельности в значительной степени обуславливает создание системы обучения кадров, соответствует насущным потребностям. </p>
-            <p>Идейные соображения высшего порядка, а также постоянный количественный рост и сфера.</p>
+            <div v-html="place.description"></div>
         </div>
-        <PlaceItem :place="place" />
     </div>
 </template>
 
@@ -28,27 +18,31 @@
 import CloseButton from "@/components/CloseButton";
 import PlacesGrid from "@/components/places/PlacesGrid";
 import CollapsedText from "@/components/common/CollapsedText/CollapsedText";
-import PlaceItem from "@/components/places/PlaceItem/PlaceItem";
-import PlacesMock from "@/utils/data/PlacesMock";
+import api from "@/plugins/api";
 
 let map;
 
 export default {
     name: "PlaceDetails",
-    components: { CloseButton, PlacesGrid, CollapsedText, PlaceItem },
+    components: { CloseButton, PlacesGrid, CollapsedText },
     data() {
         return {
-            place: {}
+            place_id: this.$route.params.place_id,
+            place: null,
         }
     },
     mounted() {
-        this.place = PlacesMock[Math.floor(Math.random() * PlacesMock.length)];
-        console.log(this.place);
+        this.fetch();
         ymaps.ready(() => {
-            this.setupMap();
+            //this.setupMap();
         })
     },
     methods: {
+        fetch() {
+            return api.get(`/places/details?id=${this.place_id}`).then(res => {
+                this.place = res.data;
+            }).finally(() => this.isLoading = false);
+        },
         setupMap() {
             map = new ymaps.Map('place-details-map', {
                 center: [59.938955, 30.315644],

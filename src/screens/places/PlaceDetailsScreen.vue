@@ -27,6 +27,7 @@ import BackButton from "@/components/BackButton";
 import {StatusBar} from "@capacitor/status-bar";
 import PlaceDetails from "@/components/single-place/PlaceDetails/PlaceDetails";
 import {heartOutline, shareOutline} from "ionicons/icons";
+import {Capacitor} from "@capacitor/core";
 
 export default {
     name: "PlaceDetailsScreen",
@@ -42,10 +43,14 @@ export default {
         }
     },
     ionViewWillEnter() {
-        StatusBar.hide();
+        if (Capacitor.isNativePlatform()) {
+            StatusBar.hide();
+        }
     },
     ionViewWillLeave() {
-        StatusBar.show();
+        if (Capacitor.isNativePlatform()) {
+            StatusBar.show();
+        }
     },
     methods: {
         handleScroll(e) {
