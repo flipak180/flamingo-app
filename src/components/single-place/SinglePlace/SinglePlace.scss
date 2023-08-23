@@ -1,12 +1,17 @@
 .single-place {
     margin-bottom: 75px;
+    position: relative;
+
+    .swiper-pagination-bullet {
+        --bullet-background: red;
+        --bullet-background-active: red;
+    }
 
     &__image {
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center center;
         height: 300px;
-        position: relative;
     }
 
     &__header {
