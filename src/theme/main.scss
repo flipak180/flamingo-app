@@ -39,3 +39,17 @@ body {
 ion-content {
     --padding-bottom: 50px;
 }
+
+.ion-page .swiper .swiper-pagination {
+    background: rgba(var(--black-rgba), 0.5);
+    --swiper-pagination-bottom: 0;
+    padding: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.ion-page .swiper .swiper-pagination-bullet {
+    background: #fff;
+}
+.ion-page .swiper .swiper-pagination-bullet-active {
+    background: #fff;
+}

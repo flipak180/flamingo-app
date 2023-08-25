@@ -37,9 +37,6 @@ export default {
             chevronForwardOutline
         }
     },
-    mounted() {
-        console.log(this.place);
-    },
     methods: {
         onButtonClick() {
             visit(this.place);
