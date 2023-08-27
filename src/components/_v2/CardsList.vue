@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import CardItem from "@/components/cards/CardItem/CardItem";
+import CardItem from "@/components/_v2/CardItem";
 import Cards from "@/utils/data/Cards";
 
 export default {
@@ -20,4 +20,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped src="./CardsList.scss"></style>
+<style lang="scss" scoped>
+    .cards-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-bottom: 50px;
+    }
+</style>

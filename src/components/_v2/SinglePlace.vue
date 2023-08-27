@@ -15,10 +15,8 @@
 
 <script>
 import CloseButton from "@/components/CloseButton";
-import PlacesGrid from "@/components/places/PlacesGrid";
 import CollapsedText from "@/components/common/CollapsedText/CollapsedText";
-import Cards from "@/utils/data/Cards";
-import PlaceItem from "@/components/places/PlaceItem/PlaceItem";
+import PlaceItem from "@/components/_v2/PlaceItem";
 import api from "@/plugins/api";
 import {Swiper, SwiperSlide} from "swiper/vue";
 import 'swiper/css';
@@ -29,7 +27,7 @@ import {Pagination} from "swiper";
 
 export default {
     name: "SinglePlace",
-    components: { CloseButton, PlacesGrid, CollapsedText, PlaceItem, Swiper, SwiperSlide },
+    components: { CloseButton, CollapsedText, PlaceItem, Swiper, SwiperSlide },
     data() {
         return {
             place_id: this.$route.params.place_id,
@@ -55,6 +53,63 @@ export default {
 }
 </script>
 
-<style scoped lang="scss" src="./SinglePlace.scss">
+<style scoped lang="scss">
+.single-place {
+    margin-bottom: 75px;
+    position: relative;
 
+    .swiper-pagination-bullet {
+        --bullet-background: red;
+        --bullet-background-active: red;
+    }
+
+    &__image {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        height: 300px;
+    }
+
+    &__header {
+        padding: 15px;
+    }
+
+    &__type {
+        color: rgba(var(--black-rgba), 0.5);
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 13px;
+        margin-bottom: 10px;
+        letter-spacing: 0.5px;
+
+        @media (prefers-color-scheme: dark) {
+            color: var(--grey);
+        }
+    }
+
+    &__title {
+        color: var(--black);
+        font-size: 20px;
+        font-weight: 700;
+
+        @media (prefers-color-scheme: dark) {
+            color: #fff;
+        }
+    }
+
+    .place-item {
+        position: fixed;
+        bottom: 50px;
+        left: 0;
+        width: calc(100% - 30px);
+        background: var(--pink-light);
+        border-radius: 10px;
+        padding: 10px;
+        margin: 0 15px;
+
+        @media (prefers-color-scheme: dark) {
+            background: var(--black);
+        }
+    }
+}
 </style>

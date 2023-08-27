@@ -1,9 +1,11 @@
 <template>
     <ion-page>
-        <ion-header :translucent="true">
+        <ion-header :translucent="true" style="display: none;">
             <ion-toolbar></ion-toolbar>
         </ion-header>
-        <ion-content :fullscreen="true" class="ion-padding">
+        <ion-content :fullscreen="true" class="ion-padding"
+                     :scroll-events="true"
+                     @ionScroll="onScroll($event)">
             <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
                 <ion-refresher-content />
             </ion-refresher>
@@ -11,7 +13,8 @@
                 <ion-spinner />
             </div>
 
-            <div>
+            <PlacesFilter :class="{visible: filtersVisible}" />
+            <div style="padding-top: 35px">
                 <!--<h2>Актуальное</h2>-->
                 <CardsList :events="events" />
 
@@ -46,7 +49,8 @@ import CatalogCategory from "@/components/categories/CatalogCategory";
 import RouteCategory from "@/components/categories/RouteCategory";
 import QuestCategory from "@/components/categories/QuestCategory";
 import CardModal from "@/components/CardModal";
-import CardsList from "@/components/cards/CardsList/CardsList";
+import CardsList from "@/components/_v2/CardsList";
+import PlacesFilter from "@/components/_v2/PlacesFilter";
 
 export default {
     name: "HomeScreen",
@@ -54,13 +58,14 @@ export default {
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
         IonButtons, BackButton, IonIcon, IonButton,
         IonSpinner, IonRefresher, IonRefresherContent,
-        MyCoordinates, CategoriesGrid, CardModal,
+        MyCoordinates, CategoriesGrid, CardModal, PlacesFilter,
         CatalogCategory, RouteCategory, QuestCategory, CardsList
     },
     data() {
         return {
             events: [],
             isLoading: false,
+            filtersVisible: true,
 
             TYPE_CATALOG,
             TYPE_ROUTE,
@@ -80,6 +85,13 @@ export default {
             this.fetch(false).then(() => {
                 event.target.complete();
             });
+        },
+        onScroll(e) {
+            if (e.detail.deltaY > 0) {
+                this.filtersVisible = false;
+            } else {
+                this.filtersVisible = true;
+            }
         },
     }
 }

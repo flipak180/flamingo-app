@@ -33,7 +33,7 @@ const routes = [
             {
                 path: 'home',
                 name: 'home',
-                component: () => import('@/screens/HomeScreen'),
+                component: () => import('@/screens/_v2/HomeScreen'),
             },
             {
                 path: 'home/quest',
@@ -45,7 +45,7 @@ const routes = [
             },
             {
                 path: 'home/single-place/:place_id',
-                component: () => import('@/screens/SinglePlaceScreen'),
+                component: () => import('@/screens/_v2/SinglePlaceScreen'),
             },
             // {
             //     path: 'route',
