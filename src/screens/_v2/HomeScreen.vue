@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <ion-header :translucent="true" style="display: none;">
+        <ion-header :translucent="true">
             <ion-toolbar></ion-toolbar>
         </ion-header>
         <ion-content :fullscreen="true" class="ion-padding"
@@ -14,7 +14,7 @@
             </div>
 
             <PlacesFilter :class="{visible: filtersVisible}" />
-            <div style="padding-top: 35px">
+            <div style="padding-top: 40px">
                 <!--<h2>Актуальное</h2>-->
                 <CardsList :events="events" />
 
@@ -87,7 +87,7 @@ export default {
             });
         },
         onScroll(e) {
-            if (e.detail.deltaY > 0) {
+            if (e.detail.deltaY > 0 && e.detail.scrollTop > 250) {
                 this.filtersVisible = false;
             } else {
                 this.filtersVisible = true;

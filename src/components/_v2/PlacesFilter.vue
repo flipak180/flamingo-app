@@ -35,8 +35,8 @@ export default {
 <style scoped lang="scss">
 .places-filter {
     position: fixed;
-    top: -75px;
-    left: 0;
+    top: calc(-75px + var(--ion-safe-area-top));
+    left: calc(0 + var(--ion-safe-area-left));
     padding: 10px 15px;
     width: 100%;
     z-index: 10;
@@ -44,7 +44,7 @@ export default {
     transition: top 0.3s;
 
     &.visible {
-        top: 0;
+        top: calc(0 + var(--ion-safe-area-top));
     }
 }
 </style>

@@ -35,7 +35,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    top: calc(10px + var(--ion-safe-area-bottom));
+    top: calc(10px + var(--ion-safe-area-top));
     right: calc(10px + var(--ion-safe-area-right));
     width: 32px;
     height: 32px;
