@@ -46,5 +46,9 @@ export default {
     //&.visible {
     //    top: calc(0 + var(--ion-safe-area-top));
     //}
+
+    ion-button:first-child {
+        margin-left: 0;
+    }
 }
 </style>

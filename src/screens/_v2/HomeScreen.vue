@@ -1,8 +1,10 @@
 <template>
     <ion-page>
         <ion-header>
-            <ion-toolbar>
-                <PlacesFilter class="visible" />
+            <ion-toolbar v-show="filtersVisible">
+                <div class="ion-padding-horizontal">
+                    <PlacesFilter />
+                </div>
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding"
@@ -67,6 +69,7 @@ export default {
             events: [],
             isLoading: false,
             filtersVisible: true,
+            lastScrollTop: null,
 
             TYPE_CATALOG,
             TYPE_ROUTE,
@@ -88,11 +91,15 @@ export default {
             });
         },
         onScroll(e) {
-            if (e.detail.deltaY > 0 && e.detail.scrollTop > 250) {
+            if (!this.lastScrollTop) {
+                this.lastScrollTop = e.detail.scrollTop;
+            }
+            if (e.detail.scrollTop > 250 && this.lastScrollTop < e.detail.scrollTop) {
                 this.filtersVisible = false;
             } else {
                 this.filtersVisible = true;
             }
+            this.lastScrollTop = e.detail.scrollTop;
         },
     }
 }
