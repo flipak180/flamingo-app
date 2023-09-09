@@ -1,6 +1,7 @@
 <template>
     <ion-page>
         <ion-header>
+            <ion-toolbar></ion-toolbar>
             <ion-toolbar v-show="filtersVisible">
                 <div class="ion-padding-horizontal">
                     <PlacesFilter />
