@@ -1,9 +1,11 @@
 <template>
     <ion-page>
-        <ion-header :translucent="true">
-            <ion-toolbar></ion-toolbar>
+        <ion-header>
+            <ion-toolbar>
+                <PlacesFilter class="visible" />
+            </ion-toolbar>
         </ion-header>
-        <ion-content :fullscreen="true" class="ion-padding"
+        <ion-content class="ion-padding"
                      :scroll-events="true"
                      @ionScroll="onScroll($event)">
             <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
@@ -13,8 +15,7 @@
                 <ion-spinner />
             </div>
 
-            <PlacesFilter :class="{visible: filtersVisible}" />
-            <div style="padding-top: 40px">
+            <div>
                 <!--<h2>Актуальное</h2>-->
                 <CardsList :events="events" />
 

@@ -34,17 +34,17 @@ export default {
 
 <style scoped lang="scss">
 .places-filter {
-    position: fixed;
-    top: calc(-75px + var(--ion-safe-area-top));
-    left: calc(0 + var(--ion-safe-area-left));
-    padding: 10px 15px;
-    width: 100%;
-    z-index: 10;
-    background: var(--ion-background-color);
-    transition: top 0.3s;
-
-    &.visible {
-        top: calc(0 + var(--ion-safe-area-top));
-    }
+    //position: fixed;
+    //top: calc(-75px + var(--ion-safe-area-top));
+    //left: calc(0 + var(--ion-safe-area-left));
+    //padding: 10px 15px;
+    //width: 100%;
+    //z-index: 10;
+    //background: var(--ion-background-color);
+    //transition: top 0.3s;
+    //
+    //&.visible {
+    //    top: calc(0 + var(--ion-safe-area-top));
+    //}
 }
 </style>
