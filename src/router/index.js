@@ -36,6 +36,16 @@ const routes = [
                 component: () => import('@/screens/_v2/HomeScreen'),
             },
             {
+                path: 'expand',
+                name: 'expand',
+                component: () => import('@/screens/ExpandScreen.vue'),
+            },
+            {
+                path: 'swipe',
+                name: 'swipe',
+                component: () => import('@/screens/SwipeScreen.vue'),
+            },
+            {
                 path: 'home/quest',
                 component: () => import('@/screens/QuestScreen'),
             },

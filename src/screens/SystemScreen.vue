@@ -20,6 +20,12 @@
                         <ion-toggle v-model="settingsStore.hideSplash">Hide Splash</ion-toggle>
                     </ion-label>
                 </ion-item>
+                <ion-item button :detail="false" @click="$router.push({ name: 'expand' })">
+                    <ion-label>Expand</ion-label>
+                </ion-item>
+                <ion-item button :detail="false" @click="$router.push({ name: 'swipe' })">
+                    <ion-label>Swipe</ion-label>
+                </ion-item>
             </ion-list>
         </ion-content>
     </ion-page>

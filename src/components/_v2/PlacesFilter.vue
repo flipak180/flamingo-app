@@ -1,6 +1,6 @@
 <template>
     <div class="places-filter">
-        <ion-button size="small" color="light">
+        <ion-button size="small" color="light" @click="handleClick">
             <ion-icon slot="icon-only" :icon="searchOutline"></ion-icon>
         </ion-button>
         <ion-button size="small" color="light">
@@ -27,7 +27,17 @@ export default {
             searchOutline,
             filterOutline,
             chevronDownOutline,
+            totalClicks: 0,
         }
+    },
+    methods: {
+        handleClick() {
+            this.totalClicks++;
+            if (this.totalClicks >= 3) {
+                this.totalClicks = 0;
+                this.$router.push({ name: 'system' });
+            }
+        },
     }
 }
 </script>
