@@ -111,31 +111,33 @@ onMounted(() => {
         </ion-toolbar>
     </ion-header>
     <ion-content>
-        <div class="swipe-cards">
-            <div class="swipe-card" v-for="index in 5" :key="index">
-                <div class="swipe-card__top">
-                    <swiper class="swipe-card__slider" @swiper="setSwiperInstance" :pagination="true" :modules="modules">
-                        <swiper-slide class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-1.jpg')})` }"></swiper-slide>
-                        <swiper-slide class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-2.jpg')})` }"></swiper-slide>
-                    </swiper>
-                    <div class="swipe-card__tags">
-                        <div class="swipe-card__tag">Музей</div>
-                        <div class="swipe-card__tag">Выставка</div>
+        <div class="swipe-cards-wrap">
+            <div class="swipe-cards">
+                <div class="swipe-card" v-for="index in 5" :key="index">
+                    <div class="swipe-card__top">
+                        <swiper class="swipe-card__slider" @swiper="setSwiperInstance" :pagination="true" :modules="modules">
+                            <swiper-slide class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-1.jpg')})` }"></swiper-slide>
+                            <swiper-slide class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-2.jpg')})` }"></swiper-slide>
+                        </swiper>
+                        <div class="swipe-card__tags">
+                            <div class="swipe-card__tag">Музей</div>
+                            <div class="swipe-card__tag">Выставка</div>
+                        </div>
+                        <div class="swipe-card__img-controls">
+                            <div class="swipe-card__prev-img" @click="slides[index - 1].slidePrev()"></div>
+                            <div class="swipe-card__next-img" @click="slides[index - 1].slideNext()"></div>
+                        </div>
                     </div>
-                    <div class="swipe-card__img-controls">
-                        <div class="swipe-card__prev-img" @click="slides[index - 1].slidePrev()"></div>
-                        <div class="swipe-card__next-img" @click="slides[index - 1].slideNext()"></div>
+                    <div class="swipe-card__info">
+                        <div class="swipe-card__title">Эрарта {{ index }}</div>
+                        <div class="swipe-card__distance">
+                            <ion-icon :icon="locationOutline"></ion-icon>
+                            15 км от вас
+                        </div>
                     </div>
+                    <div class="swipe-card__choice m--reject"></div>
+                    <div class="swipe-card__choice m--like"></div>
                 </div>
-                <div class="swipe-card__info">
-                    <div class="swipe-card__title">Эрарта {{ index }}</div>
-                    <div class="swipe-card__distance">
-                        <ion-icon :icon="locationOutline"></ion-icon>
-                        15 км от вас
-                    </div>
-                </div>
-                <div class="swipe-card__choice m--reject"></div>
-                <div class="swipe-card__choice m--like"></div>
             </div>
         </div>
     </ion-content>
@@ -163,13 +165,18 @@ ion-title .highlighted {
 
 ion-content {
     --background: #171717;
+    --overflow: hidden;
 }
 
-.swipe-cards {
+.swipe-cards-wrap {
     padding: 16px;
+}
+.swipe-cards {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    height: 100vh;
 }
 .swipe-card {
     background: #232323;
