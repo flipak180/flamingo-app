@@ -46,6 +46,11 @@ const routes = [
                 component: () => import('@/screens/SwipeScreen.vue'),
             },
             {
+                path: 'match',
+                name: 'match',
+                component: () => import('@/screens/_v2/MatchScreen.vue'),
+            },
+            {
                 path: 'home/quest',
                 component: () => import('@/screens/QuestScreen'),
             },
