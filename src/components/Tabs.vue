@@ -3,6 +3,18 @@
         <!-- <MainButton /> -->
         <ion-tabs>
             <ion-router-outlet></ion-router-outlet>
+            <ion-tabs>
+                <ion-router-outlet></ion-router-outlet>
+                <ion-tab-bar slot="bottom">
+                    <ion-tab-button tab="tab-home" href="/tabs/match">
+                        <ion-icon aria-hidden="true" :icon="albumsOutline"/>
+                    </ion-tab-button>
+
+                    <ion-tab-button tab="tab-profile" href="/tabs/profile">
+                        <ion-icon aria-hidden="true" :icon="person"/>
+                    </ion-tab-button>
+                </ion-tab-bar>
+            </ion-tabs>
             <!-- <ion-tab-bar slot="bottom">
                 <ion-tab-button tab="tab-home" href="/tabs/home">
                     <ion-icon aria-hidden="true" :icon="homeOutline"/>
@@ -32,48 +44,41 @@
     </ion-page>
 </template>
 
-<script>
-import {IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/vue';
-import {compassOutline, homeOutline, personOutline, trailSignOutline} from 'ionicons/icons';
-import MainButton from "@/components/MainButton";
-
-export default {
-    name: "Tabs",
-    components: {
-        IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs,
-        MainButton,
-    },
-    data() {
-        return {
-            homeOutline,
-            personOutline,
-            trailSignOutline,
-            compassOutline,
-        }
-    },
-}
+<script setup>
+import {IonIcon, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/vue";
+import {albumsOutline, person} from 'ionicons/icons';
 </script>
 
 <style scoped lang="scss">
 ion-tab-bar {
-    --background: var(--grey-light);
-
-    @media (prefers-color-scheme: dark) {
-        --background: var(--black);
-    }
+    --background: #232323;
 }
 ion-tab-button {
-    --color: var(--black);
-    --color-focused: var(--pink-light);
-    --ripple-color: var(--pink-light);
-    --color-selected: var(--pink);
+    --color: #A2A2A2;
+    --color-focused: #A2A2A2;
+    --ripple-color: #A2A2A2;
+    --color-selected: #FFFFFF;
+}
 
-    @media (prefers-color-scheme: dark) {
-        --color: #fff;
-    }
-}
-ion-tab-button.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
+//ion-tab-bar {
+//    --background: var(--grey-light);
+//
+//    @media (prefers-color-scheme: dark) {
+//        --background: var(--black);
+//    }
+//}
+//ion-tab-button {
+//    --color: var(--black);
+//    --color-focused: var(--pink-light);
+//    --ripple-color: var(--pink-light);
+//    --color-selected: var(--pink);
+//
+//    @media (prefers-color-scheme: dark) {
+//        --color: #fff;
+//    }
+//}
+//ion-tab-button.hidden {
+//    opacity: 0;
+//    visibility: hidden;
+//}
 </style>

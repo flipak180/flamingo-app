@@ -1,81 +1,78 @@
 <script setup>
-import {
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonPage,
-    IonRouterOutlet,
-    IonTabBar,
-    IonTabButton,
-    IonTabs,
-    IonTitle,
-    IonToolbar
-} from "@ionic/vue";
-import {albumsOutline, locationOutline, optionsOutline, person, shuffleOutline} from 'ionicons/icons';
+import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar} from "@ionic/vue";
+import {locationOutline, optionsOutline, shuffleOutline} from 'ionicons/icons';
 import {Swiper, SwiperSlide} from "swiper/vue";
 import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
+import {ref} from "vue";
+import {Pagination} from "swiper";
+
+const slides = ref();
+const modules = ref([Pagination]);
+const setSwiperInstance = (swiper) => {
+    console.log(swiper);
+    slides.value = swiper;
+}
+
+const nextImg = () => {
+    console.log(123);
+    slides.value.slideNext();
+}
+
+const prevImg = () => {
+    console.log(321);
+    slides.value.slidePrev();
+}
 </script>
 
 <template>
-    <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-buttons slot="secondary">
-                    <ion-button>
-                        <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>
-                    </ion-button>
-                </ion-buttons>
-                <ion-buttons slot="primary">
-                    <ion-button>
-                        <ion-icon slot="icon-only" :icon="optionsOutline"></ion-icon>
-                    </ion-button>
-                </ion-buttons>
-                <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content>
-            <div class="swipe-cards">
-                <div class="swipe-card">
-                    <div class="swipe-card__top">
-                        <swiper class="swipe-card__slider">
-                            <swiper-slide class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-1.jpg')})` }"></swiper-slide>
-                            <swiper-slide class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-2.jpg')})` }"></swiper-slide>
-                        </swiper>
-                        <div class="swipe-card__tags">
-                            <div class="swipe-card__tag">Музей</div>
-                            <div class="swipe-card__tag">Выставка</div>
-                        </div>
+    <ion-header>
+        <ion-toolbar>
+            <ion-buttons slot="secondary">
+                <ion-button>
+                    <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+            <ion-buttons slot="primary">
+                <ion-button>
+                    <ion-icon slot="icon-only" :icon="optionsOutline"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+            <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <div class="swipe-cards">
+            <div class="swipe-card">
+                <div class="swipe-card__top">
+                    <swiper class="swipe-card__slider" @swiper="setSwiperInstance" :pagination="true" :modules="modules">
+                        <swiper-slide class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-1.jpg')})` }"></swiper-slide>
+                        <swiper-slide class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-2.jpg')})` }"></swiper-slide>
+                    </swiper>
+                    <div class="swipe-card__tags">
+                        <div class="swipe-card__tag">Музей</div>
+                        <div class="swipe-card__tag">Выставка</div>
                     </div>
-                    <div class="swipe-card__info">
-                        <div class="swipe-card__title">Эрарта</div>
-                        <div class="swipe-card__distance">
-                            <ion-icon :icon="locationOutline"></ion-icon>
-                            15 км от вас
-                        </div>
+                    <div class="swipe-card__img-controls">
+                        <div class="swipe-card__prev-img" @click="prevImg"></div>
+                        <div class="swipe-card__next-img" @click="nextImg"></div>
+                    </div>
+                </div>
+                <div class="swipe-card__info">
+                    <div class="swipe-card__title">Эрарта</div>
+                    <div class="swipe-card__distance">
+                        <ion-icon :icon="locationOutline"></ion-icon>
+                        15 км от вас
                     </div>
                 </div>
             </div>
-        </ion-content>
-        <ion-tabs>
-            <ion-router-outlet></ion-router-outlet>
-            <ion-tab-bar slot="bottom">
-                <ion-tab-button tab="tab-home" href="/tabs/match">
-                    <ion-icon aria-hidden="true" :icon="albumsOutline"/>
-                </ion-tab-button>
-
-                <ion-tab-button tab="tab-profile" href="/tabs/profile">
-                    <ion-icon aria-hidden="true" :icon="person"/>
-                </ion-tab-button>
-            </ion-tab-bar>
-        </ion-tabs>
-    </ion-page>
+        </div>
+    </ion-content>
 </template>
 
 <style scoped lang="scss">
-.ion-page {
+.ion-page,
+ion-header {
     background: #171717;
 }
 
@@ -131,6 +128,30 @@ ion-content {
         border-radius: 15px;
         height: 560px;
     }
+    .swiper {
+        border-radius: 15px;
+    }
+    &__img-controls {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    &__next-img,
+    &__prev-img {
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+    }
+    &__next-img {
+
+    }
+    &__prev-img {
+
+    }
     &__info {
         padding: 15px;
     }
@@ -147,15 +168,5 @@ ion-content {
         align-items: center;
         gap: 5px;
     }
-}
-
-ion-tab-bar {
-    --background: #232323;
-}
-ion-tab-button {
-    --color: #A2A2A2;
-    --color-focused: #A2A2A2;
-    --ripple-color: #A2A2A2;
-    --color-selected: #FFFFFF;
 }
 </style>
