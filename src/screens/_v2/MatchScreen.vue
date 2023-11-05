@@ -15,6 +15,8 @@ import {
 } from "@ionic/vue";
 import {albumsOutline, locationOutline, optionsOutline, person, shuffleOutline} from 'ionicons/icons';
 import {Swiper, SwiperSlide} from "swiper/vue";
+import 'swiper/css';
+import '@ionic/vue/css/ionic-swiper.css';
 </script>
 
 <template>
