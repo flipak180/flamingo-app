@@ -180,7 +180,7 @@ ion-content {
 }
 .swipe-card {
     background: #232323;
-    max-height: 650px;
+    max-height: 640px;
     border-radius: 15px;
 
     z-index: 2;
