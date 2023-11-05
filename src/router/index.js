@@ -5,7 +5,7 @@ const routes = [
     {
         path: '/',
         //redirect: '/onboarding'
-        redirect: '/tabs/home'
+        redirect: '/tabs/match'
     },
     {
         path: '/login',

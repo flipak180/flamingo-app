@@ -1,6 +1,19 @@
 <script setup>
-import {IonPage, IonContent, IonHeader, IonTabBar, IonTabButton, IonIcon, IonTabs, IonRouterOutlet, IonButton, IonButtons, IonTitle, IonToolbar} from "@ionic/vue";
-import {albumsOutline, person, shuffleOutline, optionsOutline} from 'ionicons/icons';
+import {
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonPage,
+    IonRouterOutlet,
+    IonTabBar,
+    IonTabButton,
+    IonTabs,
+    IonTitle,
+    IonToolbar
+} from "@ionic/vue";
+import {albumsOutline, locationOutline, optionsOutline, person, shuffleOutline} from 'ionicons/icons';
 </script>
 
 <template>
@@ -23,12 +36,21 @@ import {albumsOutline, person, shuffleOutline, optionsOutline} from 'ionicons/ic
         <ion-content>
             <div class="swipe-cards">
                 <div class="swipe-card">
-                    <div class="swipe-card__slider">
-                        <div class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-1.jpg')})` }"></div>
+                    <div class="swipe-card__top">
+                        <div class="swipe-card__slider">
+                            <div class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-1.jpg')})` }"></div>
+                        </div>
+                        <div class="swipe-card__tags">
+                            <div class="swipe-card__tag">Музей</div>
+                            <div class="swipe-card__tag">Выставка</div>
+                        </div>
                     </div>
                     <div class="swipe-card__info">
                         <div class="swipe-card__title">Эрарта</div>
-                        <div class="swipe-card__distance">15 км от вас</div>
+                        <div class="swipe-card__distance">
+                            <ion-icon :icon="locationOutline"></ion-icon>
+                            15 км от вас
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,17 +94,54 @@ ion-content {
 }
 
 .swipe-cards {
-    height: 650px;
     padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .swipe-card {
     background: #232323;
     height: 100%;
+    max-height: 650px;
     border-radius: 15px;
 
+    &__top {
+        position: relative;
+    }
+    &__tags {
+        position: absolute;
+        bottom: 15px;
+        left: 10px;
+        display: flex;
+        gap: 10px;
+    }
+    &__tag {
+        background: var(--pink);
+        font-size: 13px;
+        font-weight: 600;
+        color: #fff;
+        border-radius: 10px;
+        padding: 4px 10px;
+    }
     &__slider-item {
         border-radius: 15px;
         height: 560px;
+    }
+    &__info {
+        padding: 15px;
+    }
+    &__title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 12px;
+    }
+    &__distance {
+        font-size: 13px;
+        color: #A2A2A2;
+        display: flex;
+        align-items: center;
+        gap: 5px;
     }
 }
 
