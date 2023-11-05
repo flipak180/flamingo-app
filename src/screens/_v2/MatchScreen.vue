@@ -200,6 +200,7 @@ ion-content {
         left: 10px;
         display: flex;
         gap: 10px;
+        z-index: 15;
     }
     &__tag {
         background: var(--pink);
