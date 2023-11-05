@@ -14,6 +14,7 @@ import {
     IonToolbar
 } from "@ionic/vue";
 import {albumsOutline, locationOutline, optionsOutline, person, shuffleOutline} from 'ionicons/icons';
+import {Swiper, SwiperSlide} from "swiper/vue";
 </script>
 
 <template>
@@ -37,9 +38,10 @@ import {albumsOutline, locationOutline, optionsOutline, person, shuffleOutline} 
             <div class="swipe-cards">
                 <div class="swipe-card">
                     <div class="swipe-card__top">
-                        <div class="swipe-card__slider">
-                            <div class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-1.jpg')})` }"></div>
-                        </div>
+                        <swiper class="swipe-card__slider">
+                            <swiper-slide class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-1.jpg')})` }"></swiper-slide>
+                            <swiper-slide class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-2.jpg')})` }"></swiper-slide>
+                        </swiper>
                         <div class="swipe-card__tags">
                             <div class="swipe-card__tag">Музей</div>
                             <div class="swipe-card__tag">Выставка</div>
