@@ -1,11 +1,18 @@
 <template>
     <ion-page>
         <ion-header>
-            <ion-toolbar></ion-toolbar>
-            <ion-toolbar v-show="filtersVisible">
-                <div class="ion-padding-horizontal">
-                    <PlacesFilter />
-                </div>
+            <ion-toolbar>
+                <ion-buttons slot="secondary">
+                    <ion-button>
+                        <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+                <ion-buttons slot="primary">
+                    <ion-button>
+                        <ion-icon slot="icon-only" :icon="optionsOutline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+                <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding"
@@ -44,6 +51,7 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/vue";
+import {locationOutline, optionsOutline, shuffleOutline} from 'ionicons/icons';
 import MyCoordinates from "@/components/MyCoordinates";
 import BackButton from "@/components/BackButton";
 import CategoriesGrid from "@/components/categories/CategoriesGrid";
@@ -71,6 +79,9 @@ export default {
             isLoading: false,
             filtersVisible: true,
             lastScrollTop: null,
+
+            shuffleOutline,
+            optionsOutline,
 
             TYPE_CATALOG,
             TYPE_ROUTE,

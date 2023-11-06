@@ -74,3 +74,11 @@ ion-content {
 .ion-page .swiper .swiper-pagination-bullet-active {
     background: var(--pink);
 }
+
+ion-title {
+    --color: #FFFFFF;
+    font-size: 24px;
+}
+ion-title .highlighted {
+    color: var(--pink);
+}

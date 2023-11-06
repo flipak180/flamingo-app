@@ -1,3 +1,8 @@
+<script setup>
+import {IonIcon, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/vue";
+import {albumsOutline, copyOutline} from 'ionicons/icons';
+</script>
+
 <template>
     <ion-page>
         <!-- <MainButton /> -->
@@ -6,12 +11,11 @@
             <ion-tabs>
                 <ion-router-outlet></ion-router-outlet>
                 <ion-tab-bar slot="bottom">
-                    <ion-tab-button tab="tab-home" href="/tabs/match">
+                    <ion-tab-button tab="tab-profile" href="/tabs/home">
                         <ion-icon aria-hidden="true" :icon="albumsOutline"/>
                     </ion-tab-button>
-
-                    <ion-tab-button tab="tab-profile" href="/tabs/profile">
-                        <ion-icon aria-hidden="true" :icon="person"/>
+                    <ion-tab-button tab="tab-home" href="/tabs/match">
+                        <ion-icon aria-hidden="true" :icon="copyOutline"/>
                     </ion-tab-button>
                 </ion-tab-bar>
             </ion-tabs>
@@ -43,11 +47,6 @@
         </ion-tabs>
     </ion-page>
 </template>
-
-<script setup>
-import {IonIcon, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/vue";
-import {albumsOutline, person} from 'ionicons/icons';
-</script>
 
 <style scoped lang="scss">
 ion-tab-bar {

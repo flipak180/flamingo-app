@@ -1,5 +1,5 @@
 <script setup>
-import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonTitle, IonToolbar} from "@ionic/vue";
+import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
 import {locationOutline, optionsOutline, shuffleOutline} from 'ionicons/icons';
 import {Swiper, SwiperSlide} from "swiper/vue";
 import 'swiper/css';
@@ -101,50 +101,52 @@ onMounted(async () => {
 </script>
 
 <template>
-    <ion-header>
-        <ion-toolbar>
-            <ion-buttons slot="secondary">
-                <ion-button>
-                    <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-            <ion-buttons slot="primary">
-                <ion-button>
-                    <ion-icon slot="icon-only" :icon="optionsOutline"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-            <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
-        </ion-toolbar>
-    </ion-header>
-    <ion-content>
-        <div class="swipe-cards-wrap">
-            <div class="swipe-cards">
-                <div class="swipe-card" v-for="(place, index) in places" :key="place.id">
-                    <div class="swipe-card__top">
-                        <swiper class="swipe-card__slider" @swiper="setSwiperInstance($event, place.id)" :pagination="place.images.length > 1" :modules="modules">
-                            <swiper-slide class="swipe-card__slider-item" v-for="image in place.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
-                        </swiper>
-                        <div class="swipe-card__tags" v-for="tag in place.tags" :key="tag">
-                            <div class="swipe-card__tag">{{ tag }}</div>
+    <ion-page>
+        <ion-header>
+            <ion-toolbar>
+                <ion-buttons slot="secondary">
+                    <ion-button>
+                        <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+                <ion-buttons slot="primary">
+                    <ion-button>
+                        <ion-icon slot="icon-only" :icon="optionsOutline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+                <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content>
+            <div class="swipe-cards-wrap">
+                <div class="swipe-cards">
+                    <div class="swipe-card" v-for="place in places" :key="place.id">
+                        <div class="swipe-card__top">
+                            <swiper class="swipe-card__slider" @swiper="setSwiperInstance($event, place.id)" :pagination="place.images.length > 1" :modules="modules">
+                                <swiper-slide class="swipe-card__slider-item" v-for="image in place.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
+                            </swiper>
+                            <div class="swipe-card__tags" v-for="tag in place.tags" :key="tag">
+                                <div class="swipe-card__tag">{{ tag }}</div>
+                            </div>
+                            <div class="swipe-card__img-controls">
+                                <div class="swipe-card__prev-img" @click="sliders[place.id].slidePrev()"></div>
+                                <div class="swipe-card__next-img" @click="sliders[place.id].slideNext()"></div>
+                            </div>
                         </div>
-                        <div class="swipe-card__img-controls">
-                            <div class="swipe-card__prev-img" @click="sliders[place.id].slidePrev()"></div>
-                            <div class="swipe-card__next-img" @click="sliders[place.id].slideNext()"></div>
+                        <div class="swipe-card__info">
+                            <div class="swipe-card__title">{{ place.title }}</div>
+                            <div class="swipe-card__distance">
+                                <ion-icon :icon="locationOutline"></ion-icon>
+                                15 км от вас
+                            </div>
                         </div>
+                        <div class="swipe-card__choice m--reject"></div>
+                        <div class="swipe-card__choice m--like"></div>
                     </div>
-                    <div class="swipe-card__info">
-                        <div class="swipe-card__title">{{ place.title }}</div>
-                        <div class="swipe-card__distance">
-                            <ion-icon :icon="locationOutline"></ion-icon>
-                            15 км от вас
-                        </div>
-                    </div>
-                    <div class="swipe-card__choice m--reject"></div>
-                    <div class="swipe-card__choice m--like"></div>
                 </div>
             </div>
-        </div>
-    </ion-content>
+        </ion-content>
+    </ion-page>
 </template>
 
 <style scoped lang="scss">
@@ -158,13 +160,6 @@ ion-toolbar {
 }
 ion-toolbar ion-button {
     --color: #FFFFFF;
-}
-ion-title {
-    --color: #FFFFFF;
-    font-size: 24px;
-}
-ion-title .highlighted {
-    color: var(--pink);
 }
 
 ion-content {
