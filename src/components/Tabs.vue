@@ -50,32 +50,26 @@ import {albumsOutline, copyOutline} from 'ionicons/icons';
 
 <style scoped lang="scss">
 ion-tab-bar {
-    --background: #232323;
+    --background: var(--grey-light);
+
+    @media (prefers-color-scheme: dark) {
+        --background: var(--black-light);
+    }
 }
 ion-tab-button {
-    --color: #A2A2A2;
-    --color-focused: #A2A2A2;
-    --ripple-color: #A2A2A2;
-    --color-selected: #FFFFFF;
+    --color: var(--black);
+    --color-focused: var(--pink-light);
+    --ripple-color: var(--pink-light);
+    --color-selected: var(--pink);
+
+    @media (prefers-color-scheme: dark) {
+        --color: #A2A2A2;
+        --color-focused: #A2A2A2;
+        --ripple-color: #A2A2A2;
+        --color-selected: #FFFFFF;
+    }
 }
 
-//ion-tab-bar {
-//    --background: var(--grey-light);
-//
-//    @media (prefers-color-scheme: dark) {
-//        --background: var(--black);
-//    }
-//}
-//ion-tab-button {
-//    --color: var(--black);
-//    --color-focused: var(--pink-light);
-//    --ripple-color: var(--pink-light);
-//    --color-selected: var(--pink);
-//
-//    @media (prefers-color-scheme: dark) {
-//        --color: #fff;
-//    }
-//}
 //ion-tab-button.hidden {
 //    opacity: 0;
 //    visibility: hidden;

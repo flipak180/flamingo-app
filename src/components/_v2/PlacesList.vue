@@ -26,7 +26,7 @@ export default {
     background: #fff;
 
     @media (prefers-color-scheme: dark) {
-        background: var(--black);
+        background: var(--black-light);
     }
 }
 
