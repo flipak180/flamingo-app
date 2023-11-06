@@ -11,7 +11,6 @@ const slides = ref([]);
 const modules = ref([Pagination]);
 const setSwiperInstance = (swiper) => {
     slides.value.push(swiper);
-    console.log(slides.value);
 }
 
 onMounted(() => {
@@ -176,7 +175,7 @@ ion-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100vh;
+    height: calc(100vh - 44px - 83px);
 }
 .swipe-card {
     background: #232323;
@@ -190,9 +189,12 @@ ion-content {
     width: 100%;
     height: 100%;
     transform-origin: 50% 100%;
+    display: flex;
+    flex-direction: column;
 
     &__top {
         position: relative;
+        flex-grow: 1;
     }
     &__tags {
         position: absolute;
@@ -212,10 +214,14 @@ ion-content {
     }
     &__slider-item {
         border-radius: 15px;
-        height: 560px;
+        max-height: 560px;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
     }
     .swiper {
         border-radius: 15px;
+        height: 100%;
     }
     &__img-controls {
         position: absolute;
