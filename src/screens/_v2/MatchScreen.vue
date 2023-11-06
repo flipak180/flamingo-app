@@ -15,15 +15,15 @@ const setSwiperInstance = (swiper) => {
     sliders.value.push(swiper);
 }
 
-onMounted(() => {
-    api.get(`/places/list`).then(res => {
-        places.value = res.data;
+onMounted(async () => {
+    await api.get(`/places/list`).then(res => {
+        places.value = res.data.reverse();
     });
 
 
     var animating = false;
     var cardsCounter = 0;
-    var numOfCards = 6;
+    var numOfCards = places.value.length;
     var decisionVal = 80;
     var pullDeltaX = 0;
     var deg = 0;
@@ -121,7 +121,7 @@ onMounted(() => {
             <div class="swipe-cards">
                 <div class="swipe-card" v-for="(place, index) in places" :key="place.id">
                     <div class="swipe-card__top">
-                        <swiper class="swipe-card__slider" @swiper="setSwiperInstance" :pagination="true" :modules="modules">
+                        <swiper class="swipe-card__slider" @swiper="setSwiperInstance" :pagination="place.images.length > 1" :modules="modules">
                             <swiper-slide class="swipe-card__slider-item" v-for="image in place.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
                         </swiper>
                         <div class="swipe-card__tags" v-for="tag in place.tags" :key="tag">
