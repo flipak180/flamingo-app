@@ -6,14 +6,21 @@ import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import {onMounted, ref} from "vue";
 import {Pagination} from "swiper";
+import api from "@/plugins/api";
 
-const slides = ref([]);
+const places = ref([]);
+const sliders = ref([]);
 const modules = ref([Pagination]);
 const setSwiperInstance = (swiper) => {
-    slides.value.push(swiper);
+    sliders.value.push(swiper);
 }
 
 onMounted(() => {
+    api.get(`/places/list`).then(res => {
+        places.value = res.data;
+    });
+
+
     var animating = false;
     var cardsCounter = 0;
     var numOfCards = 6;
@@ -112,23 +119,21 @@ onMounted(() => {
     <ion-content>
         <div class="swipe-cards-wrap">
             <div class="swipe-cards">
-                <div class="swipe-card" v-for="index in 5" :key="index">
+                <div class="swipe-card" v-for="(place, index) in places" :key="place.id">
                     <div class="swipe-card__top">
                         <swiper class="swipe-card__slider" @swiper="setSwiperInstance" :pagination="true" :modules="modules">
-                            <swiper-slide class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-1.jpg')})` }"></swiper-slide>
-                            <swiper-slide class="swipe-card__slider-item" :style="{ backgroundImage: `url(${require('@/assets/swipe-card-2.jpg')})` }"></swiper-slide>
+                            <swiper-slide class="swipe-card__slider-item" v-for="image in place.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
                         </swiper>
-                        <div class="swipe-card__tags">
-                            <div class="swipe-card__tag">Музей</div>
-                            <div class="swipe-card__tag">Выставка</div>
+                        <div class="swipe-card__tags" v-for="tag in place.tags" :key="tag">
+                            <div class="swipe-card__tag">{{ tag }}</div>
                         </div>
                         <div class="swipe-card__img-controls">
-                            <div class="swipe-card__prev-img" @click="slides[index - 1].slidePrev()"></div>
-                            <div class="swipe-card__next-img" @click="slides[index - 1].slideNext()"></div>
+                            <div class="swipe-card__prev-img" @click="sliders[index - 1].slidePrev()"></div>
+                            <div class="swipe-card__next-img" @click="sliders[index - 1].slideNext()"></div>
                         </div>
                     </div>
                     <div class="swipe-card__info">
-                        <div class="swipe-card__title">Эрарта {{ index }}</div>
+                        <div class="swipe-card__title">{{ place.title }}</div>
                         <div class="swipe-card__distance">
                             <ion-icon :icon="locationOutline"></ion-icon>
                             15 км от вас
