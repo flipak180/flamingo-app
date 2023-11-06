@@ -9,10 +9,10 @@ import {Pagination} from "swiper";
 import api from "@/plugins/api";
 
 const places = ref([]);
-const sliders = ref([]);
+const sliders = ref({});
 const modules = ref([Pagination]);
-const setSwiperInstance = (swiper) => {
-    sliders.value.push(swiper);
+const setSwiperInstance = (swiper, id) => {
+    sliders.value[id] = swiper;
 }
 
 onMounted(async () => {
@@ -121,15 +121,15 @@ onMounted(async () => {
             <div class="swipe-cards">
                 <div class="swipe-card" v-for="(place, index) in places" :key="place.id">
                     <div class="swipe-card__top">
-                        <swiper class="swipe-card__slider" @swiper="setSwiperInstance" :pagination="place.images.length > 1" :modules="modules">
+                        <swiper class="swipe-card__slider" @swiper="setSwiperInstance($event, place.id)" :pagination="place.images.length > 1" :modules="modules">
                             <swiper-slide class="swipe-card__slider-item" v-for="image in place.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
                         </swiper>
                         <div class="swipe-card__tags" v-for="tag in place.tags" :key="tag">
                             <div class="swipe-card__tag">{{ tag }}</div>
                         </div>
                         <div class="swipe-card__img-controls">
-                            <div class="swipe-card__prev-img" @click="sliders[index - 1].slidePrev()"></div>
-                            <div class="swipe-card__next-img" @click="sliders[index - 1].slideNext()"></div>
+                            <div class="swipe-card__prev-img" @click="sliders[place.id].slidePrev()"></div>
+                            <div class="swipe-card__next-img" @click="sliders[place.id].slideNext()"></div>
                         </div>
                     </div>
                     <div class="swipe-card__info">
