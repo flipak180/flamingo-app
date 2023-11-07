@@ -125,8 +125,8 @@ onMounted(async () => {
                             <swiper class="swipe-card__slider" @swiper="setSwiperInstance($event, place.id)" :pagination="place.images.length > 1" :modules="modules">
                                 <swiper-slide class="swipe-card__slider-item" v-for="image in place.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
                             </swiper>
-                            <div class="swipe-card__tags" v-for="tag in place.tags" :key="tag">
-                                <div class="swipe-card__tag">{{ tag }}</div>
+                            <div class="swipe-card__tags">
+                                <div class="swipe-card__tag" v-for="tag in place.tags" :key="tag">{{ tag }}</div>
                             </div>
                             <div class="swipe-card__img-controls">
                                 <div class="swipe-card__prev-img" @click="sliders[place.id].slidePrev()"></div>
