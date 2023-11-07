@@ -150,20 +150,14 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
-.ion-page,
-ion-header {
-    background: #171717;
-}
-
-ion-toolbar {
-    --background: transparent;
-}
-ion-toolbar ion-button {
-    --color: #FFFFFF;
-}
+//ion-toolbar {
+//    --background: transparent;
+//}
+//ion-toolbar ion-button {
+//    --color: #FFFFFF;
+//}
 
 ion-content {
-    --background: #171717;
     --overflow: hidden;
 }
 
@@ -178,7 +172,7 @@ ion-content {
     height: calc(100vh - 44px - 83px);
 }
 .swipe-card {
-    background: #232323;
+    background: var(--black-light);
     max-height: 640px;
     border-radius: 15px;
 
