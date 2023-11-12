@@ -5,7 +5,7 @@ import {Swiper, SwiperSlide} from "swiper/vue";
 import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import {onMounted, ref} from "vue";
-import {Pagination} from "swiper";
+import {Pagination} from "swiper/modules";
 import api from "@/plugins/api";
 
 const places = ref([]);

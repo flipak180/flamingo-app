@@ -1,7 +1,7 @@
 <template>
     <div class="single-place" v-if="place">
         <CloseButton />
-        <swiper class="single-place__images" :modules="modules" :pagination="{dynamicBullets: true}">
+        <swiper class="single-place__images" :modules="modules" :pagination="place.images.length > 1">
             <swiper-slide class="single-place__image" v-for="image in place.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
         </swiper>
         <div class="single-place__header">
@@ -23,7 +23,7 @@ import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import 'swiper/css/pagination';
 import {IonicSlides} from "@ionic/vue";
-import {Pagination} from "swiper";
+import {Pagination} from "swiper/modules";
 
 export default {
     name: "SinglePlace",
