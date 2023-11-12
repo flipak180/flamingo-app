@@ -8,17 +8,14 @@ import {albumsOutline, copyOutline} from 'ionicons/icons';
         <!-- <MainButton /> -->
         <ion-tabs>
             <ion-router-outlet></ion-router-outlet>
-            <ion-tabs>
-                <ion-router-outlet></ion-router-outlet>
-                <ion-tab-bar slot="bottom">
-                    <ion-tab-button tab="tab-profile" href="/tabs/home">
-                        <ion-icon aria-hidden="true" :icon="albumsOutline"/>
-                    </ion-tab-button>
-                    <ion-tab-button tab="tab-home" href="/tabs/match">
-                        <ion-icon aria-hidden="true" :icon="copyOutline"/>
-                    </ion-tab-button>
-                </ion-tab-bar>
-            </ion-tabs>
+            <ion-tab-bar slot="bottom">
+                <ion-tab-button tab="tab-profile" href="/tabs/home">
+                    <ion-icon aria-hidden="true" :icon="albumsOutline"/>
+                </ion-tab-button>
+                <ion-tab-button tab="tab-home" href="/tabs/match">
+                    <ion-icon aria-hidden="true" :icon="copyOutline"/>
+                </ion-tab-button>
+            </ion-tab-bar>
             <!-- <ion-tab-bar slot="bottom">
                 <ion-tab-button tab="tab-home" href="/tabs/home">
                     <ion-icon aria-hidden="true" :icon="homeOutline"/>
