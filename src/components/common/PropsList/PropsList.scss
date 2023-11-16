@@ -1,8 +1,9 @@
 .props-list {
-    border-top: 1px solid rgba(var(--contrast), 0.2);
-    border-bottom: 1px solid rgba(var(--contrast), 0.2);
+    //border-top: 1px solid rgba(var(--contrast), 0.2);
+    //border-bottom: 1px solid rgba(var(--contrast), 0.2);
     padding: 10px 0;
-    margin: 10px 0;
+    //margin: 10px 0;
+    margin: 0 10px;
     display: flex;
     gap: 30px;
     text-align: center;
@@ -30,6 +31,14 @@
 
         &:last-child:after {
             display: none;
+        }
+
+        &-active {
+
+            .props-list__name,
+            .props-list__value {
+                color: var(--pink);
+            }
         }
     }
 

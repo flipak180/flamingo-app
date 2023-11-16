@@ -1,6 +1,6 @@
 <script setup>
 import {IonIcon, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/vue";
-import {albumsOutline, copyOutline} from 'ionicons/icons';
+import {albumsOutline, compassOutline, copyOutline} from 'ionicons/icons';
 </script>
 
 <template>
@@ -9,10 +9,13 @@ import {albumsOutline, copyOutline} from 'ionicons/icons';
         <ion-tabs>
             <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar slot="bottom">
-                <ion-tab-button tab="tab-profile" href="/tabs/home">
+                <ion-tab-button tab="tab-home" href="/tabs/home">
                     <ion-icon aria-hidden="true" :icon="albumsOutline"/>
                 </ion-tab-button>
-                <ion-tab-button tab="tab-home" href="/tabs/match">
+                <ion-tab-button tab="tab-quests" href="/tabs/quests">
+                    <ion-icon aria-hidden="true" :icon="compassOutline"/>
+                </ion-tab-button>
+                <ion-tab-button tab="tab-match" href="/tabs/match">
                     <ion-icon aria-hidden="true" :icon="copyOutline"/>
                 </ion-tab-button>
             </ion-tab-bar>

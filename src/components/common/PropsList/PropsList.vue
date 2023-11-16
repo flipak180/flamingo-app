@@ -1,5 +1,9 @@
 <template>
     <div class="props-list">
+        <div class="props-list__item props-list__item-active">
+            <div class="props-list__name">Награда</div>
+            <div class="props-list__value">500</div>
+        </div>
         <div class="props-list__item" @click="$router.push({ name: 'map' });">
             <div class="props-list__name">Локация</div>
             <div class="props-list__value">
@@ -13,6 +17,10 @@
         <div class="props-list__item">
             <div class="props-list__name">Длительность</div>
             <div class="props-list__value">4 часа</div>
+        </div>
+        <div class="props-list__item">
+            <div class="props-list__name">Заданий</div>
+            <div class="props-list__value">11</div>
         </div>
         <div class="props-list__item">
             <div class="props-list__name">Сложность</div>

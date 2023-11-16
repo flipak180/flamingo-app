@@ -51,13 +51,18 @@ const routes = [
                 component: () => import('@/screens/_v2/MatchScreen.vue'),
             },
             {
-                path: 'home/quest',
-                component: () => import('@/screens/QuestScreen'),
+                path: 'quests',
+                name: 'quests',
+                component: () => import('@/screens/_v2/QuestsScreen.vue'),
             },
-            {
-                path: 'home/compilation',
-                component: () => import('@/screens/CompilationScreen'),
-            },
+            // {
+            //     path: 'home/quest',
+            //     component: () => import('@/screens/QuestScreen'),
+            // },
+            // {
+            //     path: 'home/compilation',
+            //     component: () => import('@/screens/CompilationScreen'),
+            // },
             {
                 path: 'home/single-place/:place_id',
                 component: () => import('@/screens/_v2/SinglePlaceScreen'),
