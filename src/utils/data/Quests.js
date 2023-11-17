@@ -37,14 +37,16 @@ export default [
                 atPlace: true,
             }
         ],
+        tags: ['Исторический', 'Сложный'],
     },
     {
         id: 4,
-        type: 'Квест',
+        type: 'Маршрут',
         title: 'Марафон по разводу мостов',
         image: 'images/4.jpg',
         totalPlaces: 0,
         places: [],
+        tags: ['На транспорте', 'Ночной'],
     },
     {
         id: 2,
@@ -53,5 +55,6 @@ export default [
         image: 'images/2.jpg',
         totalPlaces: 0,
         places: [],
+        tags: ['Знаменитости', 'С детьми'],
     },
 ]

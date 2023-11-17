@@ -1,40 +1,3 @@
-<template>
-    <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-buttons slot="secondary">
-                    <ion-button>
-                        <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>
-                    </ion-button>
-                </ion-buttons>
-                <ion-buttons slot="primary">
-                    <ion-button>
-                        <ion-icon slot="icon-only" :icon="optionsOutline"></ion-icon>
-                    </ion-button>
-                </ion-buttons>
-                <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-padding">
-            <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
-                <ion-refresher-content />
-            </ion-refresher>
-            <div class="ion-margin-top ion-text-center" v-if="isLoading">
-                <ion-spinner />
-            </div>
-
-            <div>
-                <!--<h2>Актуальное</h2>-->
-                <QuestsList :quests="quests" />
-
-<!--                <h2>Подборки</h2>-->
-<!--                <CategoriesGrid :categories="categories" />-->
-            </div>
-        </ion-content>
-        <CardModal />
-    </ion-page>
-</template>
-
 <script>
 import {
     IonButton,
@@ -59,20 +22,24 @@ import RouteCategory from "@/components/categories/RouteCategory";
 import QuestCategory from "@/components/categories/QuestCategory";
 import CardModal from "@/components/CardModal";
 import PlacesFilter from "@/components/_v2/PlacesFilter";
-import QuestsList from "@/components/_v2/QuestsList.vue";
+import PropsList from "@/components/common/PropsList/PropsList.vue";
+import {randomColor} from "@/utils/helper";
+import Quests from "@/utils/data/Quests";
 
 export default {
     name: "HomeScreen",
     components: {
+        PropsList,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
         IonButtons, BackButton, IonIcon, IonButton,
         IonSpinner, IonRefresher, IonRefresherContent,
         MyCoordinates, CategoriesGrid, CardModal, PlacesFilter,
-        CatalogCategory, RouteCategory, QuestCategory, QuestsList
+        CatalogCategory, RouteCategory, QuestCategory
     },
     data() {
         return {
             quests: [],
+            Quests,
             isLoading: false,
             filtersVisible: true,
             lastScrollTop: null,
@@ -89,6 +56,7 @@ export default {
         this.fetch();
     },
     methods: {
+        randomColor,
         fetch() {
 
         },
@@ -100,6 +68,52 @@ export default {
     }
 }
 </script>
+
+<template>
+    <ion-page>
+        <ion-header>
+            <ion-toolbar>
+                <ion-buttons slot="secondary">
+                    <ion-button>
+                        <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+                <ion-buttons slot="primary">
+                    <ion-button>
+                        <ion-icon slot="icon-only" :icon="optionsOutline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+                <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+            <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
+                <ion-refresher-content />
+            </ion-refresher>
+            <div class="ion-margin-top ion-text-center" v-if="isLoading">
+                <ion-spinner />
+            </div>
+            <div class="cards-list">
+                <div class="card-item" v-for="card in Quests" :key="card.id">
+                    <div class="card-item__header">
+                        <div class="card-item__type">{{ card.type }}</div>
+                        <div class="card-item__title">{{ card.title }}</div>
+                    </div>
+                    <div class="card-item__content">
+                        <div class="card-item__image" :style="{ background: randomColor() }"></div>
+                        <div class="card-item__tags">
+                            <div class="card-item__tag" v-for="tag in card.tags" :key="tag">{{ tag }}</div>
+                        </div>
+                    </div>
+                    <div class="card-item__footer">
+                        <PropsList />
+                    </div>
+                </div>
+            </div>
+        </ion-content>
+        <CardModal />
+    </ion-page>
+</template>
 
 <style lang="scss" scoped>
 //ion-content {
@@ -113,6 +127,141 @@ h2 {
 
     &:first-child {
         margin-top: 0;
+    }
+}
+
+.cards-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 50px;
+}
+
+.card-item {
+    $this: &;
+
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 4px 16px;
+    overflow: hidden;
+    transition: transform 0.4s;
+
+    @media (prefers-color-scheme: dark) {
+        box-shadow: none;
+    }
+
+    &_active {
+        transform: scale(0.97);
+    }
+
+    &__header {
+        background: #fff;
+        padding: 15px;
+        width: 100%;
+
+        @media (prefers-color-scheme: dark) {
+            background: var(--black-light);
+        }
+    }
+
+    &__content {
+        position: relative;
+    }
+
+    &__footer {
+        background: #fff;
+
+        @media (prefers-color-scheme: dark) {
+            background: var(--black-light);
+        }
+    }
+
+    &__image {
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        height: 300px;
+        position: relative;
+    }
+
+    &__type {
+        color: rgba(var(--black-rgba), 0.5);
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 13px;
+        margin-bottom: 10px;
+        letter-spacing: 0.5px;
+
+        @media (prefers-color-scheme: dark) {
+            color: var(--grey);
+        }
+    }
+
+    &__title {
+        color: var(--black);
+        font-size: 20px;
+        font-weight: 700;
+
+        @media (prefers-color-scheme: dark) {
+            color: #fff;
+        }
+    }
+
+    &__tags {
+        position: absolute;
+        bottom: 15px;
+        left: 10px;
+        display: flex;
+        gap: 10px;
+        z-index: 15;
+    }
+    &__tag {
+        background: var(--pink);
+        font-size: 13px;
+        font-weight: 600;
+        color: #fff;
+        border-radius: 10px;
+        padding: 4px 10px;
+    }
+
+    &__info {
+        padding: 15px;
+        width: 100%;
+
+        &_position_bottom {
+            position: absolute;
+            bottom: 0;
+        }
+
+        &_color_light {
+            #{$this}__type {
+
+            }
+
+            #{$this}__title {
+                color: #fff;
+            }
+        }
+
+        &_color_dark {
+            #{$this}__type {
+
+            }
+
+            #{$this}__title {
+                color: #000;
+            }
+        }
+
+        &_type_bg {
+            // background: rgba(0, 0, 0, 0.5);
+            background: #fff;
+            color: #000;
+
+            @media (prefers-color-scheme: dark) {
+                background: #000;
+                color: #fff;
+            }
+        }
     }
 }
 </style>
