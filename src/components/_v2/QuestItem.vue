@@ -1,7 +1,5 @@
 <template>
-    <div class="card-item" :class="{'card-item_active': isActive}" @click="onClick"
-         @mousedown="startTouch" @mouseup="endTouch" @mouseout="endTouch"
-         @touchstart="startTouch" @touchend="endTouch" @touchmove="endTouch"  >
+    <div class="card-item" :class="{'card-item_active': isActive}" @click="onClick">
         <div class="card-item__header">
             <div class="card-item__type">{{ card.type }}</div>
             <div class="card-item__title">{{ card.title }}</div>
