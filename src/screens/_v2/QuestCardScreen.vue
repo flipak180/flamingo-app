@@ -12,11 +12,10 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/vue";
-import {optionsOutline, shuffleOutline} from 'ionicons/icons';
+import {optionsOutline, shareOutline, mapOutline, lockClosed} from 'ionicons/icons';
 import MyCoordinates from "@/components/MyCoordinates";
 import BackButton from "@/components/BackButton";
 import CategoriesGrid from "@/components/categories/CategoriesGrid";
-import {TYPE_CATALOG, TYPE_QUEST, TYPE_ROUTE} from "@/models/Category";
 import CatalogCategory from "@/components/categories/CatalogCategory";
 import RouteCategory from "@/components/categories/RouteCategory";
 import QuestCategory from "@/components/categories/QuestCategory";
@@ -24,11 +23,16 @@ import CardModal from "@/components/CardModal";
 import PlacesFilter from "@/components/_v2/PlacesFilter";
 import PropsList from "@/components/common/PropsList/PropsList.vue";
 import {randomColor} from "@/utils/helper";
-import Quests from "@/utils/data/Quests";
+import CollapsedText from "@/components/common/CollapsedText/CollapsedText.vue";
+import PlacesGrid from "@/components/places/PlacesGrid.vue";
+import {Share} from "@capacitor/share";
+import PlacesGridItem from "@/components/places/PlacesGridItem.vue";
 
 export default {
     name: "HomeScreen",
     components: {
+        PlacesGridItem,
+        PlacesGrid, CollapsedText,
         PropsList,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
         IonButtons, BackButton, IonIcon, IonButton,
@@ -38,24 +42,45 @@ export default {
     },
     data() {
         return {
-            quests: [],
-            Quests,
-            isLoading: false,
-            filtersVisible: true,
-            lastScrollTop: null,
-
-            shuffleOutline,
             optionsOutline,
-
-            TYPE_CATALOG,
-            TYPE_ROUTE,
-            TYPE_QUEST,
+            shareOutline,
+            mapOutline,
+            lockClosed,
+            places: [
+                {
+                    id: 1,
+                    title: 'Лофт Проект Этажи',
+                    image: randomColor(),
+                    completed: true,
+                },
+                {
+                    id: 2,
+                    title: 'Севкабель Порт',
+                    image: randomColor(),
+                    completed: false,
+                },
+                {
+                    id: 3,
+                    title: 'Новая Голландия',
+                    image: randomColor(),
+                    completed: false,
+                },
+                {
+                    id: 4,
+                    title: 'Никольские ряды',
+                    image: randomColor(),
+                    completed: false,
+                }
+            ],
         }
     },
     mounted() {
         this.fetch();
     },
     methods: {
+        lockClosed() {
+            return lockClosed
+        },
         randomColor,
         fetch() {
 
@@ -65,6 +90,14 @@ export default {
                 event.target.complete();
             });
         },
+        async share() {
+            await Share.share({
+                title: 'Король и Шут. Между Купчино и Ржевкой',
+                text: 'Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться',
+                url: 'https://flamingo.spb.ru/tabs/home/quest',
+                dialogTitle: 'Поделиться с друзьями',
+            });
+        }
     }
 }
 </script>
@@ -76,89 +109,82 @@ export default {
                 <ion-buttons slot="secondary">
                     <BackButton />
                 </ion-buttons>
-                <ion-buttons slot="primary">
-                    <ion-button>
-                        <ion-icon slot="icon-only" :icon="optionsOutline"></ion-icon>
-                    </ion-button>
-                </ion-buttons>
                 <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-            <p>123</p>
+            <div class="quest-card__header">
+                <div class="quest-card__image" :style="{ backgroundImage: `url(${require('@/assets/2.jpg')})` }">
+
+                </div>
+                <div class="quest-card__heading">
+                    <div class="quest-card__title">Король и Шут. Между Купчино и Ржевкой</div>
+                    <div class="quest-card__category">Исторические личности</div>
+                    <div class="quest-card__actions">
+                        <ion-button size="small">Начать</ion-button>
+                        <!-- <ion-icon :icon="shareOutline"></ion-icon> -->
+                        <ion-button size="small" color="light" @click="share">
+                            <ion-icon slot="icon-only" :icon="shareOutline" />
+                        </ion-button>
+                    </div>
+                </div>
+            </div>
+            <PropsList :bordered="true" />
+            <div class="content-section">
+                <div class="content-section__title">Сюжет</div>
+                <CollapsedText>
+                    <p>Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.." Многие программы электронной вёрстки и редакторы HTML используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много версий. Некоторые версии появились по ошибке, некоторые - намеренно (например, юмористические варианты).</p>
+                </CollapsedText>
+            </div>
+            <div class="content-section">
+                <div class="content-section__title">Задания</div>
+                <div class="places-grid">
+                    <div class="place" v-for="(place, i) in places" :key="place.place_id" @click="$router.push({ name: 'placeDetails', params: { place_id: place.place_id } });">
+                        <div class="image" :style="{ background: place.image }">
+                            <span v-if="place.completed">{{ i + 1 }}</span>
+                            <ion-icon aria-hidden="true" :icon="lockClosed" v-else />
+                        </div>
+                        <div class="content" :class="{ closed: !place.completed }">
+                            <div class="title">{{ place.title }}</div>
+                            <div class="buttons">
+                                <ion-button size="small">Я тут</ion-button>
+                                <ion-button size="small">
+                                    <ion-icon slot="icon-only" :icon="mapOutline"></ion-icon>
+                                </ion-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </ion-content>
     </ion-page>
 </template>
 
 <style lang="scss" scoped>
-//ion-content {
-//    --padding-top: calc(var(--ion-padding, 16px) + var(--ion-safe-area-top));
-//}
-ion-toolbar {
-    --min-height: 0;
-}
-h2 {
-    margin: 30px 0 20px;
-
-    &:first-child {
-        margin-top: 0;
-    }
-}
-
-.cards-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
-    margin-bottom: 50px;
-}
-
-.card-item {
-    $this: &;
-
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.12) 0 4px 16px;
-    overflow: hidden;
-    transition: transform 0.4s;
-
-    @media (prefers-color-scheme: dark) {
-        box-shadow: none;
-    }
-
-    &_active {
-        transform: scale(0.97);
-    }
-
+.quest-card {
     &__header {
-        background: #fff;
-        padding: 15px;
-        width: 100%;
-
-        @media (prefers-color-scheme: dark) {
-            background: var(--black-light);
-        }
-    }
-
-    &__content {
-        position: relative;
-    }
-
-    &__footer {
-        background: #fff;
-
-        @media (prefers-color-scheme: dark) {
-            background: var(--black-light);
-        }
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
     }
 
     &__image {
+        width: 100px;
+        height: 100px;
+        flex: 0 0 100px;
         background-repeat: no-repeat;
         background-size: cover;
-        background-position: center center;
-        height: 300px;
-        position: relative;
+        background-position: center;
+        border-radius: 15px;
     }
 
-    &__type {
+    &__title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    &__category {
         color: rgba(var(--black-rgba), 0.5);
         text-transform: uppercase;
         font-weight: bold;
@@ -167,76 +193,58 @@ h2 {
         letter-spacing: 0.5px;
 
         @media (prefers-color-scheme: dark) {
-            color: var(--grey);
+            color: rgba(255, 255, 255, 0.5);
         }
     }
 
-    &__title {
-        color: var(--black);
-        font-size: 20px;
-        font-weight: 700;
-
-        @media (prefers-color-scheme: dark) {
-            color: #fff;
-        }
-    }
-
-    &__tags {
-        position: absolute;
-        bottom: 15px;
-        left: 10px;
+    &__actions {
         display: flex;
-        gap: 10px;
-        z-index: 15;
+        justify-content: space-between;
     }
-    &__tag {
-        background: var(--pink);
-        font-size: 13px;
-        font-weight: 600;
+}
+
+.place {
+    background: var(--ion-card-background, var(--ion-item-background, var(--ion-background-color, #fff)));
+    box-shadow: rgba(0, 0, 0, 0.12) 0 4px 16px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    display: flex;
+    position: relative;
+
+    .image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         color: #fff;
-        border-radius: 10px;
-        padding: 4px 10px;
+        font-weight: bold;
+        font-size: 22px;
+        flex: 0 0 75px;
+        background: #2dd36f;
     }
 
-    &__info {
-        padding: 15px;
-        width: 100%;
+    .content {
+        padding: 10px;
+        position: relative;
 
-        &_position_bottom {
+        &.closed:before {
+            content: '';
             position: absolute;
-            bottom: 0;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: rgba(255, 255, 255, .3);
+            backdrop-filter: blur(5px);
+            z-index: 10;
         }
+    }
 
-        &_color_light {
-            #{$this}__type {
-
-            }
-
-            #{$this}__title {
-                color: #fff;
-            }
-        }
-
-        &_color_dark {
-            #{$this}__type {
-
-            }
-
-            #{$this}__title {
-                color: #000;
-            }
-        }
-
-        &_type_bg {
-            // background: rgba(0, 0, 0, 0.5);
-            background: #fff;
-            color: #000;
-
-            @media (prefers-color-scheme: dark) {
-                background: #000;
-                color: #fff;
-            }
-        }
+    .title {
+        font-weight: 700;
+        min-height: 35px;
+        font-size: 14px;
+        color: var(--ion-text-color, #000);
     }
 }
 </style>
