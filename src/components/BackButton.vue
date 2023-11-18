@@ -1,5 +1,5 @@
 <template>
-    <ion-back-button :icon="chevronBack" :text="text || '&nbsp;&nbsp;&nbsp;'" style="padding-left: 7px;" class="back-button"></ion-back-button>
+    <ion-back-button color="dark" :icon="chevronBack" :text="text || '&nbsp;&nbsp;&nbsp;'" style="padding-left: 7px;" class="back-button"></ion-back-button>
 </template>
 
 <script>
@@ -26,8 +26,6 @@ export default {
 }
 </script>
 
-<style scoped>
-    .back-button {
-        color: var(--black);
-    }
+<style scoped lang="scss">
+
 </style>

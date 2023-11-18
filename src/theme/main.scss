@@ -36,14 +36,14 @@ body {
     color: var(--pink);
 }
 
-.ion-page,
-ion-header {
-    background: #fff;
-
-    @media (prefers-color-scheme: dark) {
-        background: var(--black);
-    }
-}
+//.ion-page,
+//ion-header {
+//    background: #fff;
+//
+//    @media (prefers-color-scheme: dark) {
+//        background: var(--black);
+//    }
+//}
 
 ion-toolbar {
     --background: transparent;
