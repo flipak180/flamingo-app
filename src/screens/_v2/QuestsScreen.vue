@@ -94,7 +94,7 @@ export default {
                 <ion-spinner />
             </div>
             <div class="cards-list">
-                <div class="card-item" v-for="card in Quests" :key="card.id" @click="$router.push({ name: 'quest', params: { quest_id: card.id } })">
+                <div class="card-item" v-for="card in Quests" :key="card.id" @click="$router.push({ name: 'quest', params: { quest_id: card.id } })" v-once>
                     <div class="card-item__header">
                         <div class="card-item__type">{{ card.type }}</div>
                         <div class="card-item__title">{{ card.title }}</div>
