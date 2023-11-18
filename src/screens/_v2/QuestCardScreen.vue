@@ -74,9 +74,7 @@ export default {
         <ion-header>
             <ion-toolbar>
                 <ion-buttons slot="secondary">
-                    <ion-button>
-                        <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>
-                    </ion-button>
+                    <BackButton />
                 </ion-buttons>
                 <ion-buttons slot="primary">
                     <ion-button>
@@ -87,31 +85,8 @@ export default {
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-            <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
-                <ion-refresher-content />
-            </ion-refresher>
-            <div class="ion-margin-top ion-text-center" v-if="isLoading">
-                <ion-spinner />
-            </div>
-            <div class="cards-list">
-                <div class="card-item" v-for="card in Quests" :key="card.id" @click="$router.push({ name: 'quest', params: { quest_id: card.id } })">
-                    <div class="card-item__header">
-                        <div class="card-item__type">{{ card.type }}</div>
-                        <div class="card-item__title">{{ card.title }}</div>
-                    </div>
-                    <div class="card-item__content">
-                        <div class="card-item__image" :style="{ background: randomColor() }"></div>
-                        <div class="card-item__tags">
-                            <div class="card-item__tag" v-for="tag in card.tags" :key="tag">{{ tag }}</div>
-                        </div>
-                    </div>
-                    <div class="card-item__footer">
-                        <PropsList />
-                    </div>
-                </div>
-            </div>
+            <p>123</p>
         </ion-content>
-        <CardModal />
     </ion-page>
 </template>
 

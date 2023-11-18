@@ -31,29 +31,34 @@ const routes = [
                 redirect: '/tabs/home'
             },
             {
-                path: 'home',
                 name: 'home',
+                path: 'home',
                 component: () => import('@/screens/_v2/HomeScreen'),
             },
             {
-                path: 'expand',
                 name: 'expand',
+                path: 'expand',
                 component: () => import('@/screens/ExpandScreen.vue'),
             },
             {
-                path: 'swipe',
                 name: 'swipe',
+                path: 'swipe',
                 component: () => import('@/screens/SwipeScreen.vue'),
             },
             {
-                path: 'match',
                 name: 'match',
+                path: 'match',
                 component: () => import('@/screens/_v2/MatchScreen.vue'),
             },
             {
-                path: 'quests',
                 name: 'quests',
+                path: 'quests',
                 component: () => import('@/screens/_v2/QuestsScreen.vue'),
+            },
+            {
+                name: 'quest',
+                path: 'quests/:quest_id',
+                component: () => import('@/screens/_v2/QuestCardScreen.vue'),
             },
             // {
             //     path: 'home/quest',

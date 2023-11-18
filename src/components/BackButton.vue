@@ -1,5 +1,5 @@
 <template>
-    <ion-back-button :icon="chevronBack" :text="text || '&nbsp;&nbsp;&nbsp;'" style="padding-left: 7px;" class="backButton"></ion-back-button>
+    <ion-back-button :icon="chevronBack" :text="text || '&nbsp;&nbsp;&nbsp;'" style="padding-left: 7px;" class="back-button"></ion-back-button>
 </template>
 
 <script>
@@ -17,9 +17,9 @@ export default {
     },
     mounted() {
         useBackButton(101, () => {
-            // .can-go-back:not(.ion-page-hidden) .backButton
-            const backBtn = document.querySelector('.can-go-back:not(.ion-page-hidden) .backButton');
-            // const backBtn = document.getElementById('backButton');
+            // .can-go-back:not(.ion-page-hidden) .back-button
+            const backBtn = document.querySelector('.can-go-back:not(.ion-page-hidden) .back-button');
+            // const backBtn = document.getElementById('back-button');
             if (backBtn) backBtn.click();
         });
     }
@@ -27,5 +27,7 @@ export default {
 </script>
 
 <style scoped>
-
+    .back-button {
+        color: var(--black);
+    }
 </style>
