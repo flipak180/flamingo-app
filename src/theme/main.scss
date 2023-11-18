@@ -37,17 +37,18 @@ body {
 }
 
 //.ion-page,
-//ion-header {
-//    background: #fff;
-//
-//    @media (prefers-color-scheme: dark) {
-//        background: var(--black);
-//    }
-//}
-
+//ion-header,
 ion-toolbar {
-    --background: transparent;
+    --background: #fff;
+
+    @media (prefers-color-scheme: dark) {
+        --background: var(--black);
+    }
 }
+
+//ion-toolbar {
+//    --background: transparent;
+//}
 ion-toolbar ion-button {
     --color: var(--black);
 
