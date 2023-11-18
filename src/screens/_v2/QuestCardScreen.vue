@@ -78,9 +78,6 @@ export default {
         this.fetch();
     },
     methods: {
-        lockClosed() {
-            return lockClosed
-        },
         randomColor,
         fetch() {
 
@@ -226,6 +223,7 @@ export default {
     .content {
         padding: 10px;
         position: relative;
+        flex-grow: 1;
 
         &.closed:before {
             content: '';
@@ -237,6 +235,10 @@ export default {
             background: rgba(255, 255, 255, .3);
             backdrop-filter: blur(5px);
             z-index: 10;
+
+            @media (prefers-color-scheme: dark) {
+                background: rgba(var(--black-rgba), 0.3);
+            }
         }
     }
 
