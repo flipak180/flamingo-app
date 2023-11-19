@@ -172,10 +172,10 @@ ion-content {
     height: calc(100vh - 44px - 83px);
 }
 .swipe-card {
-    background: var(--black-light);
+    background: var(--grey-light);
+    color: #000;
     max-height: 640px;
     border-radius: 15px;
-
     z-index: 2;
     position: absolute;
     left: 0;
@@ -185,6 +185,11 @@ ion-content {
     transform-origin: 50% 100%;
     display: flex;
     flex-direction: column;
+
+    @media (prefers-color-scheme: dark) {
+        background: var(--black-light);
+        color: #fff;
+    }
 
     &__top {
         position: relative;
@@ -244,8 +249,12 @@ ion-content {
     &__title {
         font-size: 18px;
         font-weight: 600;
-        color: #fff;
+        color: var(--black);
         margin-bottom: 12px;
+
+        @media (prefers-color-scheme: dark) {
+            color: #fff;
+        }
     }
     &__distance {
         font-size: 13px;
