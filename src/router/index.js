@@ -79,7 +79,7 @@ const routes = [
             {
                 path: 'home/places/:place_id',
                 name: 'placeDetails',
-                component: () => import('@/screens/places/PlaceDetailsScreen'),
+                component: () => import('@/screens/_v2/PlaceDetailsScreen'),
             },
 
             {

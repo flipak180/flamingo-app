@@ -103,6 +103,9 @@ ion-content {
     grid-auto-flow: column;
     gap: 15px;
 }
+.single-place__images .swiper-pagination-bullets {
+    align-items: end;
+}
 .ion-page .swiper .swiper-pagination-bullet {
     background: #232323;
     height: 3px;

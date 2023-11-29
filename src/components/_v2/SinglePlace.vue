@@ -1,9 +1,15 @@
 <template>
     <div class="single-place" v-if="place">
         <CloseButton />
-        <swiper class="single-place__images" :modules="modules" :pagination="place.images.length > 1">
-            <swiper-slide class="single-place__image" v-for="image in place.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
-        </swiper>
+        <div class="single-place__top">
+            <swiper class="single-place__images" @swiper="setSwiperInstance" :modules="modules" :pagination="place.images.length > 1">
+                <swiper-slide class="single-place__image" v-for="image in place.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
+            </swiper>
+            <div class="single-place__img-controls">
+                <div class="single-place__prev-img" @click="slider.slidePrev()"></div>
+                <div class="single-place__next-img" @click="slider.slideNext()"></div>
+            </div>
+        </div>
         <div class="single-place__header">
             <div class="single-place__type">{{ place.type }}</div>
             <div class="single-place__title">{{ place.title }}</div>
@@ -32,6 +38,7 @@ export default {
         return {
             place_id: this.$route.params.place_id,
             place: null,
+            slider: null,
             modules: [IonicSlides, Pagination],
         }
     },
@@ -49,6 +56,9 @@ export default {
                 event.target.complete();
             });
         },
+        setSwiperInstance(swiper){
+            this.slider = swiper;
+        }
     }
 }
 </script>
@@ -58,9 +68,25 @@ export default {
     margin-bottom: 75px;
     position: relative;
 
-    .swiper-pagination-bullet {
-        --bullet-background: red;
-        --bullet-background-active: red;
+    &__top {
+        position: relative;
+        flex-grow: 1;
+    }
+
+    &__img-controls {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    &__next-img,
+    &__prev-img {
+        width: 100%;
+        height: 100%;
+        z-index: 10;
     }
 
     &__image {
@@ -108,7 +134,7 @@ export default {
         margin: 0 15px;
 
         @media (prefers-color-scheme: dark) {
-            background: var(--black);
+            background: var(--black-light);
         }
     }
 }

@@ -74,14 +74,14 @@ export default {
         <ion-header>
             <ion-toolbar>
                 <ion-buttons slot="secondary">
-                    <ion-button>
-                        <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>
-                    </ion-button>
+<!--                    <ion-button>-->
+<!--                        <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>-->
+<!--                    </ion-button>-->
                 </ion-buttons>
                 <ion-buttons slot="primary">
-                    <ion-button>
-                        <ion-icon slot="icon-only" :icon="optionsOutline"></ion-icon>
-                    </ion-button>
+<!--                    <ion-button>-->
+<!--                        <ion-icon slot="icon-only" :icon="optionsOutline"></ion-icon>-->
+<!--                    </ion-button>-->
                 </ion-buttons>
                 <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
             </ion-toolbar>

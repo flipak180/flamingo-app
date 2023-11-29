@@ -3,14 +3,14 @@
         <ion-header>
             <ion-toolbar>
                 <ion-buttons slot="secondary">
-                    <ion-button>
-                        <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>
-                    </ion-button>
+<!--                    <ion-button>-->
+<!--                        <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>-->
+<!--                    </ion-button>-->
                 </ion-buttons>
                 <ion-buttons slot="primary">
-                    <ion-button>
-                        <ion-icon slot="icon-only" :icon="optionsOutline"></ion-icon>
-                    </ion-button>
+<!--                    <ion-button>-->
+<!--                        <ion-icon slot="icon-only" :icon="optionsOutline"></ion-icon>-->
+<!--                    </ion-button>-->
                 </ion-buttons>
                 <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
             </ion-toolbar>
@@ -51,7 +51,7 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/vue";
-import {locationOutline, optionsOutline, shuffleOutline} from 'ionicons/icons';
+import {optionsOutline, shuffleOutline} from 'ionicons/icons';
 import MyCoordinates from "@/components/MyCoordinates";
 import BackButton from "@/components/BackButton";
 import CategoriesGrid from "@/components/categories/CategoriesGrid";
