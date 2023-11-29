@@ -1,6 +1,6 @@
 <script setup>
-import {IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
-import {locationOutline} from 'ionicons/icons';
+import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
+import {locationOutline, shuffleOutline} from 'ionicons/icons';
 import {Swiper, SwiperSlide} from "swiper/vue";
 import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
@@ -15,11 +15,14 @@ const setSwiperInstance = (swiper, id) => {
     sliders.value[id] = swiper;
 }
 
-onMounted(async () => {
+const fetch = async () => {
     await api.get(`/places/list`).then(res => {
         places.value = res.data.reverse();
-    });
+    })
+}
 
+onMounted(async () => {
+    await fetch();
 
     var animating = false;
     var cardsCounter = 0;
@@ -105,9 +108,9 @@ onMounted(async () => {
         <ion-header>
             <ion-toolbar>
                 <ion-buttons slot="secondary">
-<!--                    <ion-button>-->
-<!--                        <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>-->
-<!--                    </ion-button>-->
+                    <ion-button @click="fetch">
+                        <ion-icon slot="icon-only" :icon="shuffleOutline"></ion-icon>
+                    </ion-button>
                 </ion-buttons>
                 <ion-buttons slot="primary">
 <!--                    <ion-button>-->
@@ -124,6 +127,7 @@ onMounted(async () => {
                         <div class="swipe-card__top">
                             <swiper class="swipe-card__slider" @swiper="setSwiperInstance($event, place.id)" :pagination="place.images.length > 1" :modules="modules">
                                 <swiper-slide class="swipe-card__slider-item" v-for="image in place.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
+                                <swiper-slide class="swipe-card__slider-item swipe-card__no-image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/upload/flamingo.png)` }" v-if="!place.images.length"></swiper-slide>
                             </swiper>
                             <div class="swipe-card__tags">
                                 <div class="swipe-card__tag" v-for="tag in place.tags" :key="tag">{{ tag }}</div>
@@ -242,6 +246,10 @@ ion-content {
     }
     &__prev-img {
 
+    }
+    &__no-image {
+        background-color: #FFDCEC;
+        background-size: 50%;
     }
     &__info {
         padding: 15px;
