@@ -44,7 +44,7 @@ export default {
     border-radius: 50%;
     font-size: 20px;
     transition: all .3s;
-    z-index: 2;
+    z-index: 50;
 
     @media (prefers-color-scheme: dark) {
         background: rgba(0, 0, 0, 0.8);
