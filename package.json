@@ -23,7 +23,6 @@
         "@capacitor/status-bar": "^5.0.6",
         "@ionic/vue": "^7.5.7",
         "@ionic/vue-router": "^7.5.7",
-        "@turf/turf": "^6.5.0",
         "axios": "^1.6.2",
         "core-js": "^3.33.3",
         "distance-to-polygon": "^2.0.2",

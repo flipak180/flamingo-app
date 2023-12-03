@@ -4,7 +4,7 @@ import {locationOutline, shuffleOutline} from 'ionicons/icons';
 import {Swiper, SwiperSlide} from "swiper/vue";
 import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {Pagination} from "swiper/modules";
 import api from "@/plugins/api";
 import {getDistance} from "@/models/Place";
@@ -47,7 +47,6 @@ onMounted(async () => {
     }
 
     function release() {
-
         if (pullDeltaX >= decisionVal) {
             $card.addClass("to-right");
         } else if (pullDeltaX <= -decisionVal) {
@@ -57,7 +56,7 @@ onMounted(async () => {
         if (Math.abs(pullDeltaX) >= decisionVal) {
             $card.addClass("inactive");
 
-            setTimeout(function() {
+            setTimeout(() => {
                 $card.addClass("below").removeClass("inactive to-left to-right");
                 cardsCounter++;
                 if (cardsCounter === numOfCards) {
@@ -127,8 +126,12 @@ onMounted(async () => {
                     <div class="swipe-card" v-for="place in places" :key="place.id">
                         <div class="swipe-card__top">
                             <swiper class="swipe-card__slider" @swiper="setSwiperInstance($event, place.id)" :pagination="place.images.length > 1" :modules="modules">
-                                <swiper-slide class="swipe-card__slider-item" v-for="image in place.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
-                                <swiper-slide class="swipe-card__slider-item swipe-card__no-image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/upload/flamingo.png)` }" v-if="!place.images.length"></swiper-slide>
+                                <swiper-slide class="swipe-card__slider-item" v-for="image in place.images" :key="image">
+                                    <img :src="`https://flamingo.spb.ru/${image}`" alt="" loading="lazy">
+                                </swiper-slide>
+                                <swiper-slide class="swipe-card__slider-item swipe-card__no-image" v-if="!place.images.length">
+                                    <img src="https://flamingo.spb.ru/upload/flamingo.png" alt="" loading="lazy">
+                                </swiper-slide>
                             </swiper>
                             <div class="swipe-card__tags">
                                 <div class="swipe-card__tag" v-for="tag in place.tags" :key="tag">{{ tag }}</div>
