@@ -66,7 +66,7 @@ export const visit = async (place) => {
     });
 }
 
-function calcCrow(coords1, coords2) {
+export function calcCrow(coords1, coords2) {
     const R = 6371; // Radius of the earth in km
     const dLat = deg2rad(coords2.latitude - coords1.latitude); // deg2rad below
     const dLon = deg2rad(coords2.longitude - coords1.longitude);
@@ -81,4 +81,20 @@ function calcCrow(coords1, coords2) {
 
 function deg2rad(deg) {
     return deg * (Math.PI / 180)
+}
+
+/**
+ *
+ * @param coords
+ * @returns {*}
+ */
+export function getDistance(coords) {
+    const distance = calcCrow({
+        latitude: coords[0],
+        longitude: coords[1]
+    }, {
+        latitude: store.coords.latitude,
+        longitude: store.coords.longitude
+    });
+    return Math.round(distance / 1000);
 }

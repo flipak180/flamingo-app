@@ -7,6 +7,7 @@ import '@ionic/vue/css/ionic-swiper.css';
 import {onMounted, ref} from "vue";
 import {Pagination} from "swiper/modules";
 import api from "@/plugins/api";
+import {getDistance} from "@/models/Place";
 
 const places = ref([]);
 const sliders = ref({});
@@ -141,7 +142,7 @@ onMounted(async () => {
                             <div class="swipe-card__title">{{ place.title }}</div>
                             <div class="swipe-card__distance">
                                 <ion-icon :icon="locationOutline"></ion-icon>
-                                15 км от вас
+                                <span v-if="place.coords">{{ getDistance(place.coords) }} км от вас</span>
                             </div>
                         </div>
                         <div class="swipe-card__choice m--reject"></div>

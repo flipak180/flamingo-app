@@ -1,11 +1,11 @@
-import { defineStore } from "pinia";
+import {defineStore} from "pinia";
 import {Geolocation} from "@capacitor/geolocation";
 
 export const useMainStore = () => {
     const innerStore = defineStore({
         id: 'main',
         state: () => ({
-            coords: { latitude: 0, longitude: 0 },
+            coords: { latitude: 59.938784, longitude: 30.314997 },
             init: false,
             onBoardingComplete: null,
         }),
@@ -16,8 +16,6 @@ export const useMainStore = () => {
                 //     maximumAge: 5000,
                 // });
 
-                /* Это рабочая версия
-
                 await Geolocation.watchPosition({
                     enableHighAccuracy: false,
                     maximumAge: 5000,
@@ -25,8 +23,6 @@ export const useMainStore = () => {
                     this.coords.latitude = coordinates.coords.latitude;
                     this.coords.longitude = coordinates.coords.longitude;
                 })
-
-                 */
 
                 // this.coords.latitude = coordinates.coords.latitude;
                 // this.coords.longitude = coordinates.coords.longitude;

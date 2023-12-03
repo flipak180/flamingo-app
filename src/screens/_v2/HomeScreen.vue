@@ -63,6 +63,8 @@ import QuestCategory from "@/components/categories/QuestCategory";
 import CardModal from "@/components/CardModal";
 import CardsList from "@/components/_v2/CardsList";
 import PlacesFilter from "@/components/_v2/PlacesFilter";
+import * as turf from '@turf/turf'
+import {calcCrow} from "@/models/Place";
 
 export default {
     name: "HomeScreen",
@@ -90,6 +92,49 @@ export default {
     },
     mounted() {
         this.fetch();
+
+        const point = [59.837910, 30.509150];
+        const polygon = [
+            [
+                59.98334173,
+                30.209710504
+            ],
+            [
+                59.978994563,
+                30.207466715
+            ],
+            [
+                59.982435586,
+                30.189184779
+            ],
+            [
+                59.985360174,
+                30.187253588
+            ],
+            [
+                59.986340128,
+                30.192159906
+            ],
+            [
+                59.985501511,
+                30.19323279
+            ],
+            [
+                59.98334173,
+                30.209710504
+            ]
+        ];
+
+        //console.log(distanceToPolygon(point, polygon));
+
+        const point2 = [59.837910, 30.509150];
+        const point22 = {latitude: 59.837910, longitude: 30.509150};
+        const point3 = [59.843698, 30.485178];
+        const point33 = {latitude: 59.843698, longitude: 30.485178};
+
+        var distance = turf.distance(point2, point3);
+        console.log(distance);
+        console.log(calcCrow(point22, point33));
     },
     methods: {
         fetch() {
