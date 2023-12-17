@@ -15,7 +15,7 @@
             <div class="single-place__title">{{ place.title }}</div>
         </div>
         <div class="single-place__content ion-padding-horizontal" v-html="place.description"></div>
-        <PlaceItem :place="place.places[0]" v-if="place.places.length" />
+        <!-- <PlaceItem :place="place.places[0]" v-if="place.places.length" /> -->
     </div>
 </template>
 
