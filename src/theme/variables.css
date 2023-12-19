@@ -35,7 +35,9 @@ http://ionicframework.com/docs/theming/ */
     --black-rgba: 23, 23, 23;
     /*--black-rgba: 58, 55, 63;*/
     --pink: #FF0682;
+    --pink-rgba: 255, 6, 130;
     --pink-light: #FFDCEC;
+    --pink-light-rgba: 255, 220, 236;
     --blue: #20C0FF;
     --blue-light: #BEE9FA;
     --grey: #D9D9D9;

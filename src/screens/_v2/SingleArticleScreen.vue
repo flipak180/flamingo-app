@@ -93,7 +93,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .single-place {
     margin-bottom: 75px;
     position: relative;
@@ -123,7 +123,7 @@ export default {
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center center;
-        height: 300px;
+        height: 300px !important;
     }
 
     &__header {
@@ -150,6 +150,31 @@ export default {
 
         @media (prefers-color-scheme: dark) {
             color: #fff;
+        }
+    }
+
+    blockquote {
+        border-left: 3px solid var(--pink);
+        margin-left: 0;
+        margin-right: 0;
+        background: rgba(var(--pink-light-rgba), 0.4);
+        padding: 10px 30px 10px 10px;
+        border-radius: 5px;
+        position: relative;
+        font-size: 90%;
+
+        &:after {
+            content: '';
+            background-color: var(--pink);
+            background-repeat: no-repeat;
+            -webkit-mask-image: url('~@/assets/icons/quote.svg');
+            mask-image: url('~@/assets/icons/quote.svg');
+            background-size: cover;
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
     }
 
