@@ -38,7 +38,7 @@ export default {
             this.isActive = false;
         },
         onClick() {
-            this.$router.push('/tabs/home/single-place/' + this.card.id);
+            this.$router.push('/tabs/home/single-article/' + this.card.id);
             return;
 
             if (this.card.type === 'Квест') {

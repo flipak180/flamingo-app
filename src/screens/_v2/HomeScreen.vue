@@ -93,7 +93,7 @@ export default {
     },
     methods: {
         fetch() {
-            return api.get(`/events/list`).then(res => {
+            return api.get(`/articles/list`).then(res => {
                 this.events = res.data;
             }).finally(() => this.isLoading = false);
         },

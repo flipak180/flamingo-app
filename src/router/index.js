@@ -72,6 +72,10 @@ const routes = [
                 path: 'home/single-place/:place_id',
                 component: () => import('@/screens/_v2/SinglePlaceScreen'),
             },
+            {
+                path: 'home/single-article/:id',
+                component: () => import('@/screens/_v2/SingleArticleScreen'),
+            },
             // {
             //     path: 'route',
             //     component: () => import('@/screens/RouteScreen'),
