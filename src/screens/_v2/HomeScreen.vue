@@ -28,6 +28,7 @@
             <div>
                 <!--<h2>Актуальное</h2>-->
                 <CardsList :events="events" />
+                <p class="the-end">Пока на этом всё</p>
 
 <!--                <h2>Подборки</h2>-->
 <!--                <CategoriesGrid :categories="categories" />-->
@@ -130,5 +131,9 @@ h2 {
     &:first-child {
         margin-top: 0;
     }
+}
+
+.the-end {
+    text-align: center;
 }
 </style>
