@@ -65,8 +65,8 @@ export default {
     }
 
     &:last-child {
-        //border: none;
-        padding-bottom: 0;
+        // border: none;
+        // padding-bottom: 0;
 
         &:after {
             display: none;
@@ -91,6 +91,13 @@ export default {
 
     &__actions {
 
+        ion-button {
+            --color: var(--black);
+
+            @media (prefers-color-scheme: dark) {
+                --color: #FFFFFF;
+            }
+        }
     }
 }
 </style>

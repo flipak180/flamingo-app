@@ -20,11 +20,15 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
     .cards-list {
         display: grid;
         grid-template-columns: 1fr;
         gap: 15px;
         margin-bottom: 30px;
+
+        .place-item:last-child {
+            padding-bottom: 0;
+        }
     }
 </style>

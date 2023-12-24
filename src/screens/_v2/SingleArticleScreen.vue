@@ -8,11 +8,11 @@
             </ion-toolbar>
         </ion-header>-->
         <ion-content :scroll-events="true" @ionScroll="handleScroll($event)">
-            <div class="single-place" v-if="place">
+            <div class="single-place" v-if="article">
                 <CloseButton />
                 <div class="single-place__top">
-                    <swiper class="single-place__images" @swiper="setSwiperInstance" :modules="modules" :pagination="place.images.length > 1">
-                        <swiper-slide class="single-place__image" v-for="image in place.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
+                    <swiper class="single-place__images" @swiper="setSwiperInstance" :modules="modules" :pagination="article.images.length > 1">
+                        <swiper-slide class="single-place__image" v-for="image in article.images" :key="image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${image})` }"></swiper-slide>
                     </swiper>
                     <div class="single-place__img-controls">
                         <div class="single-place__prev-img" @click="slider.slidePrev()"></div>
@@ -20,11 +20,14 @@
                     </div>
                 </div>
                 <div class="single-place__header">
-                    <div class="single-place__type">{{ place.type }}</div>
-                    <div class="single-place__title">{{ place.title }}</div>
+                    <div class="single-place__type">{{ article.type }}</div>
+                    <div class="single-place__title">{{ article.title }}</div>
                 </div>
-                <div class="single-place__content ion-padding-horizontal" v-html="place.description"></div>
-                <!-- <PlaceItem :place="place.places[0]" v-if="place.places.length" /> -->
+                <div class="single-place__content ion-padding-horizontal" v-html="article.description"></div>
+<!--                <div class="single-place__map" v-if="place && place.coords">-->
+<!--                    <img :src="`https://static-maps.yandex.ru/v1?ll=${place.coords.reverse().join(',')}&apikey=${YMAP_API_KEY}&z=15`" alt="">-->
+<!--                </div>-->
+                 <PlaceItem :place="place" v-if="place" />
             </div>
         </ion-content>
     </ion-page>
@@ -42,6 +45,7 @@ import {Pagination} from "swiper/modules";
 import api from "@/plugins/api";
 import CollapsedText from "@/components/common/CollapsedText/CollapsedText.vue";
 import PlaceItem from "@/components/_v2/PlaceItem.vue";
+import {YMAP_API_KEY} from "@/constants";
 
 export default {
     name: "SingleArticleScreen",
@@ -64,9 +68,16 @@ export default {
     data() {
         return {
             id: this.$route.params.id,
-            place: null,
+            article: null,
             slider: null,
             modules: [IonicSlides, Pagination],
+
+            YMAP_API_KEY,
+        }
+    },
+    computed: {
+        place() {
+            return this.article.places.length > 0 ? this.article.places[0] : null
         }
     },
     mounted() {
@@ -78,7 +89,7 @@ export default {
         },
         fetch() {
             return api.get(`/articles/details?id=${this.id}`).then(res => {
-                this.place = res.data;
+                this.article = res.data;
             }).finally(() => this.isLoading = false);
         },
         refresh(event) {
@@ -190,6 +201,14 @@ export default {
 
         @media (prefers-color-scheme: dark) {
             background: var(--black-light);
+        }
+    }
+
+    &__map {
+        padding: 15px;
+
+        img {
+            border-radius: 5px;
         }
     }
 }
