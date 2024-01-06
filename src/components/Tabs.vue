@@ -1,11 +1,29 @@
 <script setup>
-import {IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/vue";
+import {IonIcon, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from "@ionic/vue";
+import {flameOutline, listOutline} from "ionicons/icons";
 </script>
 
 <template>
     <ion-page>
         <ion-tabs>
             <ion-router-outlet></ion-router-outlet>
+            <ion-tab-bar slot="bottom">
+                <ion-tab-button tab="tab-home" href="/tabs/home">
+                    <ion-icon aria-hidden="true" :icon="flameOutline"/>
+                </ion-tab-button>
+                <ion-tab-button tab="tab-categories" href="/tabs/categories">
+                    <ion-icon aria-hidden="true" :icon="listOutline"/>
+                </ion-tab-button>
+<!--                <ion-tab-button tab="tab-quests" href="/tabs/quests">-->
+<!--                    <ion-icon aria-hidden="true" :icon="footstepsOutline"/>-->
+<!--                </ion-tab-button>-->
+<!--                <ion-tab-button tab="tab-match" href="/tabs/match">-->
+<!--                    <ion-icon aria-hidden="true" :icon="copyOutline"/>-->
+<!--                </ion-tab-button>-->
+                <!--                <ion-tab-button tab="tab-match" href="/tabs/profile">-->
+                <!--                    <ion-icon aria-hidden="true" :icon="personOutline"/>-->
+                <!--                </ion-tab-button>-->
+            </ion-tab-bar>
         </ion-tabs>
     </ion-page>
 </template>

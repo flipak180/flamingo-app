@@ -89,7 +89,7 @@ const routes = [
             {
                 path: 'categories',
                 name: 'categories',
-                component: () => import('@/screens/CategoriesScreen'),
+                component: () => import('@/screens/_v2/CategoriesScreen'),
             },
             {
                 path: 'categories/:category_id',
