@@ -94,7 +94,7 @@ const routes = [
             {
                 path: 'categories/:category_id',
                 name: 'category',
-                component: () => import('@/screens/places/CategoryScreen'),
+                component: () => import('@/screens/_v2/CategoryScreen'),
             },
             {
                 path: 'profile',
