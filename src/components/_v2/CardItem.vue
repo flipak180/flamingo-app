@@ -10,7 +10,7 @@
             <div class="card-item__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${card.image})` }"></div>
         </div>
         <div class="card-item__footer">
-             <PlacesList :places="card.places" />
+<!--             <PlacesList :places="card.places" />-->
         </div>
     </div>
 </template>

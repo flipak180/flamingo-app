@@ -27,7 +27,7 @@
 <!--                <div class="single-place__map" v-if="place && place.coords">-->
 <!--                    <img :src="`https://static-maps.yandex.ru/v1?ll=${place.coords.reverse().join(',')}&apikey=${YMAP_API_KEY}&z=15`" alt="">-->
 <!--                </div>-->
-                 <PlaceItem :place="place" v-if="place" />
+<!--                 <PlaceItem :place="place" v-if="place" />-->
             </div>
         </ion-content>
     </ion-page>
