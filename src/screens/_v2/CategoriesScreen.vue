@@ -89,16 +89,18 @@ export default {
     }
 
     &__title {
-        background: rgba(255, 255, 255, .4);
+        background: rgba(255, 255, 255, .7);
         padding: 10px;
         width: 100%;
         position: absolute;
         bottom: 0;
         left: 0;
         text-align: center;
+        font-size: 20px;
+        font-weight: 700;
 
         @media (prefers-color-scheme: dark) {
-            background: rgba(var(--black-rgba), .4);
+            background: rgba(var(--black-rgba), .7);
         }
     }
 }
