@@ -7,10 +7,7 @@
         </ion-header>
         <ion-content class="ion-padding">
             <div class="categories">
-                <div class="categories__item" v-for="category in categories" :key="category.id">
-                    <div class="categories__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${category.image})` }"></div>
-                    <div class="categories__title">{{ category.title }}</div>
-                </div>
+                <CategoryItem v-for="category in categories" :key="category.id" :category="category" />
             </div>
         </ion-content>
     </ion-page>
@@ -34,12 +31,12 @@ import BackButton from "@/components/BackButton";
 import CardModal from "@/components/CardModal.vue";
 import CardsList from "@/components/_v2/CardsList.vue";
 import api from "@/plugins/api";
-import CardItem from "@/components/_v2/CardItem.vue";
+import CategoryItem from "@/components/_v2/CategoryItem.vue";
 
 export default {
     name: "HomeScreen",
     components: {
-        CardItem,
+        CategoryItem,
         IonRefresher, CardsList, IonRefresherContent, IonSpinner, CardModal,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
         IonButtons, BackButton, IonIcon, IonButton,
@@ -67,42 +64,9 @@ export default {
 <style lang="scss" scoped>
 
 .categories {
-
     display: grid;
     grid-template-columns: 1fr;
     gap: 30px;
-
-    &__item {
-        border-radius: 10px;
-        box-shadow: rgba(0, 0, 0, 0.12) 0 4px 16px;
-        overflow: hidden;
-        transition: transform 0.4s;
-        position: relative;
-    }
-
-    &__image {
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center center;
-        height: 300px;
-        position: relative;
-    }
-
-    &__title {
-        background: rgba(255, 255, 255, .7);
-        padding: 10px;
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-        font-size: 20px;
-        font-weight: 700;
-
-        @media (prefers-color-scheme: dark) {
-            background: rgba(var(--black-rgba), .7);
-        }
-    }
 }
 
 </style>
