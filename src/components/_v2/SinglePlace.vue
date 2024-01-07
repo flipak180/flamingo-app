@@ -15,14 +15,14 @@
             <div class="single-place__title">{{ place.title }}</div>
         </div>
         <div class="single-place__content ion-padding-horizontal" v-html="place.description"></div>
-        <!-- <PlaceItem :place="place.places[0]" v-if="place.places.length" /> -->
+        <!-- <ArticlePlaceItem :place="place.places[0]" v-if="place.places.length" /> -->
     </div>
 </template>
 
 <script>
 import CloseButton from "@/components/CloseButton";
 import CollapsedText from "@/components/common/CollapsedText/CollapsedText";
-import PlaceItem from "@/components/_v2/PlaceItem";
+import ArticlePlaceItem from "@/components/_v2/ArticlePlaceItem";
 import api from "@/plugins/api";
 import {Swiper, SwiperSlide} from "swiper/vue";
 import 'swiper/css';
@@ -33,7 +33,7 @@ import {Pagination} from "swiper/modules";
 
 export default {
     name: "SinglePlace",
-    components: { CloseButton, CollapsedText, PlaceItem, Swiper, SwiperSlide },
+    components: { CloseButton, CollapsedText, ArticlePlaceItem, Swiper, SwiperSlide },
     data() {
         return {
             place_id: this.$route.params.place_id,

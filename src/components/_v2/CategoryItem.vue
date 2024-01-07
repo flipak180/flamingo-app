@@ -10,7 +10,7 @@
 
 <script>
 import {IonButton, IonIcon} from "@ionic/vue";
-import PlacesList from "@/components/_v2/PlacesList";
+import PlacesList from "@/components/_v2/ArticlePlacesList.vue";
 
 export default {
     name: "CategoryItem",

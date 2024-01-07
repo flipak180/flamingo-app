@@ -27,7 +27,7 @@
 <!--                <div class="single-place__map" v-if="place && place.coords">-->
 <!--                    <img :src="`https://static-maps.yandex.ru/v1?ll=${place.coords.reverse().join(',')}&apikey=${YMAP_API_KEY}&z=15`" alt="">-->
 <!--                </div>-->
-<!--                 <PlaceItem :place="place" v-if="place" />-->
+<!--                 <ArticlePlaceItem :place="place" v-if="place" />-->
             </div>
         </ion-content>
     </ion-page>
@@ -44,7 +44,7 @@ import CloseButton from "@/components/CloseButton.vue";
 import {Pagination} from "swiper/modules";
 import api from "@/plugins/api";
 import CollapsedText from "@/components/common/CollapsedText/CollapsedText.vue";
-import PlaceItem from "@/components/_v2/PlaceItem.vue";
+import ArticlePlaceItem from "@/components/_v2/ArticlePlaceItem.vue";
 import {YMAP_API_KEY} from "@/constants";
 
 export default {
@@ -53,7 +53,7 @@ export default {
         CloseButton, Swiper, SwiperSlide,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
         IonButtons, BackButton,
-        SinglePlace, CollapsedText, PlaceItem
+        SinglePlace, CollapsedText, ArticlePlaceItem
     },
     ionViewWillEnter() {
         if (Capacitor.isNativePlatform()) {

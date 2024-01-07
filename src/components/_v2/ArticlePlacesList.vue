@@ -1,18 +1,18 @@
 <template>
     <div class="places-list" v-if="places.length">
-        <PlaceItem v-for="place in places" :key="place.id" :place="place" />
+        <ArticlePlaceItem v-for="place in places" :key="place.id" :place="place" />
     </div>
     <div v-if="places.length > 2" class="more-places">...</div>
 </template>
 
 <script>
-import PlaceItem from "@/components/_v2/PlaceItem";
+import ArticlePlaceItem from "@/components/_v2/ArticlePlaceItem";
 
 export default {
-    name: "PlacesList",
+    name: "ArticlePlacesList",
     props: ['places'],
     components: {
-        PlaceItem
+        ArticlePlaceItem
     }
 }
 </script>

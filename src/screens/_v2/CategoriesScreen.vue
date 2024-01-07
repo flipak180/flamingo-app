@@ -29,7 +29,7 @@ import {
 } from "@ionic/vue";
 import BackButton from "@/components/BackButton";
 import CardModal from "@/components/CardModal.vue";
-import CardsList from "@/components/_v2/CardsList.vue";
+import CardsList from "@/components/_v2/ArticlesList.vue";
 import api from "@/plugins/api";
 import CategoryItem from "@/components/_v2/CategoryItem.vue";
 

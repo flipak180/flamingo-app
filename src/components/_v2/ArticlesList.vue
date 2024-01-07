@@ -1,27 +1,26 @@
 <template>
-    <div class="cards-list">
-        <CardItem v-for="card in events" :key="card.id" :card="card" />
+    <div class="articles-list">
+        <ArticleItem v-for="article in articles" :key="article.id" :article="article" />
     </div>
 </template>
 
 <script>
-import CardItem from "@/components/_v2/CardItem";
-import Cards from "@/utils/data/Cards";
+import ArticleItem from "@/components/_v2/ArticleItem.vue";
 
 export default {
-    name: "CardsList",
-    props: ['events'],
-    components: { CardItem },
+    name: "ArticlesList",
+    props: ['articles'],
+    components: { ArticleItem },
     data() {
         return {
-            Cards
+
         }
     },
 }
 </script>
 
 <style lang="scss">
-    .cards-list {
+    .articles-list {
         display: grid;
         grid-template-columns: 1fr;
         gap: 15px;

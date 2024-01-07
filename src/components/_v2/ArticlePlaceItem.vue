@@ -28,7 +28,7 @@ import {IonButton, IonIcon} from "@ionic/vue";
 import {visit} from "@/models/Place";
 
 export default {
-    name: "PlaceItem",
+    name: "ArticlePlaceItem",
     props: ['place'],
     components: { IonButton, IonIcon },
     data() {

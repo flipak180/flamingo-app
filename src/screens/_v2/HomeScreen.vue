@@ -27,7 +27,7 @@
 
             <div>
                 <!--<h2>Актуальное</h2>-->
-                <CardsList :events="events" />
+                <CardsList :articles="articles" />
                 <p class="the-end">На этом пока всё</p>
 
 <!--                <h2>Подборки</h2>-->
@@ -62,7 +62,7 @@ import CatalogCategory from "@/components/categories/CatalogCategory";
 import RouteCategory from "@/components/categories/RouteCategory";
 import QuestCategory from "@/components/categories/QuestCategory";
 import CardModal from "@/components/CardModal";
-import CardsList from "@/components/_v2/CardsList";
+import CardsList from "@/components/_v2/ArticlesList.vue";
 import PlacesFilter from "@/components/_v2/PlacesFilter";
 
 export default {
@@ -76,7 +76,7 @@ export default {
     },
     data() {
         return {
-            events: [],
+            articles: [],
             isLoading: false,
             filtersVisible: true,
             lastScrollTop: null,
@@ -95,7 +95,7 @@ export default {
     methods: {
         fetch() {
             return api.get(`/articles/list`).then(res => {
-                this.events = res.data;
+                this.articles = res.data;
             }).finally(() => this.isLoading = false);
         },
         refresh(event) {

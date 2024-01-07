@@ -1,34 +1,34 @@
 <template>
-    <div class="card-item" :class="{'card-item_active': isActive}" @click="onClick"
+    <div class="article-item" :class="{'article-item_active': isActive}" @click="onClick"
          @mousedown="startTouch" @mouseup="endTouch" @mouseout="endTouch"
          @touchstart="startTouch" @touchend="endTouch" @touchmove="endTouch"  >
-        <div class="card-item__header">
-            <div class="card-item__type">{{ card.type }}</div>
-            <div class="card-item__title">{{ card.title }}</div>
+        <div class="article-item__header">
+            <div class="article-item__type">{{ article.type }}</div>
+            <div class="article-item__title">{{ article.title }}</div>
         </div>
-        <div class="card-item__content">
-            <div class="card-item__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${card.image})` }"></div>
+        <div class="article-item__content">
+            <div class="article-item__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${article.image})` }"></div>
         </div>
-        <div class="card-item__footer">
-<!--             <PlacesList :places="card.places" />-->
+        <div class="article-item__footer">
+<!--             <ArticlePlacesList :places="article.places" />-->
         </div>
     </div>
 </template>
 
 <script>
 import {IonButton, IonIcon} from "@ionic/vue";
-import PlacesList from "@/components/_v2/PlacesList";
+import ArticlePlacesList from "@/components/_v2/ArticlePlacesList";
 
 export default {
-    name: "CardItem",
-    props: ['card'],
+    name: "ArticleItem",
+    props: ['article'],
     data() {
         return {
             isActive: false,
         }
     },
     components: {
-        IonIcon, IonButton, PlacesList
+        IonIcon, IonButton, ArticlePlacesList
     },
     methods: {
         startTouch() {
@@ -38,18 +38,18 @@ export default {
             this.isActive = false;
         },
         onClick() {
-            this.$router.push('/tabs/home/single-article/' + this.card.id);
+            this.$router.push('/tabs/home/single-article/' + this.article.id);
             return;
 
-            if (this.card.type === 'Квест') {
+            if (this.article.type === 'Квест') {
                 this.$router.push('/tabs/home/quest');
                 return;
             }
-            if (this.card.type === 'Подборка') {
+            if (this.article.type === 'Подборка') {
                 this.$router.push('/tabs/home/compilation');
                 return;
             }
-            if (this.card.type === 'Достопримечательность') {
+            if (this.article.type === 'Достопримечательность') {
                 this.$router.push('/tabs/home/single-place');
                 return;
             }
@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.card-item {
+.article-item {
     $this: &;
 
     border-radius: 10px;
