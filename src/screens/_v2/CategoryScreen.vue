@@ -1,14 +1,14 @@
 <template>
     <ion-page>
-        <ion-header>
+        <ion-header :translucent="true">
             <ion-toolbar>
                 <ion-buttons slot="start">
                     <BackButton />
                 </ion-buttons>
-                <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
+                <ion-title>{{ category?.title || '' }}</ion-title>
             </ion-toolbar>
         </ion-header>
-        <ion-content class="ion-padding">
+        <ion-content class="ion-padding" :fullscreen="true">
             <PlacesList :places="places" />
         </ion-content>
     </ion-page>
@@ -47,15 +47,22 @@ export default {
     data() {
         return {
             category_id: this.$route.params.category_id,
+            category: null,
             places: [],
             isLoading: false,
         }
     },
     mounted() {
-        this.fetch();
+        this.fetchPlaces();
+        this.fetchCategory();
     },
     methods: {
-        fetch() {
+        fetchCategory() {
+            return api.get(`/categories/details?id=${this.category_id}`).then(res => {
+                this.category = res.data;
+            });
+        },
+        fetchPlaces() {
             this.isLoading = true;
             return api.get(`/places/list?category_id=${this.category_id}`).then(res => {
                 this.places = res.data;
