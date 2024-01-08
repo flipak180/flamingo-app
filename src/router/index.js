@@ -36,30 +36,34 @@ const routes = [
                 component: () => import('@/screens/_v2/HomeScreen'),
             },
             {
-                name: 'expand',
-                path: 'expand',
-                component: () => import('@/screens/ExpandScreen.vue'),
+                path: 'home/single-article/:id',
+                component: () => import('@/screens/_v2/SingleArticleScreen'),
             },
-            {
-                name: 'swipe',
-                path: 'swipe',
-                component: () => import('@/screens/SwipeScreen.vue'),
-            },
+            // {
+            //     name: 'expand',
+            //     path: 'expand',
+            //     component: () => import('@/screens/ExpandScreen.vue'),
+            // },
+            // {
+            //     name: 'swipe',
+            //     path: 'swipe',
+            //     component: () => import('@/screens/SwipeScreen.vue'),
+            // },
             {
                 name: 'match',
                 path: 'match',
                 component: () => import('@/screens/_v2/MatchScreen.vue'),
             },
-            {
-                name: 'quests',
-                path: 'quests',
-                component: () => import('@/screens/_v2/QuestsScreen.vue'),
-            },
-            {
-                name: 'quest',
-                path: 'quests/:quest_id',
-                component: () => import('@/screens/_v2/QuestCardScreen.vue'),
-            },
+            // {
+            //     name: 'quests',
+            //     path: 'quests',
+            //     component: () => import('@/screens/_v2/QuestsScreen.vue'),
+            // },
+            // {
+            //     name: 'quest',
+            //     path: 'quests/:quest_id',
+            //     component: () => import('@/screens/_v2/QuestCardScreen.vue'),
+            // },
             // {
             //     path: 'home/quest',
             //     component: () => import('@/screens/QuestScreen'),
@@ -68,14 +72,10 @@ const routes = [
             //     path: 'home/compilation',
             //     component: () => import('@/screens/CompilationScreen'),
             // },
-            {
-                path: 'home/single-place/:place_id',
-                component: () => import('@/screens/_v2/SinglePlaceScreen'),
-            },
-            {
-                path: 'home/single-article/:id',
-                component: () => import('@/screens/_v2/SingleArticleScreen'),
-            },
+            // {
+            //     path: 'home/single-place/:place_id',
+            //     component: () => import('@/screens/_v2/SinglePlaceScreen'),
+            // },
             // {
             //     path: 'route',
             //     component: () => import('@/screens/RouteScreen'),
@@ -98,25 +98,25 @@ const routes = [
             },
 
 
-            {
-                path: 'profile',
-                component: () => import('@/screens/profile/ProfileScreen')
-            },
-            {
-                path: 'profile/visits',
-                component: () => import('@/screens/profile/VisitsScreen')
-            },
-            {
-                path: 'profile/planning',
-                name: 'planning',
-                component: () => import('@/screens/profile/PlanningScreen')
-            },
-
-            {
-                path: 'catalog',
-                name: 'catalog',
-                component: () => import('@/screens/places/CatalogScreen')
-            },
+            // {
+            //     path: 'profile',
+            //     component: () => import('@/screens/profile/ProfileScreen')
+            // },
+            // {
+            //     path: 'profile/visits',
+            //     component: () => import('@/screens/profile/VisitsScreen')
+            // },
+            // {
+            //     path: 'profile/planning',
+            //     name: 'planning',
+            //     component: () => import('@/screens/profile/PlanningScreen')
+            // },
+            //
+            // {
+            //     path: 'catalog',
+            //     name: 'catalog',
+            //     component: () => import('@/screens/places/CatalogScreen')
+            // },
         ]
     },
     {

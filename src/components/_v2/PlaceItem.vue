@@ -6,7 +6,7 @@
             <div class="place-item__title">{{ place.title }}</div>
         </div>
         <div class="place-item__content">
-            <div class="place-item__image" :style="{ background: image }"></div>
+            <div class="place-item__image" :style="image"></div>
         </div>
     </div>
 </template>
@@ -28,10 +28,12 @@ export default {
     },
     computed: {
         image() {
-            return this.place.image ? `url(https://flamingo.spb.ru/${this.place.image})` : randomColor({
-                hue: 'green',
-                luminosity: 'light',
-            });
+            return this.place.image
+                ? { backgroundImage: `url(https://flamingo.spb.ru/${this.place.image})`}
+                : { background: randomColor({
+                    hue: 'green',
+                    luminosity: 'light',
+                }) };
         }
     },
     methods: {

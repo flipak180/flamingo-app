@@ -58,6 +58,8 @@ import CategoryItem from "@/components/_v2/CategoryItem.vue";
 import {Swiper, SwiperSlide} from "swiper/vue";
 import {Pagination} from "swiper/modules";
 
+import 'swiper/css';
+
 export default {
     name: "PlaceDetailsScreen",
     components: {
@@ -110,7 +112,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .single-place {
     margin-bottom: 75px;
     position: relative;
