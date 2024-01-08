@@ -42,7 +42,7 @@ export default {
             this.isActive = false;
         },
         onClick() {
-            this.$router.push('/tabs/places/' + this.place.id);
+            this.$router.push({ name: 'placeDetails', params: { place_id: this.place.id } });
         }
     }
 }

@@ -80,22 +80,24 @@ const routes = [
             //     path: 'route',
             //     component: () => import('@/screens/RouteScreen'),
             // },
-            {
-                path: 'places/:place_id',
-                name: 'placeDetails',
-                component: () => import('@/screens/_v2/PlaceDetailsScreen'),
-            },
 
             {
-                path: 'categories',
+                path: 'places',
                 name: 'categories',
                 component: () => import('@/screens/_v2/CategoriesScreen'),
             },
             {
-                path: 'categories/:category_id',
+                path: 'places/categories/:category_id',
                 name: 'category',
                 component: () => import('@/screens/_v2/CategoryScreen'),
             },
+            {
+                path: 'places/place/:place_id',
+                name: 'placeDetails',
+                component: () => import('@/screens/_v2/PlaceDetailsScreen'),
+            },
+
+
             {
                 path: 'profile',
                 component: () => import('@/screens/profile/ProfileScreen')

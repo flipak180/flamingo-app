@@ -11,7 +11,7 @@ import {flameOutline, listOutline} from "ionicons/icons";
                 <ion-tab-button tab="tab-home" href="/tabs/home">
                     <ion-icon aria-hidden="true" :icon="flameOutline"/>
                 </ion-tab-button>
-                <ion-tab-button tab="tab-categories" href="/tabs/categories">
+                <ion-tab-button tab="tab-categories" href="/tabs/places">
                     <ion-icon aria-hidden="true" :icon="listOutline"/>
                 </ion-tab-button>
 <!--                <ion-tab-button tab="tab-quests" href="/tabs/quests">-->

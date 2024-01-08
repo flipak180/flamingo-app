@@ -31,7 +31,7 @@ export default {
             this.isActive = false;
         },
         onClick() {
-            this.$router.push('/tabs/categories/' + this.category.category_id);
+            this.$router.push({ name: 'category', params: { category_id: this.category.category_id } });
         }
     }
 }
