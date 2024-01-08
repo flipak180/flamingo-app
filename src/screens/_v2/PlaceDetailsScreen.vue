@@ -1,10 +1,5 @@
 <template>
     <ion-page>
-<!--        <ion-header>-->
-<!--            <ion-toolbar>-->
-<!--                <ion-title>Flamin<span class="highlighted">GO</span></ion-title>-->
-<!--            </ion-toolbar>-->
-<!--        </ion-header>-->
         <ion-content :scroll-events="true" @ionScroll="handleScroll($event)">
             <div class="ion-margin-top ion-text-center" v-if="isLoading">
                 <ion-spinner />
@@ -33,41 +28,24 @@
 </template>
 
 <script>
-import {
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonicSlides,
-    IonPage,
-    IonRefresher,
-    IonRefresherContent,
-    IonSpinner,
-    IonTitle,
-    IonToolbar
-} from "@ionic/vue";
+import {IonButtons, IonContent, IonHeader, IonicSlides, IonPage, IonSpinner, IonTitle, IonToolbar} from "@ionic/vue";
 import BackButton from "@/components/BackButton";
 import {StatusBar} from "@capacitor/status-bar";
-import PlaceDetails from "@/components/single-place/PlaceDetails/PlaceDetails";
 import {heartOutline, shareOutline} from "ionicons/icons";
 import {Capacitor} from "@capacitor/core";
 import CloseButton from "@/components/CloseButton.vue";
 import api from "@/plugins/api";
-import CategoryItem from "@/components/_v2/CategoryItem.vue";
 import {Swiper, SwiperSlide} from "swiper/vue";
 import {Pagination} from "swiper/modules";
-
-import 'swiper/css';
+import CollapsedText from "@/components/common/CollapsedText/CollapsedText.vue";
 
 export default {
     name: "PlaceDetailsScreen",
     components: {
-        IonRefresher, IonSpinner, CategoryItem, IonRefresherContent,
+        IonSpinner,
         CloseButton, Swiper, SwiperSlide,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
-        IonButtons, BackButton, IonIcon, IonButton,
-        PlaceDetails
+        IonButtons, BackButton, CollapsedText
     },
     data() {
         return {
@@ -194,6 +172,29 @@ export default {
             position: absolute;
             top: 10px;
             right: 10px;
+        }
+    }
+
+    .place-item {
+        position: fixed;
+        bottom: 50px;
+        left: 0;
+        width: calc(100% - 30px);
+        background: var(--pink-light);
+        border-radius: 10px;
+        padding: 10px;
+        margin: 0 15px;
+
+        @media (prefers-color-scheme: dark) {
+            background: var(--black-light);
+        }
+    }
+
+    &__map {
+        padding: 15px;
+
+        img {
+            border-radius: 5px;
         }
     }
 }
