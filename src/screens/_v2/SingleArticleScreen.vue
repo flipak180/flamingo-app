@@ -32,6 +32,9 @@
 </template>
 
 <script>
+import 'swiper/css';
+import '@ionic/vue/css/ionic-swiper.css';
+import 'swiper/css/pagination';
 import {IonButtons, IonContent, IonHeader, IonicSlides, IonPage, IonSpinner, IonTitle, IonToolbar} from "@ionic/vue";
 import BackButton from "@/components/BackButton";
 import {StatusBar} from "@capacitor/status-bar";
@@ -104,7 +107,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .single-place {
     margin-bottom: 75px;
     position: relative;
