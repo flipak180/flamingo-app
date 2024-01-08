@@ -9,7 +9,15 @@
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding" :fullscreen="true">
-            <PlacesList :places="places" />
+            <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
+                <ion-refresher-content />
+            </ion-refresher>
+            <div class="ion-margin-top ion-text-center" v-if="isLoading">
+                <ion-spinner />
+            </div>
+            <div v-else>
+                <PlacesList :places="places" />
+            </div>
         </ion-content>
     </ion-page>
 </template>
@@ -67,7 +75,12 @@ export default {
             return api.get(`/places/list?category_id=${this.category_id}`).then(res => {
                 this.places = res.data;
             }).finally(() => this.isLoading = false);
-        }
+        },
+        refresh(event) {
+            this.fetchPlaces(false).then(() => {
+                event.target.complete();
+            });
+        },
     }
 }
 </script>

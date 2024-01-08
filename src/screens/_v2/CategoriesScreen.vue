@@ -6,8 +6,16 @@
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-            <div class="categories">
-                <CategoryItem v-for="category in categories" :key="category.id" :category="category" />
+            <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
+                <ion-refresher-content />
+            </ion-refresher>
+            <div class="ion-margin-top ion-text-center" v-if="isLoading">
+                <ion-spinner />
+            </div>
+            <div v-else>
+                <div class="categories">
+                    <CategoryItem v-for="category in categories" :key="category.id" :category="category" />
+                </div>
             </div>
         </ion-content>
     </ion-page>
@@ -56,7 +64,12 @@ export default {
             return api.get(`/categories/list`).then(res => {
                 this.categories = res.data;
             }).finally(() => this.isLoading = false);
-        }
+        },
+        refresh(event) {
+            this.fetch(false).then(() => {
+                event.target.complete();
+            });
+        },
     }
 }
 </script>

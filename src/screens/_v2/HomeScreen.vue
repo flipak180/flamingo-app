@@ -15,23 +15,17 @@
                 <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
             </ion-toolbar>
         </ion-header>
-        <ion-content class="ion-padding"
-                     :scroll-events="true"
-                     @ionScroll="onScroll($event)">
+        <ion-content class="ion-padding">
             <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
                 <ion-refresher-content />
             </ion-refresher>
             <div class="ion-margin-top ion-text-center" v-if="isLoading">
                 <ion-spinner />
             </div>
-
-            <div>
+            <div v-else>
                 <!--<h2>Актуальное</h2>-->
                 <CardsList :articles="articles" />
                 <p class="the-end">На этом пока всё</p>
-
-<!--                <h2>Подборки</h2>-->
-<!--                <CategoriesGrid :categories="categories" />-->
             </div>
         </ion-content>
         <CardModal />
@@ -94,6 +88,7 @@ export default {
     },
     methods: {
         fetch() {
+            this.isLoading = true;
             return api.get(`/articles/list`).then(res => {
                 this.articles = res.data;
             }).finally(() => this.isLoading = false);
@@ -102,17 +97,6 @@ export default {
             this.fetch(false).then(() => {
                 event.target.complete();
             });
-        },
-        onScroll(e) {
-            if (!this.lastScrollTop) {
-                this.lastScrollTop = e.detail.scrollTop;
-            }
-            if (e.detail.scrollTop > 250 && this.lastScrollTop < e.detail.scrollTop) {
-                this.filtersVisible = false;
-            } else {
-                this.filtersVisible = true;
-            }
-            this.lastScrollTop = e.detail.scrollTop;
         },
     }
 }
