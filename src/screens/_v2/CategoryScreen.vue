@@ -17,6 +17,7 @@
             </div>
             <div v-else>
                 <PlacesList :places="places" />
+                <p class="the-end">На этом пока всё</p>
             </div>
         </ion-content>
     </ion-page>
@@ -86,5 +87,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.the-end {
+    text-align: center;
+    margin-bottom: 30px;
+}
 </style>

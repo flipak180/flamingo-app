@@ -31,7 +31,7 @@ export default {
             return this.place.image
                 ? { backgroundImage: `url(https://flamingo.spb.ru/${this.place.image})`}
                 : { background: randomColor({
-                    hue: 'green',
+                    //hue: 'green',
                     luminosity: 'light',
                 }) };
         }

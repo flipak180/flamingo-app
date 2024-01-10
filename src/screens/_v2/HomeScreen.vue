@@ -119,6 +119,6 @@ h2 {
 
 .the-end {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 </style>
