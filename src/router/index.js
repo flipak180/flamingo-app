@@ -54,16 +54,16 @@ const routes = [
                 path: 'match',
                 component: () => import('@/screens/_v2/MatchScreen.vue'),
             },
-            // {
-            //     name: 'quests',
-            //     path: 'quests',
-            //     component: () => import('@/screens/_v2/QuestsScreen.vue'),
-            // },
-            // {
-            //     name: 'quest',
-            //     path: 'quests/:quest_id',
-            //     component: () => import('@/screens/_v2/QuestCardScreen.vue'),
-            // },
+            {
+                name: 'quests',
+                path: 'quests',
+                component: () => import('@/screens/_v2/QuestsScreen.vue'),
+            },
+            {
+                name: 'quest',
+                path: 'quests/:quest_id',
+                component: () => import('@/screens/_v2/QuestCardScreen.vue'),
+            },
             // {
             //     path: 'home/quest',
             //     component: () => import('@/screens/QuestScreen'),
