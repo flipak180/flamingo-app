@@ -12,7 +12,7 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/vue";
-import {optionsOutline, shareOutline, mapOutline, lockClosed} from 'ionicons/icons';
+import {lockClosed, mapOutline, optionsOutline, shareOutline} from 'ionicons/icons';
 import MyCoordinates from "@/components/MyCoordinates";
 import BackButton from "@/components/BackButton";
 import CategoriesGrid from "@/components/categories/CategoriesGrid";
@@ -23,7 +23,7 @@ import CardModal from "@/components/CardModal";
 import PlacesFilter from "@/components/_v2/PlacesFilter";
 import PropsList from "@/components/common/PropsList/PropsList.vue";
 import {randomColor} from "@/utils/helper";
-import CollapsedText from "@/components/common/CollapsedText/CollapsedText.vue";
+import CollapsedText from "@/components/common/CollapsedText.vue";
 import PlacesGrid from "@/components/places/PlacesGrid.vue";
 import {Share} from "@capacitor/share";
 import PlacesGridItem from "@/components/places/PlacesGridItem.vue";
@@ -49,28 +49,53 @@ export default {
             places: [
                 {
                     id: 1,
-                    title: 'Лофт Проект Этажи',
-                    image: randomColor(),
+                    title: 'Дом старухи-процентщицы',
                     completed: true,
                 },
                 {
                     id: 2,
-                    title: 'Севкабель Порт',
-                    image: randomColor(),
-                    completed: false,
+                    title: 'Трактир "Хрустальный дворец"',
                 },
                 {
                     id: 3,
-                    title: 'Новая Голландия',
-                    image: randomColor(),
-                    completed: false,
+                    title: 'Юсуповский сад',
                 },
                 {
                     id: 4,
-                    title: 'Никольские ряды',
-                    image: randomColor(),
-                    completed: false,
-                }
+                    title: 'Вознесенский мост',
+                },
+                {
+                    id: 5,
+                    title: 'Дом Бакалеева',
+                },
+                {
+                    id: 6,
+                    title: 'Дом Родиона Раскольникова',
+                },
+                {
+                    id: 7,
+                    title: 'Дом Бакалеева',
+                },
+                {
+                    id: 8,
+                    title: 'Столярный переулок, 14',
+                },
+                {
+                    id: 9,
+                    title: 'Кокушкин мост',
+                },
+                {
+                    id: 10,
+                    title: 'Здание бывшей Казанской полицейской части',
+                },
+                {
+                    id: 11,
+                    title: 'Конный переулок - переулок Гривцова',
+                },
+                {
+                    id: 12,
+                    title: 'Сенная площадь',
+                },
             ],
         }
     },
@@ -89,9 +114,9 @@ export default {
         },
         async share() {
             await Share.share({
-                title: 'Король и Шут. Между Купчино и Ржевкой',
-                text: 'Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться',
-                url: 'https://flamingo.spb.ru/tabs/home/quest',
+                title: 'Преступление и наказание',
+                text: 'Захватывающее путешествие по местам, где разворачивались главные события романа',
+                url: 'https://flamingo.spb.ru/tabs/quests/1',
                 dialogTitle: 'Поделиться с друзьями',
             });
         }
@@ -111,12 +136,12 @@ export default {
         </ion-header>
         <ion-content class="ion-padding">
             <div class="quest-card__header">
-                <div class="quest-card__image" :style="{ backgroundImage: `url(${require('@/assets/2.jpg')})` }">
+                <div class="quest-card__image" :style="{ backgroundImage: `url(${require('@/assets/dostoevsky.jpg')})` }">
 
                 </div>
                 <div class="quest-card__heading">
-                    <div class="quest-card__title">Король и Шут. Между Купчино и Ржевкой</div>
-                    <div class="quest-card__category">Исторические личности</div>
+                    <div class="quest-card__title">Преступление и наказание</div>
+                    <div class="quest-card__category">Литературный маршрут</div>
                     <div class="quest-card__actions">
                         <ion-button size="small">Начать</ion-button>
                         <!-- <ion-icon :icon="shareOutline"></ion-icon> -->
@@ -130,14 +155,16 @@ export default {
             <div class="content-section">
                 <div class="content-section__title">Сюжет</div>
                 <CollapsedText>
-                    <p>Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации "Здесь ваш текст.. Здесь ваш текст.. Здесь ваш текст.." Многие программы электронной вёрстки и редакторы HTML используют Lorem Ipsum в качестве текста по умолчанию, так что поиск по ключевым словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются своего настоящего рождения. За прошедшие годы текст Lorem Ipsum получил много версий. Некоторые версии появились по ошибке, некоторые - намеренно (например, юмористические варианты).</p>
+                    <p>Сегодня многим читателям, как российским, так и зарубежным, хочется прогуляться по тем самым местам, где проживали персонажи Достоевского, где разворачивались главные события романа.</p>
+                    <p>Если интересно, то ничего не сможет помешать и вам отправиться в очень захватывающее путешествие по местам романа "Преступление и наказание".</p>
+                    <p>Начинается экскурсия с Дома старухи-процентщицы, а дальше маршрут следует согласно указанной синей линии на карте.</p>
                 </CollapsedText>
             </div>
             <div class="content-section">
-                <div class="content-section__title">Задания</div>
+                <div class="content-section__title">Места</div>
                 <div class="places-grid">
                     <div class="place" v-for="(place, i) in places" :key="place.place_id" @click="$router.push({ name: 'placeDetails', params: { place_id: place.place_id } });">
-                        <div class="image" :style="{ background: place.image }">
+                        <div class="image" :style="{ background: randomColor() }">
                             <span v-if="place.completed">{{ i + 1 }}</span>
                             <ion-icon aria-hidden="true" :icon="lockClosed" v-else />
                         </div>

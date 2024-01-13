@@ -21,6 +21,31 @@ export default {
 }
 </script>
 
-<style lang="scss" src="./CollapsedText.scss">
+<style lang="scss">
+.collapsed-text {
+    max-height: 79px;
+    overflow: hidden;
+    position: relative;
 
+    p {
+        margin-top: 0;
+    }
+
+    &__full {
+        max-height: 500px;
+    }
+
+    &__more {
+        position: absolute;
+        right: 5px;
+        bottom: 3px;
+        color: var(--pink);
+        padding: 0 5px;
+        background: #fff;
+
+        @media (prefers-color-scheme: dark) {
+            background: var(--black);
+        }
+    }
+}
 </style>

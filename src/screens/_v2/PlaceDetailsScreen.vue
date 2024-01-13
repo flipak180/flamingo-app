@@ -40,7 +40,7 @@ import CloseButton from "@/components/CloseButton.vue";
 import api from "@/plugins/api";
 import {Swiper, SwiperSlide} from "swiper/vue";
 import {Pagination} from "swiper/modules";
-import CollapsedText from "@/components/common/CollapsedText/CollapsedText.vue";
+import CollapsedText from "@/components/common/CollapsedText.vue";
 
 export default {
     name: "PlaceDetailsScreen",

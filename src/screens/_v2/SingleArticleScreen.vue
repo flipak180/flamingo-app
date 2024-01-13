@@ -43,7 +43,7 @@ import {Swiper, SwiperSlide} from "swiper/vue";
 import CloseButton from "@/components/CloseButton.vue";
 import {Pagination} from "swiper/modules";
 import api from "@/plugins/api";
-import CollapsedText from "@/components/common/CollapsedText/CollapsedText.vue";
+import CollapsedText from "@/components/common/CollapsedText.vue";
 import ArticlePlaceItem from "@/components/_v2/ArticlePlaceItem.vue";
 import {YMAP_API_KEY} from "@/constants";
 

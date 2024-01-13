@@ -21,7 +21,7 @@
 
 <script>
 import CloseButton from "@/components/CloseButton";
-import CollapsedText from "@/components/common/CollapsedText/CollapsedText";
+import CollapsedText from "@/components/common/CollapsedText";
 import ArticlePlaceItem from "@/components/_v2/ArticlePlaceItem";
 import api from "@/plugins/api";
 import {Swiper, SwiperSlide} from "swiper/vue";

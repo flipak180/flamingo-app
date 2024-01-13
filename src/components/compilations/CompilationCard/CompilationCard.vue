@@ -27,7 +27,7 @@
 import CloseButton from "@/components/CloseButton";
 import PlacesGrid from "@/components/places/PlacesGrid";
 import Cards from "@/utils/data/Cards";
-import CollapsedText from "@/components/common/CollapsedText/CollapsedText";
+import CollapsedText from "@/components/common/CollapsedText";
 
 export default {
     name: "CompilationCard",

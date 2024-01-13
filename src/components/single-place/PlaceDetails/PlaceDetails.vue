@@ -17,7 +17,7 @@
 <script>
 import CloseButton from "@/components/CloseButton";
 import PlacesGrid from "@/components/places/PlacesGrid";
-import CollapsedText from "@/components/common/CollapsedText/CollapsedText";
+import CollapsedText from "@/components/common/CollapsedText";
 import api from "@/plugins/api";
 
 let map;
