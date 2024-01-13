@@ -64,6 +64,11 @@ const routes = [
                 path: 'quests/:quest_id',
                 component: () => import('@/screens/_v2/QuestCardScreen.vue'),
             },
+            {
+                name: 'questPlace',
+                path: 'quests/:quest_id/places/:place_id',
+                component: () => import('@/screens/_v2/QuestPlaceScreen.vue'),
+            },
             // {
             //     path: 'home/quest',
             //     component: () => import('@/screens/QuestScreen'),

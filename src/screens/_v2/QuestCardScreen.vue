@@ -163,7 +163,7 @@ export default {
             <div class="content-section">
                 <div class="content-section__title">Места</div>
                 <div class="places-grid">
-                    <div class="place" v-for="(place, i) in places" :key="place.place_id" @click="$router.push({ name: 'placeDetails', params: { place_id: place.place_id } });">
+                    <div class="place" v-once v-for="(place, i) in places" :key="place.id" @click="$router.push({ name: 'questPlace', params: { quest_id: 1, place_id: place.id } });">
                         <div class="image" :style="{ background: randomColor() }">
                             <span v-if="place.completed">{{ i + 1 }}</span>
                             <ion-icon aria-hidden="true" :icon="lockClosed" v-else />
