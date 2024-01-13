@@ -100,7 +100,7 @@ export default {
                         <div class="card-item__title">{{ card.title }}</div>
                     </div>
                     <div class="card-item__content">
-                        <div class="card-item__image" :style="{ background: randomColor() }"></div>
+                        <div class="card-item__image" :style="{ backgroundImage: card.id === 1 ? `url(${require('@/assets/dostoevsky.jpg')})` : null }"></div>
                         <div class="card-item__tags">
                             <div class="card-item__tag" v-for="tag in card.tags" :key="tag">{{ tag }}</div>
                         </div>
