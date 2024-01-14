@@ -21,6 +21,16 @@
                         <div class="single-place__title">{{ place.title }}</div>
                     </div>
                     <div class="single-place__content ion-padding-horizontal" v-html="place.description"></div>
+                    <div class="single-place__map" v-if="coords">
+                        <yandex-map v-model="map" :settings="{location: {center: coords, zoom: 17}}" width="100%" height="200px">
+                            <yandex-map-default-scheme-layer :settings="{ theme: isDarkMode ? 'dark' : 'light' }" />
+                            <yandex-map-default-features-layer/>
+                            <yandex-map-marker :settings="{coordinates: coords}"
+                            >
+                                <div class="marker"/>
+                            </yandex-map-marker>
+                        </yandex-map>
+                    </div>
                 </div>
             </div>
         </ion-content>
@@ -41,10 +51,14 @@ import api from "@/plugins/api";
 import {Swiper, SwiperSlide} from "swiper/vue";
 import {Pagination} from "swiper/modules";
 import CollapsedText from "@/components/common/CollapsedText.vue";
+import {YandexMap, YandexMapDefaultFeaturesLayer, YandexMapDefaultSchemeLayer, YandexMapMarker} from "vue-yandex-maps";
+import {mapState} from "pinia";
+import {useMainStore} from "@/store";
 
 export default {
     name: "PlaceDetailsScreen",
     components: {
+        YandexMap, YandexMapDefaultSchemeLayer, YandexMapDefaultFeaturesLayer, YandexMapMarker,
         IonSpinner,
         CloseButton, Swiper, SwiperSlide,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
@@ -57,10 +71,17 @@ export default {
 
             place_id: this.$route.params.place_id,
             place: null,
+            map: null,
             isLoading: false,
 
             slider: null,
             modules: [IonicSlides, Pagination],
+        }
+    },
+    computed: {
+        ...mapState(useMainStore, ['isDarkMode']),
+        coords() {
+            return this?.place.coords ? this.place.coords.slice().reverse() : null;
         }
     },
     ionViewWillEnter() {

@@ -138,17 +138,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.marker {
-    position: relative;
-    width: 20px;
-    height: 20px;
-    background: #ff0000;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    color: #fff;
-    font-weight: bold;
-    line-height: 20px;
-}
+
 </style>
