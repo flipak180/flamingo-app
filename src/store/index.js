@@ -7,6 +7,7 @@ export const useMainStore = () => {
             coords: { latitude: 59.938784, longitude: 30.314997 },
             init: false,
             onBoardingComplete: null,
+            isDarkMode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
         }),
         actions: {
             async getCoords() {
@@ -34,6 +35,10 @@ export const useMainStore = () => {
     if (!s.init) {
         s.init = true;
         s.getCoords();
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            s.isDarkMode = event.matches === 'dark';
+        });
     }
     return s;
 };

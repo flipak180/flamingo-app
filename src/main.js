@@ -1,5 +1,5 @@
 import {createApp} from 'vue'
-import { createPinia } from 'pinia'
+import {createPinia} from 'pinia'
 import App from './App.vue'
 import router from './router';
 import VueTheMask from 'vue-the-mask';
@@ -30,8 +30,8 @@ import {useProfileStore} from "@/store/profile";
 import mitt from "mitt";
 import {useMainStore} from "@/store";
 import {piniaCapacitorPersist} from "pinia-plugin-capacitor-persist";
-import {SplashScreen} from "@capacitor/splash-screen";
 import {useSettingsStore} from "@/store/settings";
+import {createYmaps} from "vue-yandex-maps";
 
 //
 (async function () {
@@ -52,6 +52,10 @@ import {useSettingsStore} from "@/store/settings";
         .use(router)
         .use(pinia)
         .use(VueTheMask);
+
+    app.use(createYmaps({
+        apikey: '048d2b9a-9e4a-481c-9799-c8f42c0ce65a',
+    }));
 
     app.config.globalProperties.emitter = emitter;
 

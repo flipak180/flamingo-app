@@ -25,6 +25,17 @@
     <!--                    <img :src="`https://static-maps.yandex.ru/v1?ll=${place.coords.reverse().join(',')}&apikey=${YMAP_API_KEY}&z=15`" alt="">-->
     <!--                </div>-->
     <!--                 <ArticlePlaceItem :place="place" v-if="place" />-->
+
+                    <div class="single-place__map">
+                        <yandex-map v-model="map" :settings="{location: {center: [30.251378, 59.932160], zoom: 17}}" width="100%" height="200px">
+                            <yandex-map-default-scheme-layer :settings="{ theme: isDarkMode ? 'dark' : 'light' }" />
+                            <yandex-map-default-features-layer/>
+                            <yandex-map-marker :settings="{coordinates: [30.251378, 59.932160], onClick: handleClick}"
+                            >
+                                <div class="marker"/>
+                            </yandex-map-marker>
+                        </yandex-map>
+                    </div>
                 </div>
             </div>
         </ion-content>
@@ -46,6 +57,9 @@ import api from "@/plugins/api";
 import CollapsedText from "@/components/common/CollapsedText.vue";
 import ArticlePlaceItem from "@/components/_v2/ArticlePlaceItem.vue";
 import {YMAP_API_KEY} from "@/constants";
+import {YandexMap, YandexMapDefaultFeaturesLayer, YandexMapDefaultSchemeLayer, YandexMapMarker} from "vue-yandex-maps";
+import {mapState} from "pinia";
+import {useMainStore} from "@/store";
 
 export default {
     name: "SingleArticleScreen",
@@ -54,7 +68,8 @@ export default {
         CloseButton, Swiper, SwiperSlide,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
         IonButtons, BackButton,
-        CollapsedText, ArticlePlaceItem
+        CollapsedText, ArticlePlaceItem,
+        YandexMap, YandexMapDefaultSchemeLayer, YandexMapMarker, YandexMapDefaultFeaturesLayer
     },
     ionViewWillEnter() {
         if (Capacitor.isNativePlatform()) {
@@ -75,9 +90,21 @@ export default {
             modules: [IonicSlides, Pagination],
 
             YMAP_API_KEY,
+            map: null,
+            markers: [
+                {
+                    coordinates: [51.789682128109, 55.140428698122],
+                    onClick: this.handleClick,
+                },
+                {
+                    coordinates: [54.76778893634, 57.108481458691],
+                    onClick: this.handleClick,
+                },
+            ]
         }
     },
     computed: {
+        ...mapState(useMainStore, ['isDarkMode']),
         place() {
             return this.article.places.length > 0 ? this.article.places[0] : null
         }
@@ -102,11 +129,26 @@ export default {
         },
         setSwiperInstance(swiper){
             this.slider = swiper;
+        },
+        handleClick(event) {
+            console.log(event);
         }
     }
 }
 </script>
 
 <style scoped lang="scss">
-
+.marker {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background: #ff0000;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    line-height: 20px;
+}
 </style>
