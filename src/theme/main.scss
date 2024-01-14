@@ -117,3 +117,7 @@ ion-content {
 .ion-page .swiper .swiper-pagination-bullet-active {
     background: var(--pink);
 }
+
+ion-modal.auto-height {
+	--height: auto;
+}

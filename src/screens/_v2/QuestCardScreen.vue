@@ -1,3 +1,63 @@
+<template>
+    <ion-page>
+        <ion-header>
+            <ion-toolbar>
+                <ion-buttons slot="secondary">
+                    <BackButton />
+                </ion-buttons>
+                <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+            <div class="quest-card__header">
+                <div class="quest-card__image" :style="{ backgroundImage: `url(${require('@/assets/dostoevsky.jpg')})` }">
+
+                </div>
+                <div class="quest-card__heading">
+                    <div class="quest-card__title">Преступление и наказание</div>
+                    <div class="quest-card__category">Литературный маршрут</div>
+                    <div class="quest-card__actions">
+                        <ion-button size="small" @click="openModal">Начать</ion-button>
+                        <!-- <ion-icon :icon="shareOutline"></ion-icon> -->
+                        <ion-button size="small" color="light" @click="share">
+                            <ion-icon slot="icon-only" :icon="shareOutline" />
+                        </ion-button>
+                    </div>
+                </div>
+            </div>
+            <PropsList :bordered="true" />
+            <div class="content-section">
+                <div class="content-section__title">Сюжет</div>
+                <CollapsedText>
+                    <p>Сегодня многим читателям, как российским, так и зарубежным, хочется прогуляться по тем самым местам, где проживали персонажи Достоевского, где разворачивались главные события романа.</p>
+                    <p>Если интересно, то ничего не сможет помешать и вам отправиться в очень захватывающее путешествие по местам романа "Преступление и наказание".</p>
+                    <p>Начинается экскурсия с Дома старухи-процентщицы, а дальше маршрут следует согласно указанной синей линии на карте.</p>
+                </CollapsedText>
+            </div>
+            <div class="content-section">
+                <div class="content-section__title">Места</div>
+                <div class="places-grid">
+                    <div class="place" v-once v-for="(place, i) in places" :key="place.id" @click="$router.push({ name: 'questPlace', params: { quest_id: 1, place_id: place.id } });">
+                        <div class="image" :style="{ background: randomColor() }">
+                            <span v-if="place.completed">{{ i + 1 }}</span>
+                            <ion-icon aria-hidden="true" :icon="lockClosed" v-else />
+                        </div>
+                        <div class="content" :class="{ closed: !place.completed }">
+                            <div class="title">{{ place.title }}</div>
+                            <div class="buttons">
+                                <ion-button size="small">Я тут</ion-button>
+                                <ion-button size="small">
+                                    <ion-icon slot="icon-only" :icon="mapOutline"></ion-icon>
+                                </ion-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ion-content>
+    </ion-page>
+</template>
+
 <script>
 import {
     IonButton,
@@ -5,12 +65,14 @@ import {
     IonContent,
     IonHeader,
     IonIcon,
+    IonModal,
     IonPage,
     IonRefresher,
     IonRefresherContent,
     IonSpinner,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    modalController
 } from "@ionic/vue";
 import {lockClosed, mapOutline, optionsOutline, shareOutline} from 'ionicons/icons';
 import MyCoordinates from "@/components/MyCoordinates";
@@ -27,6 +89,7 @@ import CollapsedText from "@/components/common/CollapsedText.vue";
 import PlacesGrid from "@/components/places/PlacesGrid.vue";
 import {Share} from "@capacitor/share";
 import PlacesGridItem from "@/components/places/PlacesGridItem.vue";
+import Quiz from "@/components/_v2/Quiz.vue";
 
 export default {
     name: "HomeScreen",
@@ -35,7 +98,7 @@ export default {
         PlacesGrid, CollapsedText,
         PropsList,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
-        IonButtons, BackButton, IonIcon, IonButton,
+        IonButtons, BackButton, IonIcon, IonButton, IonModal,
         IonSpinner, IonRefresher, IonRefresherContent,
         MyCoordinates, CategoriesGrid, CardModal, PlacesFilter,
         CatalogCategory, RouteCategory, QuestCategory
@@ -97,6 +160,7 @@ export default {
                     title: 'Сенная площадь',
                 },
             ],
+            isOpen: false,
         }
     },
     mounted() {
@@ -119,70 +183,20 @@ export default {
                 url: 'https://flamingo.spb.ru/tabs/quests/1',
                 dialogTitle: 'Поделиться с друзьями',
             });
+        },
+        async openModal() {
+            const modal = await modalController.create({
+                component: Quiz,
+                initialBreakpoint: 1,
+                breakpoints: [0, 1],
+                cssClass: 'auto-height'
+            });
+
+            modal.present();
         }
     }
 }
 </script>
-
-<template>
-    <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-buttons slot="secondary">
-                    <BackButton />
-                </ion-buttons>
-                <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-padding">
-            <div class="quest-card__header">
-                <div class="quest-card__image" :style="{ backgroundImage: `url(${require('@/assets/dostoevsky.jpg')})` }">
-
-                </div>
-                <div class="quest-card__heading">
-                    <div class="quest-card__title">Преступление и наказание</div>
-                    <div class="quest-card__category">Литературный маршрут</div>
-                    <div class="quest-card__actions">
-                        <ion-button size="small">Начать</ion-button>
-                        <!-- <ion-icon :icon="shareOutline"></ion-icon> -->
-                        <ion-button size="small" color="light" @click="share">
-                            <ion-icon slot="icon-only" :icon="shareOutline" />
-                        </ion-button>
-                    </div>
-                </div>
-            </div>
-            <PropsList :bordered="true" />
-            <div class="content-section">
-                <div class="content-section__title">Сюжет</div>
-                <CollapsedText>
-                    <p>Сегодня многим читателям, как российским, так и зарубежным, хочется прогуляться по тем самым местам, где проживали персонажи Достоевского, где разворачивались главные события романа.</p>
-                    <p>Если интересно, то ничего не сможет помешать и вам отправиться в очень захватывающее путешествие по местам романа "Преступление и наказание".</p>
-                    <p>Начинается экскурсия с Дома старухи-процентщицы, а дальше маршрут следует согласно указанной синей линии на карте.</p>
-                </CollapsedText>
-            </div>
-            <div class="content-section">
-                <div class="content-section__title">Места</div>
-                <div class="places-grid">
-                    <div class="place" v-once v-for="(place, i) in places" :key="place.id" @click="$router.push({ name: 'questPlace', params: { quest_id: 1, place_id: place.id } });">
-                        <div class="image" :style="{ background: randomColor() }">
-                            <span v-if="place.completed">{{ i + 1 }}</span>
-                            <ion-icon aria-hidden="true" :icon="lockClosed" v-else />
-                        </div>
-                        <div class="content" :class="{ closed: !place.completed }">
-                            <div class="title">{{ place.title }}</div>
-                            <div class="buttons">
-                                <ion-button size="small">Я тут</ion-button>
-                                <ion-button size="small">
-                                    <ion-icon slot="icon-only" :icon="mapOutline"></ion-icon>
-                                </ion-button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ion-content>
-    </ion-page>
-</template>
 
 <style lang="scss" scoped>
 .quest-card {
