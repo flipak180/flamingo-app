@@ -9,46 +9,51 @@
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-            <div class="quest-card__header">
-                <div class="quest-card__image" :style="{ backgroundImage: `url(${require('@/assets/dostoevsky.jpg')})` }">
+            <div class="ion-margin-top ion-text-center" v-if="isLoading">
+                <ion-spinner />
+            </div>
+            <div v-else>
+                <div class="quest-card" v-if="quest">
+                    <div class="quest-card__header">
+                        <div class="quest-card__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${quest.image})` }">
 
-                </div>
-                <div class="quest-card__heading">
-                    <div class="quest-card__title">Преступление и наказание</div>
-                    <div class="quest-card__category">Литературный маршрут</div>
-                    <div class="quest-card__actions">
-                        <ion-button size="small" @click="openModal">Начать</ion-button>
-                        <!-- <ion-icon :icon="shareOutline"></ion-icon> -->
-                        <ion-button size="small" color="light" @click="share">
-                            <ion-icon slot="icon-only" :icon="shareOutline" />
-                        </ion-button>
-                    </div>
-                </div>
-            </div>
-            <PropsList :bordered="true" />
-            <div class="content-section">
-                <div class="content-section__title">Сюжет</div>
-                <CollapsedText>
-                    <p>Сегодня многим читателям, как российским, так и зарубежным, хочется прогуляться по тем самым местам, где проживали персонажи Достоевского, где разворачивались главные события романа.</p>
-                    <p>Если интересно, то ничего не сможет помешать и вам отправиться в очень захватывающее путешествие по местам романа "Преступление и наказание".</p>
-                    <p>Начинается экскурсия с Дома старухи-процентщицы, а дальше маршрут следует согласно указанной синей линии на карте.</p>
-                </CollapsedText>
-            </div>
-            <div class="content-section">
-                <div class="content-section__title">Места</div>
-                <div class="places-grid">
-                    <div class="place" v-once v-for="(place, i) in places" :key="place.id" @click="$router.push({ name: 'questPlace', params: { quest_id: 1, place_id: place.id } });">
-                        <div class="image" :style="{ background: randomColor() }">
-                            <span v-if="place.completed">{{ i + 1 }}</span>
-                            <ion-icon aria-hidden="true" :icon="lockClosed" v-else />
                         </div>
-                        <div class="content" :class="{ closed: !place.completed }">
-                            <div class="title">{{ place.title }}</div>
-                            <div class="buttons">
-                                <ion-button size="small">Я тут</ion-button>
-                                <ion-button size="small">
-                                    <ion-icon slot="icon-only" :icon="mapOutline"></ion-icon>
+                        <div class="quest-card__heading">
+                            <div class="quest-card__title">{{ quest.title }}</div>
+                            <div class="quest-card__category">{{ quest.type }}</div>
+                            <div class="quest-card__actions">
+                                <ion-button size="small" @click="openModal">Начать</ion-button>
+                                <!-- <ion-icon :icon="shareOutline"></ion-icon> -->
+                                <ion-button size="small" color="light" @click="share">
+                                    <ion-icon slot="icon-only" :icon="shareOutline" />
                                 </ion-button>
+                            </div>
+                        </div>
+                    </div>
+                    <PropsList :bordered="true" />
+                    <div class="content-section">
+                        <div class="content-section__title">Описание</div>
+                        <CollapsedText>
+                            <div v-html="quest.description"></div>
+                        </CollapsedText>
+                    </div>
+                    <div class="content-section">
+                        <div class="content-section__title">Места</div>
+                        <div class="places-grid">
+                            <div class="place" v-once v-for="(place, i) in places" :key="place.id" @click="$router.push({ name: 'questPlace', params: { quest_id: 1, place_id: place.id } });">
+                                <div class="image" :style="{ background: randomColor() }">
+                                    <span v-if="place.completed">{{ i + 1 }}</span>
+                                    <ion-icon aria-hidden="true" :icon="lockClosed" v-else />
+                                </div>
+                                <div class="content" :class="{ closed: !place.completed }">
+                                    <div class="title">{{ place.title }}</div>
+                                    <div class="buttons">
+                                        <ion-button size="small">Я тут</ion-button>
+                                        <ion-button size="small">
+                                            <ion-icon slot="icon-only" :icon="mapOutline"></ion-icon>
+                                        </ion-button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -90,6 +95,7 @@ import PlacesGrid from "@/components/places/PlacesGrid.vue";
 import {Share} from "@capacitor/share";
 import PlacesGridItem from "@/components/places/PlacesGridItem.vue";
 import Quiz from "@/components/_v2/Quiz.vue";
+import api from "@/plugins/api";
 
 export default {
     name: "HomeScreen",
@@ -105,10 +111,15 @@ export default {
     },
     data() {
         return {
+            id: this.$route.params.quest_id,
+            quest: null,
+            isLoading: false,
+
             optionsOutline,
             shareOutline,
             mapOutline,
             lockClosed,
+
             places: [
                 {
                     id: 1,
@@ -169,7 +180,10 @@ export default {
     methods: {
         randomColor,
         fetch() {
-
+            this.isLoading = true;
+            return api.get(`/quests/details?id=${this.id}`).then(res => {
+                this.quest = res.data;
+            }).finally(() => this.isLoading = false);
         },
         refresh(event) {
             this.fetch(false).then(() => {
