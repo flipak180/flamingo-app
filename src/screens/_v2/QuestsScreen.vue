@@ -16,7 +16,6 @@ import {optionsOutline, shuffleOutline} from 'ionicons/icons';
 import MyCoordinates from "@/components/MyCoordinates";
 import BackButton from "@/components/BackButton";
 import CategoriesGrid from "@/components/categories/CategoriesGrid";
-import {TYPE_CATALOG, TYPE_QUEST, TYPE_ROUTE} from "@/models/Category";
 import CatalogCategory from "@/components/categories/CatalogCategory";
 import RouteCategory from "@/components/categories/RouteCategory";
 import QuestCategory from "@/components/categories/QuestCategory";
@@ -24,7 +23,7 @@ import CardModal from "@/components/CardModal";
 import PlacesFilter from "@/components/_v2/PlacesFilter";
 import PropsList from "@/components/common/PropsList/PropsList.vue";
 import {randomColor} from "@/utils/helper";
-import Quests from "@/utils/data/Quests";
+import api from "@/plugins/api";
 
 export default {
     name: "HomeScreen",
@@ -39,17 +38,12 @@ export default {
     data() {
         return {
             quests: [],
-            Quests,
             isLoading: false,
             filtersVisible: true,
             lastScrollTop: null,
 
             shuffleOutline,
             optionsOutline,
-
-            TYPE_CATALOG,
-            TYPE_ROUTE,
-            TYPE_QUEST,
         }
     },
     mounted() {
@@ -58,7 +52,10 @@ export default {
     methods: {
         randomColor,
         fetch() {
-
+            this.isLoading = true;
+            return api.get(`/quests/list`).then(res => {
+                this.quests = res.data;
+            }).finally(() => this.isLoading = false);
         },
         refresh(event) {
             this.fetch(false).then(() => {
@@ -94,15 +91,15 @@ export default {
                 <ion-spinner />
             </div>
             <div class="cards-list">
-                <div class="card-item" v-for="card in Quests" :key="card.id" @click="$router.push({ name: 'quest', params: { quest_id: card.id } })" v-once>
+                <div class="card-item" v-for="quest in quests" :key="quest.id" @click="$router.push({ name: 'quest', params: { quest_id: quest.id } })">
                     <div class="card-item__header">
-                        <div class="card-item__type">{{ card.type }}</div>
-                        <div class="card-item__title">{{ card.title }}</div>
+                        <div class="card-item__type">{{ quest.type }}</div>
+                        <div class="card-item__title">{{ quest.title }}</div>
                     </div>
                     <div class="card-item__content">
-                        <div class="card-item__image" :style="{ backgroundImage: card.id === 1 ? `url(${require('@/assets/dostoevsky.jpg')})` : null }"></div>
+                        <div class="card-item__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${quest.image})` }"></div>
                         <div class="card-item__tags">
-                            <div class="card-item__tag" v-for="tag in card.tags" :key="tag">{{ tag }}</div>
+                            <div class="card-item__tag" v-for="tag in quest.tags" :key="tag">{{ tag }}</div>
                         </div>
                     </div>
                     <div class="card-item__footer">
@@ -110,6 +107,7 @@ export default {
                     </div>
                 </div>
             </div>
+            <p class="the-end">На этом пока всё</p>
         </ion-content>
         <CardModal />
     </ion-page>

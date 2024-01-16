@@ -87,8 +87,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.the-end {
-    text-align: center;
-    margin-bottom: 30px;
-}
+
 </style>

@@ -116,9 +116,4 @@ h2 {
         margin-top: 0;
     }
 }
-
-.the-end {
-    text-align: center;
-    margin-bottom: 30px;
-}
 </style>
