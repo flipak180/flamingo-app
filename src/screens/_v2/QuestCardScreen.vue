@@ -22,7 +22,7 @@
                             <div class="quest-card__title">{{ quest.title }}</div>
                             <div class="quest-card__category">{{ quest.type }}</div>
                             <div class="quest-card__actions">
-                                <ion-button size="small" @click="openModal">Начать</ion-button>
+                                <ion-button size="small" @click="start">Начать</ion-button>
                                 <!-- <ion-icon :icon="shareOutline"></ion-icon> -->
                                 <ion-button size="small" color="light" @click="share">
                                     <ion-icon slot="icon-only" :icon="shareOutline" />
@@ -163,6 +163,16 @@ export default {
             }
 
             this.$router.push({ name: 'questPlace', params: { quest_id: this.id, place_id: place.id } });
+        },
+        start() {
+            const token = '100-token';
+            api.post('/quests/start', {
+
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            }).then(res => {
+                console.log(res);
+            });
         }
     }
 }
