@@ -40,12 +40,12 @@
                     <div class="content-section">
                         <div class="content-section__title">Места</div>
                         <div class="places-grid">
-                            <div class="place" v-once v-for="(place, i) in places" :key="place.id" @click="$router.push({ name: 'questPlace', params: { quest_id: 1, place_id: place.id } });">
+                            <div class="place" v-once v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place)">
                                 <div class="image" :style="{ background: randomColor() }">
-                                    <span v-if="place.completed">{{ i + 1 }}</span>
+                                    <span v-if="place.opened">{{ i + 1 }}</span>
                                     <ion-icon aria-hidden="true" :icon="lockClosed" v-else />
                                 </div>
-                                <div class="content" :class="{ closed: !place.completed }">
+                                <div class="content" :class="{ closed: !place.opened }">
                                     <div class="title">{{ place.title }}</div>
                                     <div class="buttons">
                                         <ion-button size="small">Я тут</ion-button>
@@ -120,57 +120,6 @@ export default {
             mapOutline,
             lockClosed,
 
-            places: [
-                {
-                    id: 1,
-                    title: 'Дом старухи-процентщицы',
-                    completed: true,
-                },
-                {
-                    id: 2,
-                    title: 'Трактир "Хрустальный дворец"',
-                },
-                {
-                    id: 3,
-                    title: 'Юсуповский сад',
-                },
-                {
-                    id: 4,
-                    title: 'Вознесенский мост',
-                },
-                {
-                    id: 5,
-                    title: 'Дом Бакалеева',
-                },
-                {
-                    id: 6,
-                    title: 'Дом Родиона Раскольникова',
-                },
-                {
-                    id: 7,
-                    title: 'Дом Бакалеева',
-                },
-                {
-                    id: 8,
-                    title: 'Столярный переулок, 14',
-                },
-                {
-                    id: 9,
-                    title: 'Кокушкин мост',
-                },
-                {
-                    id: 10,
-                    title: 'Здание бывшей Казанской полицейской части',
-                },
-                {
-                    id: 11,
-                    title: 'Конный переулок - переулок Гривцова',
-                },
-                {
-                    id: 12,
-                    title: 'Сенная площадь',
-                },
-            ],
             isOpen: false,
         }
     },
@@ -207,6 +156,13 @@ export default {
             });
 
             modal.present();
+        },
+        handlePlaceClick(place) {
+            if (!place.opened) {
+                return;
+            }
+
+            this.$router.push({ name: 'questPlace', params: { quest_id: this.id, place_id: place.id } });
         }
     }
 }
