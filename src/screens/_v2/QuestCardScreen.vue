@@ -15,14 +15,15 @@
             <div v-else>
                 <div class="quest-card" v-if="quest">
                     <div class="quest-card__header">
-                        <div class="quest-card__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${quest.image})` }">
+                        <div class="quest-card__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${quest.image})` }" @click="reset">
 
                         </div>
                         <div class="quest-card__heading">
                             <div class="quest-card__title">{{ quest.title }}</div>
                             <div class="quest-card__category">{{ quest.type }}</div>
                             <div class="quest-card__actions">
-                                <ion-button size="small" @click="start">Начать</ion-button>
+                                <ion-button size="small" @click="start" v-if="!userQuest">Начать</ion-button>
+                                <div class="quest-card__progress" v-else>1 из {{ quest.total_places }}</div>
                                 <!-- <ion-icon :icon="shareOutline"></ion-icon> -->
                                 <ion-button size="small" color="light" @click="share">
                                     <ion-icon slot="icon-only" :icon="shareOutline" />
@@ -42,10 +43,10 @@
                         <div class="places-grid">
                             <div class="place" v-once v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place)">
                                 <div class="image" :style="{ background: randomColor() }">
-                                    <span v-if="place.opened">{{ i + 1 }}</span>
-                                    <ion-icon aria-hidden="true" :icon="lockClosed" v-else />
+                                    <ion-icon aria-hidden="true" :icon="lockClosed" v-if="step < (i + 1)" />
+                                    <span v-else>{{ i + 1 }}</span>
                                 </div>
-                                <div class="content" :class="{ closed: !place.opened }">
+                                <div class="content" :class="{ closed: step < (i + 1) }">
                                     <div class="title">{{ place.title }}</div>
                                     <div class="buttons">
                                         <ion-button size="small">Я тут</ion-button>
@@ -96,6 +97,8 @@ import {Share} from "@capacitor/share";
 import PlacesGridItem from "@/components/places/PlacesGridItem.vue";
 import Quiz from "@/components/_v2/Quiz.vue";
 import api from "@/plugins/api";
+import {mapActions, mapState} from "pinia";
+import {useUserQuestsStore} from "@/store/userQuests";
 
 export default {
     name: "HomeScreen",
@@ -111,7 +114,7 @@ export default {
     },
     data() {
         return {
-            id: this.$route.params.quest_id,
+            quest_id: +this.$route.params.quest_id,
             quest: null,
             isLoading: false,
 
@@ -123,14 +126,24 @@ export default {
             isOpen: false,
         }
     },
+    computed: {
+        ...mapState(useUserQuestsStore, ['userQuests']),
+        userQuest() {
+            return this.userQuests.find(item => item.id === this.quest_id);
+        },
+        step() {
+            return this.userQuest?.step || 0;
+        }
+    },
     mounted() {
         this.fetch();
     },
     methods: {
+        ...mapActions(useUserQuestsStore, ['startQuest', 'resetQuest']),
         randomColor,
         fetch() {
             this.isLoading = true;
-            return api.get(`/quests/details?id=${this.id}`).then(res => {
+            return api.get(`/quests/details?id=${this.quest_id}`).then(res => {
                 this.quest = res.data;
             }).finally(() => this.isLoading = false);
         },
@@ -162,17 +175,22 @@ export default {
                 return;
             }
 
-            this.$router.push({ name: 'questPlace', params: { quest_id: this.id, place_id: place.id } });
+            this.$router.push({ name: 'questPlace', params: { quest_id: this.quest_id, place_id: place.id } });
         },
         start() {
-            const token = '100-token';
-            api.post('/quests/start', {
+            this.startQuest(this.quest);
 
-            }, {
-                headers: { Authorization: `Bearer ${token}` }
-            }).then(res => {
-                console.log(res);
-            });
+            // const token = '100-token';
+            // api.post('/quests/start', {
+            //
+            // }, {
+            //     headers: { Authorization: `Bearer ${token}` }
+            // }).then(res => {
+            //     console.log(res);
+            // });
+        },
+        reset() {
+            this.resetQuest(this.quest);
         }
     }
 }
@@ -218,6 +236,16 @@ export default {
     &__actions {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+    }
+
+    &__progress {
+        background: var(--pink);
+        font-size: 13px;
+        font-weight: 600;
+        color: #fff;
+        border-radius: 10px;
+        padding: 4px 10px;
     }
 }
 

@@ -24,6 +24,8 @@ import PlacesFilter from "@/components/_v2/PlacesFilter";
 import PropsList from "@/components/common/PropsList/PropsList.vue";
 import {randomColor} from "@/utils/helper";
 import api from "@/plugins/api";
+import {mapState} from "pinia";
+import {useUserQuestsStore} from "@/store/userQuests";
 
 export default {
     name: "HomeScreen",
@@ -45,6 +47,9 @@ export default {
             shuffleOutline,
             optionsOutline,
         }
+    },
+    computed: {
+        ...mapState(useUserQuestsStore, ['quests'])
     },
     mounted() {
         this.fetch();

@@ -32,6 +32,7 @@ import {useMainStore} from "@/store";
 import {piniaCapacitorPersist} from "pinia-plugin-capacitor-persist";
 import {useSettingsStore} from "@/store/settings";
 import {createYmaps} from "vue-yandex-maps";
+import {useUserQuestsStore} from "@/store/userQuests";
 
 //
 (async function () {
@@ -67,6 +68,9 @@ import {createYmaps} from "vue-yandex-maps";
 
     const settingsStore = useSettingsStore();
     await settingsStore.restored;
+
+    const userQuestsStore = useUserQuestsStore();
+    await userQuestsStore.restored;
 
     await router.isReady();
 
