@@ -24,10 +24,13 @@
                             <div class="quest-card__actions">
                                 <div class="quest-card__actions-left">
                                     <ion-button size="small" @click="start" v-if="!userQuest">Начать</ion-button>
-                                    <div class="quest-card__progress" v-if="userQuest">{{ step }} из {{ quest.total_places }}</div>
-                                    <ion-button size="small" color="light" @click="reset" v-if="userQuest">
-                                        <ion-icon slot="icon-only" :icon="refreshOutline" />
-                                    </ion-button>
+                                    <div v-if="userQuest" class="quest-card__actions-left">
+                                        <div class="quest-card__progress">{{ step }} из {{ quest.total_places }}</div>
+                                        <ion-button size="small" color="light" id="present-alert">
+                                            <ion-icon slot="icon-only" :icon="refreshOutline" />
+                                        </ion-button>
+                                        <ion-alert trigger="present-alert" header="Начать заново?" :buttons="alertButtons"></ion-alert>
+                                    </div>
                                 </div>
                                 <!-- <ion-icon :icon="shareOutline"></ion-icon> -->
                                 <ion-button size="small" color="light" @click="share">
@@ -71,6 +74,7 @@
 
 <script>
 import {
+    IonAlert,
     IonButton,
     IonButtons,
     IonContent,
@@ -113,7 +117,7 @@ export default {
         PropsList,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
         IonButtons, BackButton, IonIcon, IonButton, IonModal,
-        IonSpinner, IonRefresher, IonRefresherContent,
+        IonSpinner, IonRefresher, IonRefresherContent, IonAlert,
         MyCoordinates, CategoriesGrid, CardModal, PlacesFilter,
         CatalogCategory, RouteCategory, QuestCategory
     },
@@ -130,6 +134,19 @@ export default {
             refreshOutline,
 
             isOpen: false,
+            alertButtons: [
+                {
+                    text: 'Нет',
+                    role: 'cancel',
+                },
+                {
+                    text: 'Да',
+                    role: 'confirm',
+                    handler: () => {
+                        this.reset();
+                    },
+                },
+            ],
         }
     },
     computed: {
