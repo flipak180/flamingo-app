@@ -41,12 +41,12 @@
                     <div class="content-section">
                         <div class="content-section__title">Места</div>
                         <div class="places-grid">
-                            <div class="place" v-once v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place)">
-                                <div class="image" :style="{ background: randomColor() }">
+                            <div class="place" v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place, i + 1)" :class="{ closed: step < (i + 1) }">
+                                <div class="image" :style="{ background: place.image }">
                                     <ion-icon aria-hidden="true" :icon="lockClosed" v-if="step < (i + 1)" />
                                     <span v-else>{{ i + 1 }}</span>
                                 </div>
-                                <div class="content" :class="{ closed: step < (i + 1) }">
+                                <div class="content">
                                     <div class="title">{{ place.title }}</div>
                                     <div class="buttons">
                                         <ion-button size="small">Я тут</ion-button>
@@ -90,7 +90,6 @@ import QuestCategory from "@/components/categories/QuestCategory";
 import CardModal from "@/components/CardModal";
 import PlacesFilter from "@/components/_v2/PlacesFilter";
 import PropsList from "@/components/common/PropsList/PropsList.vue";
-import {randomColor} from "@/utils/helper";
 import CollapsedText from "@/components/common/CollapsedText.vue";
 import PlacesGrid from "@/components/places/PlacesGrid.vue";
 import {Share} from "@capacitor/share";
@@ -140,7 +139,6 @@ export default {
     },
     methods: {
         ...mapActions(useUserQuestsStore, ['startQuest', 'resetQuest']),
-        randomColor,
         fetch() {
             this.isLoading = true;
             return api.get(`/quests/details?id=${this.quest_id}`).then(res => {
@@ -170,8 +168,8 @@ export default {
 
             modal.present();
         },
-        handlePlaceClick(place) {
-            if (!place.opened) {
+        handlePlaceClick(place, index) {
+            if (this.step < index) {
                 return;
             }
 
@@ -188,6 +186,9 @@ export default {
             // }).then(res => {
             //     console.log(res);
             // });
+        },
+        isPlaceOpened(place) {
+
         },
         reset() {
             this.resetQuest(this.quest);
@@ -258,23 +259,10 @@ export default {
     display: flex;
     position: relative;
 
-    .image {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-        font-weight: bold;
-        font-size: 22px;
-        flex: 0 0 75px;
-        background: #2dd36f;
-    }
+    &.closed {
+        opacity: .5;
 
-    .content {
-        padding: 10px;
-        position: relative;
-        flex-grow: 1;
-
-        &.closed:before {
+        .content:before {
             content: '';
             position: absolute;
             width: 100%;
@@ -289,6 +277,22 @@ export default {
                 background: rgba(var(--black-rgba), 0.3);
             }
         }
+    }
+
+    .image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-weight: bold;
+        font-size: 22px;
+        flex: 0 0 75px;
+    }
+
+    .content {
+        padding: 10px;
+        position: relative;
+        flex-grow: 1;
     }
 
     .title {
