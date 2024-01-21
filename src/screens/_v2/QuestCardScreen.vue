@@ -23,7 +23,7 @@
                             <div class="quest-card__category">{{ quest.type }}</div>
                             <div class="quest-card__actions">
                                 <ion-button size="small" @click="start" v-if="!userQuest">Начать</ion-button>
-                                <div class="quest-card__progress" v-else>1 из {{ quest.total_places }}</div>
+                                <div class="quest-card__progress" v-else>{{ step }} из {{ quest.total_places }}</div>
                                 <!-- <ion-icon :icon="shareOutline"></ion-icon> -->
                                 <ion-button size="small" color="light" @click="share">
                                     <ion-icon slot="icon-only" :icon="shareOutline" />
@@ -49,7 +49,7 @@
                                 <div class="content">
                                     <div class="title">{{ place.title }}</div>
                                     <div class="buttons">
-                                        <ion-button size="small">Я тут</ion-button>
+                                        <ion-button size="small" @click.stop="next">Я тут</ion-button>
                                         <ion-button size="small">
                                             <ion-icon slot="icon-only" :icon="mapOutline"></ion-icon>
                                         </ion-button>
@@ -98,6 +98,7 @@ import Quiz from "@/components/_v2/Quiz.vue";
 import api from "@/plugins/api";
 import {mapActions, mapState} from "pinia";
 import {useUserQuestsStore} from "@/store/userQuests";
+import {Haptics, ImpactStyle} from "@capacitor/haptics";
 
 export default {
     name: "HomeScreen",
@@ -138,7 +139,7 @@ export default {
         this.fetch();
     },
     methods: {
-        ...mapActions(useUserQuestsStore, ['startQuest', 'resetQuest']),
+        ...mapActions(useUserQuestsStore, ['startQuest', 'resetQuest', 'nextQuestPlace']),
         fetch() {
             this.isLoading = true;
             return api.get(`/quests/details?id=${this.quest_id}`).then(res => {
@@ -175,8 +176,10 @@ export default {
 
             this.$router.push({ name: 'questPlace', params: { quest_id: this.quest_id, place_id: place.id } });
         },
-        start() {
+        async start() {
             this.startQuest(this.quest);
+
+            await Haptics.impact({ style: ImpactStyle.Light });
 
             // const token = '100-token';
             // api.post('/quests/start', {
@@ -192,6 +195,9 @@ export default {
         },
         reset() {
             this.resetQuest(this.quest);
+        },
+        next() {
+            this.nextQuestPlace(this.quest);
         }
     }
 }

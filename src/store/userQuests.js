@@ -17,6 +17,13 @@ export const useUserQuestsStore = defineStore('user-quests', {
         },
         resetQuest(quest) {
             this.userQuests = this.userQuests.filter(item => item.id !== quest.id);
+        },
+        nextQuestPlace(quest) {
+            this.userQuests = this.userQuests.map(item =>
+                item.id === quest.id ? { ...item, step: item.step + 1 } : item
+            );
+            console.log(quest);
+            console.log(this.userQuests);
         }
     },
     persist: {
