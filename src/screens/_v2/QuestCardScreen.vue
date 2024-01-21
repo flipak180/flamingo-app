@@ -15,15 +15,20 @@
             <div v-else>
                 <div class="quest-card" v-if="quest">
                     <div class="quest-card__header">
-                        <div class="quest-card__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${quest.image})` }" @click="reset">
+                        <div class="quest-card__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${quest.image})` }">
 
                         </div>
                         <div class="quest-card__heading">
                             <div class="quest-card__title">{{ quest.title }}</div>
                             <div class="quest-card__category">{{ quest.type }}</div>
                             <div class="quest-card__actions">
-                                <ion-button size="small" @click="start" v-if="!userQuest">Начать</ion-button>
-                                <div class="quest-card__progress" v-else>{{ step }} из {{ quest.total_places }}</div>
+                                <div class="quest-card__actions-left">
+                                    <ion-button size="small" @click="start" v-if="!userQuest">Начать</ion-button>
+                                    <div class="quest-card__progress" v-if="userQuest">{{ step }} из {{ quest.total_places }}</div>
+                                    <ion-button size="small" color="light" @click="reset" v-if="userQuest">
+                                        <ion-icon slot="icon-only" :icon="refreshOutline" />
+                                    </ion-button>
+                                </div>
                                 <!-- <ion-icon :icon="shareOutline"></ion-icon> -->
                                 <ion-button size="small" color="light" @click="share">
                                     <ion-icon slot="icon-only" :icon="shareOutline" />
@@ -80,7 +85,7 @@ import {
     IonToolbar,
     modalController
 } from "@ionic/vue";
-import {lockClosed, mapOutline, optionsOutline, shareOutline} from 'ionicons/icons';
+import {lockClosed, mapOutline, optionsOutline, refreshOutline, shareOutline} from 'ionicons/icons';
 import MyCoordinates from "@/components/MyCoordinates";
 import BackButton from "@/components/BackButton";
 import CategoriesGrid from "@/components/categories/CategoriesGrid";
@@ -122,6 +127,7 @@ export default {
             shareOutline,
             mapOutline,
             lockClosed,
+            refreshOutline,
 
             isOpen: false,
         }
@@ -245,6 +251,12 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        &-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
     }
 
     &__progress {
