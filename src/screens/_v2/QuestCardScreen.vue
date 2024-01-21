@@ -196,8 +196,9 @@ export default {
         reset() {
             this.resetQuest(this.quest);
         },
-        next() {
+        async next() {
             this.nextQuestPlace(this.quest);
+            await Haptics.impact({ style: ImpactStyle.Light });
         }
     }
 }
