@@ -25,7 +25,10 @@
                                 <div class="quest-card__actions-left">
                                     <ion-button size="small" @click="start" v-if="!userQuest">Начать</ion-button>
                                     <div v-if="userQuest" class="quest-card__actions-left">
-                                        <div class="quest-card__progress">{{ step }} из {{ quest.total_places }}</div>
+                                        <ion-badge color="primary" v-if="step < quest.total_places">{{ step }} из {{ quest.total_places }}</ion-badge>
+                                        <ion-badge color="success" v-else>Завершен</ion-badge>
+<!--                                        <div class="quest-card__progress" v-if="step <= quest.total_places">{{ step }} из {{ quest.total_places }}</div>-->
+<!--                                        <div class="quest-card__progress" v-else>Завершен</div>-->
                                         <ion-button size="small" color="light" id="present-alert">
                                             <ion-icon slot="icon-only" :icon="refreshOutline" />
                                         </ion-button>
@@ -49,15 +52,18 @@
                     <div class="content-section">
                         <div class="content-section__title">Места</div>
                         <div class="places-grid">
-                            <div class="place" v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place, i + 1)" :class="{ closed: step < (i + 1) }">
+                            <div class="place" v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place, i + 1)" :class="{ closed: (step < i || !userQuest) }">
                                 <div class="image" :style="{ background: place.image }">
-                                    <ion-icon aria-hidden="true" :icon="lockClosed" v-if="step < (i + 1)" />
+                                    <ion-icon aria-hidden="true" :icon="lockClosed" v-if="(step < i || !userQuest)" />
                                     <span v-else>{{ i + 1 }}</span>
                                 </div>
                                 <div class="content">
                                     <div class="title">{{ place.title }}</div>
                                     <div class="buttons">
-                                        <ion-button size="small" @click.stop="next">Я тут</ion-button>
+                                        <ion-button size="small" @click.stop="next" v-if="step <= i">Я тут</ion-button>
+                                        <ion-button size="small" @click.stop="" color="success" v-else>
+                                            <ion-icon slot="icon-only" :icon="checkmarkOutline"></ion-icon>
+                                        </ion-button>
                                         <ion-button size="small">
                                             <ion-icon slot="icon-only" :icon="mapOutline"></ion-icon>
                                         </ion-button>
@@ -75,6 +81,7 @@
 <script>
 import {
     IonAlert,
+    IonBadge,
     IonButton,
     IonButtons,
     IonContent,
@@ -89,7 +96,7 @@ import {
     IonToolbar,
     modalController
 } from "@ionic/vue";
-import {lockClosed, mapOutline, optionsOutline, refreshOutline, shareOutline} from 'ionicons/icons';
+import {checkmarkOutline, lockClosed, mapOutline, optionsOutline, refreshOutline, shareOutline} from 'ionicons/icons';
 import MyCoordinates from "@/components/MyCoordinates";
 import BackButton from "@/components/BackButton";
 import CategoriesGrid from "@/components/categories/CategoriesGrid";
@@ -119,7 +126,7 @@ export default {
         IonButtons, BackButton, IonIcon, IonButton, IonModal,
         IonSpinner, IonRefresher, IonRefresherContent, IonAlert,
         MyCoordinates, CategoriesGrid, CardModal, PlacesFilter,
-        CatalogCategory, RouteCategory, QuestCategory
+        CatalogCategory, RouteCategory, QuestCategory, IonBadge
     },
     data() {
         return {
@@ -132,6 +139,7 @@ export default {
             mapOutline,
             lockClosed,
             refreshOutline,
+            checkmarkOutline,
 
             isOpen: false,
             alertButtons: [

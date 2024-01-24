@@ -12,7 +12,7 @@ export const useUserQuestsStore = defineStore('user-quests', {
 
             this.userQuests.push({
                 id: quest.id,
-                step: 1,
+                step: 0,
             });
         },
         resetQuest(quest) {
