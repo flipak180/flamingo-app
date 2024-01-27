@@ -248,6 +248,7 @@ export default {
         },
         reset() {
             this.resetQuest(this.quest);
+            this.answers = [];
         },
         async next() {
             this.nextQuestPlace(this.quest);
