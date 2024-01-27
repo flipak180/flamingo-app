@@ -23,7 +23,7 @@
                             <div class="quest-card__category">{{ quest.type }}</div>
                             <div class="quest-card__actions">
                                 <div class="quest-card__actions-left">
-                                    <ion-button size="small" @click="start" v-if="!userQuest">Начать</ion-button>
+                                    <ion-button size="small" @click="start(false)" v-if="!userQuest">Начать</ion-button>
                                     <div v-if="userQuest" class="quest-card__actions-left">
                                         <ion-badge color="primary" v-if="step < quest.total_places">{{ step }} из {{ quest.total_places }}</ion-badge>
                                         <ion-badge color="success" v-else>Завершен</ion-badge>
@@ -75,6 +75,18 @@
                 </div>
             </div>
         </ion-content>
+
+        <ion-modal :is-open="isQuizOpen" :initial-breakpoint="1" :breakpoints="[0, 1]" @didDismiss="onQuizClose()">
+            <div class="quiz ion-padding">
+                <div class="quiz__question">Кого убил Раскольников?</div>
+                <div class="quiz__answers">
+                    <ion-button :color="answers.includes(1) ? 'danger' : 'light'" @click="answer(1)">Помещика</ion-button>
+                    <ion-button :color="answers.includes(2) ? 'success' : 'light'" @click="answer(2)">Старуху</ion-button>
+                    <ion-button :color="answers.includes(3) ? 'danger' : 'light'" @click="answer(3)">Жену</ion-button>
+                    <ion-button :color="answers.includes(4) ? 'danger' : 'light'" @click="answer(4)">Марка</ion-button>
+                </div>
+            </div>
+        </ion-modal>
     </ion-page>
 </template>
 
@@ -141,7 +153,9 @@ export default {
             refreshOutline,
             checkmarkOutline,
 
-            isOpen: false,
+            isQuizOpen: false,
+            answers: [],
+
             alertButtons: [
                 {
                     text: 'Нет',
@@ -207,7 +221,12 @@ export default {
 
             this.$router.push({ name: 'questPlace', params: { quest_id: this.quest_id, place_id: place.id } });
         },
-        async start() {
+        async start(skipQuiz = false) {
+            if (!skipQuiz) {
+                this.isQuizOpen = true;
+                return;
+            }
+
             this.startQuest(this.quest);
 
             await Haptics.impact({ style: ImpactStyle.Light });
@@ -221,6 +240,9 @@ export default {
             //     console.log(res);
             // });
         },
+        onQuizClose() {
+            this.isQuizOpen = false;
+        },
         isPlaceOpened(place) {
 
         },
@@ -230,6 +252,15 @@ export default {
         async next() {
             this.nextQuestPlace(this.quest);
             await Haptics.impact({ style: ImpactStyle.Light });
+        },
+        answer(answer) {
+            this.answers.push(answer);
+            if (answer === 2) {
+                setTimeout(() => {
+                    this.start(true);
+                    this.isQuizOpen = false;
+                }, 1000);
+            }
         }
     }
 }
@@ -345,5 +376,29 @@ export default {
         font-size: 14px;
         color: var(--ion-text-color, #000);
     }
+}
+
+.quiz {
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+
+    &__question {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    &__answers {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+}
+
+ion-modal {
+    --height: auto;
 }
 </style>
