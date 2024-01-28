@@ -79,6 +79,16 @@
         <ion-modal :is-open="isQuizOpen" :initial-breakpoint="1" :breakpoints="[0, 1]" @didDismiss="onQuizClose()">
             <div class="quiz ion-padding">
                 <div class="quiz__question">Кого убил Раскольников?</div>
+<!--                <div class="quiz__answer-row">-->
+<!--                    <ion-list>-->
+<!--                        <ion-item lines="none">-->
+<!--                            <ion-input aria-label="Ответ"></ion-input>-->
+<!--                        </ion-item>-->
+<!--                    </ion-list>-->
+<!--                    <ion-button>-->
+<!--                        <ion-icon slot="icon-only" :icon="checkmarkOutline"></ion-icon>-->
+<!--                    </ion-button>-->
+<!--                </div>-->
                 <div class="quiz__answers">
                     <ion-button :color="answers.includes(1) ? 'danger' : 'light'" @click="answer(1)">Помещика</ion-button>
                     <ion-button :color="answers.includes(2) ? 'success' : 'light'" @click="answer(2)">Старуху</ion-button>
@@ -99,6 +109,9 @@ import {
     IonContent,
     IonHeader,
     IonIcon,
+    IonInput,
+    IonItem,
+    IonList,
     IonModal,
     IonPage,
     IonRefresher,
@@ -131,14 +144,13 @@ import {Haptics, ImpactStyle} from "@capacitor/haptics";
 export default {
     name: "HomeScreen",
     components: {
-        PlacesGridItem,
-        PlacesGrid, CollapsedText,
-        PropsList,
+        PlacesGridItem, PlacesGrid, CollapsedText, PropsList,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
         IonButtons, BackButton, IonIcon, IonButton, IonModal,
         IonSpinner, IonRefresher, IonRefresherContent, IonAlert,
         MyCoordinates, CategoriesGrid, CardModal, PlacesFilter,
-        CatalogCategory, RouteCategory, QuestCategory, IonBadge
+        CatalogCategory, RouteCategory, QuestCategory, IonBadge,
+        IonInput, IonList, IonItem
     },
     data() {
         return {
@@ -396,6 +408,26 @@ export default {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 15px;
+    }
+
+    &__answer-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        align-items: center;
+
+        ion-list {
+            flex-grow: 1;
+            --border-radius: 5px;
+        }
+
+        ion-item {
+            --border-radius: 5px;
+        }
+
+        ion-button {
+            min-height: 44px;
+        }
     }
 }
 
