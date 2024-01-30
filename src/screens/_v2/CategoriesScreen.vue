@@ -10,10 +10,19 @@
                 </ion-buttons>
             </ion-toolbar>
             <ion-toolbar v-show="isSearchVisible">
-                <ion-searchbar placeholder="Место, категория, статья и др." ref="search"></ion-searchbar>
+                <ion-searchbar placeholder="Место, категория, статья и др." ref="search" v-model="searchString"
+                               :debounce="1000" @ionClear="this.searchString = ''" @ionInput="onSearch"></ion-searchbar>
             </ion-toolbar>
         </ion-header>
-        <ion-content class="ion-padding">
+        <ion-content v-if="searchString">
+            <ion-list>
+                <ion-item v-for="result in searchResults" @click="$router.push({ name: 'placeDetails', params: { place_id: result.id } })">
+                    <ion-icon aria-hidden="true" :icon="searchOutline" slot="start"></ion-icon>
+                    <ion-label>{{ result.title }}</ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+        <ion-content class="ion-padding" v-else>
             <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
                 <ion-refresher-content />
             </ion-refresher>
@@ -36,6 +45,9 @@ import {
     IonContent,
     IonHeader,
     IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
     IonPage,
     IonRefresher,
     IonRefresherContent,
@@ -57,14 +69,18 @@ export default {
         CategoryItem,
         IonRefresher, CardsList, IonRefresherContent, IonSpinner, CardModal,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
-        IonButtons, BackButton, IonIcon, IonButton, IonSearchbar
+        IonButtons, BackButton, IonIcon, IonButton, IonSearchbar,
+        IonList, IonItem, IonLabel
     },
     data() {
         return {
             categories: [],
             isLoading: false,
             isSearchVisible: false,
+
             searchOutline,
+            searchString: '',
+            searchResults: [],
         }
     },
     mounted() {
@@ -84,8 +100,17 @@ export default {
         },
         onSearchBtnClick() {
             this.isSearchVisible = true;
-            console.log(this.$refs.search);
             //this.$refs.search.setFocus();
+        },
+        onSearch() {
+            if (!this.searchString) {
+                return;
+            }
+
+            this.isLoading = true;
+            return api.get(`/search?term=${this.searchString}`).then(res => {
+                this.searchResults = res.data;
+            }).finally(() => this.isLoading = false);
         }
     }
 }
