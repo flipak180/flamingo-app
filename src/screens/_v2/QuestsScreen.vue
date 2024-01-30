@@ -49,7 +49,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(useUserQuestsStore, ['quests'])
+        ...mapState(useUserQuestsStore, ['userQuests'])
     },
     mounted() {
         this.fetch();

@@ -52,7 +52,7 @@
                     <div class="content-section">
                         <div class="content-section__title">Места</div>
                         <div class="places-grid">
-                            <div class="place" v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place, i + 1)" :class="{ closed: (step < i || !userQuest) }">
+                            <div class="place" v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place, i)" :class="{ closed: (step < i || !userQuest) }">
                                 <div class="image" :style="{ background: place.image }">
                                     <ion-icon aria-hidden="true" :icon="lockClosed" v-if="(step < i || !userQuest)" />
                                     <span v-else>{{ i + 1 }}</span>

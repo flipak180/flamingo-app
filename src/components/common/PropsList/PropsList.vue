@@ -31,12 +31,12 @@
 
 <script>
 import {mapOutline} from "ionicons/icons";
-import {IonIcon} from "@ionic/vue";
+import {IonButton, IonIcon} from "@ionic/vue";
 
 export default {
     name: "PropsList",
     props: ['bordered'],
-    components: { IonIcon },
+    components: {IonButton, IonIcon },
     data() {
         return {
             mapOutline
