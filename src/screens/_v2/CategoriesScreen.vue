@@ -16,8 +16,8 @@
         </ion-header>
         <ion-content v-if="searchString">
             <ion-list>
-                <ion-item v-for="result in searchResults" @click="$router.push({ name: 'placeDetails', params: { place_id: result.id } })">
-                    <ion-icon aria-hidden="true" :icon="searchOutline" slot="start"></ion-icon>
+                <ion-item v-for="result in searchResults" @click="onSearchResultClick(result)">
+                    <ion-icon aria-hidden="true" :icon="getSearchResultIcon(result.type)" slot="start"></ion-icon>
                     <ion-label>{{ result.title }}</ion-label>
                 </ion-item>
             </ion-list>
@@ -61,7 +61,7 @@ import CardModal from "@/components/CardModal.vue";
 import CardsList from "@/components/_v2/ArticlesList.vue";
 import api from "@/plugins/api";
 import CategoryItem from "@/components/_v2/CategoryItem.vue";
-import {searchOutline} from "ionicons/icons";
+import {flameOutline, footstepsOutline, listOutline, searchOutline} from "ionicons/icons";
 
 export default {
     name: "HomeScreen",
@@ -79,6 +79,10 @@ export default {
             isSearchVisible: false,
 
             searchOutline,
+            footstepsOutline,
+            listOutline,
+            flameOutline,
+
             searchString: '',
             searchResults: [],
         }
@@ -111,6 +115,32 @@ export default {
             return api.get(`/search?term=${this.searchString}`).then(res => {
                 this.searchResults = res.data;
             }).finally(() => this.isLoading = false);
+        },
+        getSearchResultIcon(type) {
+            switch (type) {
+                case 'place':
+                    return this.searchOutline;
+                case 'category':
+                    return this.listOutline;
+                case 'quest':
+                    return this.footstepsOutline;
+                case 'article':
+                    return this.flameOutline;
+                default:
+                    return this.searchOutline;
+            }
+        },
+        onSearchResultClick(result) {
+            switch (result.type) {
+                case 'place':
+                    return this.$router.push({ name: 'placeDetails', params: { place_id: result.id } });
+                case 'category':
+                    return this.$router.push({ name: 'category', params: { category_id: result.id } });
+                case 'quest':
+                    return this.$router.push({ name: 'quest', params: { quest_id: result.id } });
+                case 'article':
+                    return this.$router.push({ name: 'article', params: { id: result.id } });
+            }
         }
     }
 }

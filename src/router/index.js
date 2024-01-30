@@ -36,6 +36,7 @@ const routes = [
                 component: () => import('@/screens/_v2/HomeScreen'),
             },
             {
+                name: 'article',
                 path: 'home/single-article/:id',
                 component: () => import('@/screens/_v2/SingleArticleScreen'),
             },
