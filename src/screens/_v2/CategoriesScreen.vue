@@ -103,7 +103,7 @@ export default {
             });
         },
         onSearchBtnClick() {
-            this.isSearchVisible = true;
+            this.isSearchVisible = !this.isSearchVisible;
             //this.$refs.search.setFocus();
         },
         onSearch() {
