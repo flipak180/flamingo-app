@@ -36,6 +36,15 @@
                             </yandex-map-marker>
                         </yandex-map>
                     </div>
+
+                    <hr>
+
+                    <div class="text-center" style="margin-top: 50px;">
+                        <ion-button color="light" @click="share">
+                            <ion-icon slot="start" :icon="shareOutline"></ion-icon>
+                            Поделиться статьей
+                        </ion-button>
+                    </div>
                 </div>
             </div>
         </ion-content>
@@ -46,7 +55,17 @@
 import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import 'swiper/css/pagination';
-import {IonButtons, IonContent, IonHeader, IonicSlides, IonPage, IonSpinner, IonTitle, IonToolbar} from "@ionic/vue";
+import {
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonicSlides,
+    IonPage,
+    IonSpinner,
+    IonTitle,
+    IonToolbar
+} from "@ionic/vue";
 import BackButton from "@/components/BackButton";
 import {StatusBar} from "@capacitor/status-bar";
 import {Capacitor} from "@capacitor/core";
@@ -60,6 +79,8 @@ import {YMAP_API_KEY} from "@/constants";
 import {YandexMap, YandexMapDefaultFeaturesLayer, YandexMapDefaultSchemeLayer, YandexMapMarker} from "vue-yandex-maps";
 import {mapState} from "pinia";
 import {useMainStore} from "@/store";
+import {shareOutline} from "ionicons/icons";
+import {Share} from "@capacitor/share";
 
 export default {
     name: "SingleArticleScreen",
@@ -67,7 +88,7 @@ export default {
         IonSpinner,
         CloseButton, Swiper, SwiperSlide,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
-        IonButtons, BackButton,
+        IonButtons, BackButton, IonIcon,
         CollapsedText, ArticlePlaceItem,
         YandexMap, YandexMapDefaultSchemeLayer, YandexMapMarker, YandexMapDefaultFeaturesLayer
     },
@@ -88,6 +109,7 @@ export default {
             isLoading: false,
             slider: null,
             modules: [IonicSlides, Pagination],
+            shareOutline,
 
             YMAP_API_KEY,
             map: null,
@@ -132,7 +154,15 @@ export default {
         },
         handleClick(event) {
             console.log(event);
-        }
+        },
+        async share() {
+            await Share.share({
+                title: this.article.title,
+                //text: 'Захватывающее путешествие по местам, где разворачивались главные события романа',
+                url: `https://flamingo.spb.ru/tabs/home/single-article/${this.id}`,
+                dialogTitle: 'Поделиться с друзьями',
+            });
+        },
     }
 }
 </script>

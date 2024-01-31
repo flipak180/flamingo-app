@@ -87,6 +87,14 @@ ion-item {
 	}
 }
 
+hr {
+	background: #fff;
+
+	@media (prefers-color-scheme: dark) {
+		background: var(--black-light);
+	}
+}
+
 //.ion-page .swiper .swiper-pagination {
 //    background: rgba(var(--black-rgba), 0.5);
 //    --swiper-pagination-bottom: 0;
