@@ -31,6 +31,15 @@
                             </yandex-map-marker>
                         </yandex-map>
                     </div>
+
+                    <hr>
+
+                    <div class="text-center" style="margin-top: 50px">
+                        <ion-button color="light" @click="share">
+                            <ion-icon slot="start" :icon="shareOutline"></ion-icon>
+                            Поделиться местом
+                        </ion-button>
+                    </div>
                 </div>
             </div>
         </ion-content>
@@ -41,7 +50,18 @@
 import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import 'swiper/css/pagination';
-import {IonButtons, IonContent, IonHeader, IonicSlides, IonPage, IonSpinner, IonTitle, IonToolbar} from "@ionic/vue";
+import {
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonicSlides,
+    IonPage,
+    IonSpinner,
+    IonTitle,
+    IonToolbar
+} from "@ionic/vue";
 import BackButton from "@/components/BackButton";
 import {StatusBar} from "@capacitor/status-bar";
 import {heartOutline, shareOutline} from "ionicons/icons";
@@ -54,10 +74,12 @@ import CollapsedText from "@/components/common/CollapsedText.vue";
 import {YandexMap, YandexMapDefaultFeaturesLayer, YandexMapDefaultSchemeLayer, YandexMapMarker} from "vue-yandex-maps";
 import {mapState} from "pinia";
 import {useMainStore} from "@/store";
+import {Share} from "@capacitor/share";
 
 export default {
     name: "PlaceDetailsScreen",
     components: {
+        IonButton, IonIcon,
         YandexMap, YandexMapDefaultSchemeLayer, YandexMapDefaultFeaturesLayer, YandexMapMarker,
         IonSpinner,
         CloseButton, Swiper, SwiperSlide,
@@ -109,7 +131,15 @@ export default {
         },
         setSwiperInstance(swiper){
             this.slider = swiper;
-        }
+        },
+        async share() {
+            await Share.share({
+                title: this.place.title,
+                text: this.place.type,
+                url: `https://flamingo.spb.ru/tabs/places/place/${this.place_id}`,
+                dialogTitle: 'Поделиться с друзьями',
+            });
+        },
     }
 }
 </script>

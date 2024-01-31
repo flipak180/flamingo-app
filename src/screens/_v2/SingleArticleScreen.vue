@@ -158,7 +158,7 @@ export default {
         async share() {
             await Share.share({
                 title: this.article.title,
-                //text: 'Захватывающее путешествие по местам, где разворачивались главные события романа',
+                text: this.article.type,
                 url: `https://flamingo.spb.ru/tabs/home/single-article/${this.id}`,
                 dialogTitle: 'Поделиться с друзьями',
             });

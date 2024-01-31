@@ -43,34 +43,45 @@
                         </div>
                     </div>
                     <PropsList :bordered="true" />
-                    <div class="content-section">
-                        <div class="content-section__title">Описание</div>
-                        <CollapsedText>
-                            <div v-html="quest.description"></div>
-                        </CollapsedText>
-                    </div>
-                    <div class="content-section">
-                        <div class="content-section__title">Места</div>
-                        <div class="places-grid">
-                            <div class="place" v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place, i)" :class="{ closed: (step < i || !userQuest) }">
-                                <div class="image" :style="{ background: place.image }">
-                                    <ion-icon aria-hidden="true" :icon="lockClosed" v-if="(step < i || !userQuest)" />
-                                    <span v-else>{{ i + 1 }}</span>
-                                </div>
-                                <div class="content">
-                                    <div class="title">{{ place.title }}</div>
-                                    <div class="buttons">
-                                        <ion-button size="small" @click.stop="next" v-if="step <= i">Я тут</ion-button>
-                                        <ion-button size="small" @click.stop="" color="success" v-else>
-                                            <ion-icon slot="icon-only" :icon="checkmarkOutline"></ion-icon>
-                                        </ion-button>
-                                        <ion-button size="small">
-                                            <ion-icon slot="icon-only" :icon="mapOutline"></ion-icon>
-                                        </ion-button>
+                    <div>
+                        <div class="content-section">
+                            <div class="content-section__title">Описание</div>
+                            <CollapsedText>
+                                <div v-html="quest.description"></div>
+                            </CollapsedText>
+                        </div>
+                        <div class="content-section">
+                            <div class="content-section__title">Места</div>
+                            <div class="places-grid">
+                                <div class="place" v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place, i)" :class="{ closed: (step < i || !userQuest) }">
+                                    <div class="image" :style="{ background: place.image }">
+                                        <ion-icon aria-hidden="true" :icon="lockClosed" v-if="(step < i || !userQuest)" />
+                                        <span v-else>{{ i + 1 }}</span>
+                                    </div>
+                                    <div class="content">
+                                        <div class="title">{{ place.title }}</div>
+                                        <div class="buttons">
+                                            <ion-button size="small" @click.stop="next" v-if="step <= i">Я тут</ion-button>
+                                            <ion-button size="small" @click.stop="" color="success" v-else>
+                                                <ion-icon slot="icon-only" :icon="checkmarkOutline"></ion-icon>
+                                            </ion-button>
+                                            <ion-button size="small">
+                                                <ion-icon slot="icon-only" :icon="mapOutline"></ion-icon>
+                                            </ion-button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="text-center" style="margin: 50px 0;">
+                        <ion-button color="light" @click="share">
+                            <ion-icon slot="start" :icon="shareOutline"></ion-icon>
+                            Поделиться квестом
+                        </ion-button>
                     </div>
                 </div>
             </div>
@@ -210,9 +221,9 @@ export default {
         },
         async share() {
             await Share.share({
-                title: 'Преступление и наказание',
-                text: 'Захватывающее путешествие по местам, где разворачивались главные события романа',
-                url: 'https://flamingo.spb.ru/tabs/quests/1',
+                title: this.quest.title,
+                text: this.quest.type,
+                url: `https://flamingo.spb.ru/tabs/quests/${this.quest_id}`,
                 dialogTitle: 'Поделиться с друзьями',
             });
         },
