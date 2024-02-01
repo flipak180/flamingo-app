@@ -1,21 +1,22 @@
 import {useMainStore} from "@/store";
-import robustPointInPolygon from "robust-point-in-polygon";
 import api from "@/plugins/api";
 import {toastController} from "@ionic/vue";
 
 const store = useMainStore()
 
 export const atPlace = (place) => {
-    if (place.hasOwnProperty('atPlace')) {
-        return place.atPlace;
-    }
+    // if (place.hasOwnProperty('atPlace')) {
+    //     return place.atPlace;
+    // }
+
     // console.log(place.location[0]);
     // console.log(robustPointInPolygon(place.location[0], [store.coords.latitude, store.coords.longitude]));
 
-    return robustPointInPolygon(place.location[0], [store.coords.latitude, store.coords.longitude]) < 1;
+    //return robustPointInPolygon(place.location[0], [store.coords.latitude, store.coords.longitude]) < 1;
 
-    const distance = calcCrow({latitude: place.latitude, longitude: place.longitude}, store.coords);
-    return distance <= place.radius;
+    const distance = calcCrow({latitude: place.coords[0], longitude: place.coords[1]}, store.coords);
+    console.log(distance);
+    return distance <= 100000; //place.radius;
 }
 
 export const visit = async (place) => {

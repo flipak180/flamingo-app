@@ -1,4 +1,5 @@
 import {defineStore} from "pinia";
+import {Geolocation} from '@capacitor/geolocation';
 
 export const useMainStore = () => {
     const innerStore = defineStore({
@@ -11,6 +12,7 @@ export const useMainStore = () => {
         }),
         actions: {
             async getCoords() {
+                console.log(Geolocation);
                 // const coordinates = await Geolocation.getCurrentPosition({
                 //     enableHighAccuracy: false,
                 //     maximumAge: 5000,

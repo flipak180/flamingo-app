@@ -61,8 +61,8 @@
                                     <div class="content">
                                         <div class="title">{{ place.title }}</div>
                                         <div class="buttons">
-                                            <ion-button size="small" @click.stop="next" v-if="step <= i">Я тут</ion-button>
-                                            <ion-button size="small" @click.stop="" color="success" v-else>
+                                            <ion-button size="small" @click.stop="imHere(place)" v-if="step <= i">Я тут</ion-button>
+                                            <ion-button size="small" color="success" v-else>
                                                 <ion-icon slot="icon-only" :icon="checkmarkOutline"></ion-icon>
                                             </ion-button>
                                             <ion-button size="small">
@@ -130,7 +130,8 @@ import {
     IonSpinner,
     IonTitle,
     IonToolbar,
-    modalController
+    modalController,
+    toastController
 } from "@ionic/vue";
 import {checkmarkOutline, lockClosed, mapOutline, optionsOutline, refreshOutline, shareOutline} from 'ionicons/icons';
 import MyCoordinates from "@/components/MyCoordinates";
@@ -151,6 +152,7 @@ import api from "@/plugins/api";
 import {mapActions, mapState} from "pinia";
 import {useUserQuestsStore} from "@/store/userQuests";
 import {Haptics, ImpactStyle} from "@capacitor/haptics";
+import {atPlace} from "@/models/Place";
 
 export default {
     name: "HomeScreen",
@@ -238,7 +240,7 @@ export default {
             modal.present();
         },
         handlePlaceClick(place, index) {
-            if (this.step < index) {
+            if (this.step < index || !this.userQuest) {
                 return;
             }
 
@@ -273,7 +275,17 @@ export default {
             this.resetQuest(this.quest);
             this.answers = [];
         },
-        async next() {
+        async imHere(place) {
+            if (!atPlace(place)) {
+                const toast = await toastController.create({
+                    message: 'Вы не тут :)',
+                    color: 'warning',
+                    duration: 1500,
+                });
+                await toast.present();
+                return;
+            }
+
             this.nextQuestPlace(this.quest);
             await Haptics.impact({ style: ImpactStyle.Light });
         },
@@ -283,7 +295,7 @@ export default {
                 setTimeout(() => {
                     this.start(true);
                     this.isQuizOpen = false;
-                }, 1000);
+                }, 500);
             }
         }
     }
