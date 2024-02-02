@@ -11,16 +11,16 @@
             </div>
         </div>
         <div class="props-list__item">
+            <div class="props-list__name">Заданий</div>
+            <div class="props-list__value">10</div>
+        </div>
+        <div class="props-list__item">
             <div class="props-list__name">Дистанция</div>
             <div class="props-list__value">3.2 км</div>
         </div>
         <div class="props-list__item">
             <div class="props-list__name">Длительность</div>
             <div class="props-list__value">1.5 часа</div>
-        </div>
-        <div class="props-list__item">
-            <div class="props-list__name">Заданий</div>
-            <div class="props-list__value">10</div>
         </div>
 <!--        <div class="props-list__item">-->
 <!--            <div class="props-list__name">Сложность</div>-->

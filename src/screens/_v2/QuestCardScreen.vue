@@ -14,31 +14,33 @@
             </div>
             <div v-else>
                 <div class="quest-card" v-if="quest">
+                    <ion-alert trigger="present-alert" header="Начать заново?" :buttons="alertButtons"></ion-alert>
                     <div class="quest-card__header">
                         <div class="quest-card__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${quest.image})` }">
 
                         </div>
                         <div class="quest-card__heading">
-                            <div class="quest-card__title">{{ quest.title }}</div>
+                            <div class="quest-card__title" id="present-alert">{{ quest.title }}</div>
                             <div class="quest-card__category">{{ quest.type }}</div>
                             <div class="quest-card__actions">
-                                <div class="quest-card__actions-left">
-                                    <ion-button size="small" @click="start(false)" v-if="!userQuest">Начать</ion-button>
-                                    <div v-if="userQuest" class="quest-card__actions-left">
-                                        <ion-badge color="primary" v-if="step < quest.total_places">{{ step }} из {{ quest.total_places }}</ion-badge>
-                                        <ion-badge color="success" v-else>Завершен</ion-badge>
-<!--                                        <div class="quest-card__progress" v-if="step <= quest.total_places">{{ step }} из {{ quest.total_places }}</div>-->
-<!--                                        <div class="quest-card__progress" v-else>Завершен</div>-->
-                                        <ion-button size="small" color="light" id="present-alert">
-                                            <ion-icon slot="icon-only" :icon="refreshOutline" />
-                                        </ion-button>
-                                        <ion-alert trigger="present-alert" header="Начать заново?" :buttons="alertButtons"></ion-alert>
-                                    </div>
-                                </div>
-                                <!-- <ion-icon :icon="shareOutline"></ion-icon> -->
-                                <ion-button size="small" color="light" @click="share">
-                                    <ion-icon slot="icon-only" :icon="shareOutline" />
-                                </ion-button>
+                                <ion-progress-bar :value="step / 100 * quest.total_places" style="margin-top: 5px;"></ion-progress-bar>
+<!--                                <div class="quest-card__actions-left">-->
+<!--                                    <ion-button size="small" @click="start(false)" v-if="!userQuest">Начать</ion-button>-->
+<!--                                    <div v-if="userQuest" class="quest-card__actions-left">-->
+<!--                                        <ion-badge color="primary" v-if="step < quest.total_places">{{ step }} из {{ quest.total_places }}</ion-badge>-->
+<!--                                        <ion-badge color="success" v-else>Завершен</ion-badge>-->
+<!--&lt;!&ndash;                                        <div class="quest-card__progress" v-if="step <= quest.total_places">{{ step }} из {{ quest.total_places }}</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <div class="quest-card__progress" v-else>Завершен</div>&ndash;&gt;-->
+<!--                                        <ion-button size="small" color="light" id="present-alert">-->
+<!--                                            <ion-icon slot="icon-only" :icon="refreshOutline" />-->
+<!--                                        </ion-button>-->
+<!--                                        <ion-alert trigger="present-alert" header="Начать заново?" :buttons="alertButtons"></ion-alert>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash; <ion-icon :icon="shareOutline"></ion-icon> &ndash;&gt;-->
+<!--&lt;!&ndash;                                <ion-button size="small" color="light" @click="share">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <ion-icon slot="icon-only" :icon="shareOutline" />&ndash;&gt;-->
+<!--&lt;!&ndash;                                </ion-button>&ndash;&gt;-->
                             </div>
                         </div>
                     </div>
@@ -53,9 +55,9 @@
                         <div class="content-section">
                             <div class="content-section__title">Места</div>
                             <div class="places-grid">
-                                <div class="place" v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place, i)" :class="{ closed: (step < i || !userQuest) }">
+                                <div class="place" v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place, i)" :class="{ closed: (step < i || !userQuest), 'can-open': step === i }">
                                     <div class="image" :style="{ background: place.image }">
-                                        <ion-icon aria-hidden="true" :icon="lockClosed" v-if="(step < i || !userQuest)" />
+                                        <ion-icon aria-hidden="true" :icon="step === i ? helpCircleOutline : lockClosed" v-if="(step < i || !userQuest)" :class="{ pulse: step === i }" />
                                         <span v-else>{{ i + 1 }}</span>
                                     </div>
                                     <div class="content">
@@ -125,15 +127,23 @@ import {
     IonList,
     IonModal,
     IonPage,
+    IonProgressBar,
     IonRefresher,
     IonRefresherContent,
     IonSpinner,
     IonTitle,
     IonToolbar,
-    modalController,
-    toastController
+    modalController
 } from "@ionic/vue";
-import {checkmarkOutline, lockClosed, mapOutline, optionsOutline, refreshOutline, shareOutline} from 'ionicons/icons';
+import {
+    checkmarkOutline,
+    helpCircleOutline,
+    lockClosed,
+    mapOutline,
+    optionsOutline,
+    refreshOutline,
+    shareOutline
+} from 'ionicons/icons';
 import MyCoordinates from "@/components/MyCoordinates";
 import BackButton from "@/components/BackButton";
 import CategoriesGrid from "@/components/categories/CategoriesGrid";
@@ -152,7 +162,6 @@ import api from "@/plugins/api";
 import {mapActions, mapState} from "pinia";
 import {useUserQuestsStore} from "@/store/userQuests";
 import {Haptics, ImpactStyle} from "@capacitor/haptics";
-import {atPlace} from "@/models/Place";
 
 export default {
     name: "HomeScreen",
@@ -163,7 +172,7 @@ export default {
         IonSpinner, IonRefresher, IonRefresherContent, IonAlert,
         MyCoordinates, CategoriesGrid, CardModal, PlacesFilter,
         CatalogCategory, RouteCategory, QuestCategory, IonBadge,
-        IonInput, IonList, IonItem
+        IonInput, IonList, IonItem, IonProgressBar
     },
     data() {
         return {
@@ -175,6 +184,7 @@ export default {
             shareOutline,
             mapOutline,
             lockClosed,
+            helpCircleOutline,
             refreshOutline,
             checkmarkOutline,
 
@@ -240,6 +250,10 @@ export default {
             modal.present();
         },
         handlePlaceClick(place, index) {
+            if (this.step === index) {
+                this.start()
+            }
+
             if (this.step < index || !this.userQuest) {
                 return;
             }
@@ -276,15 +290,15 @@ export default {
             this.answers = [];
         },
         async imHere(place) {
-            if (!atPlace(place)) {
-                const toast = await toastController.create({
-                    message: 'Вы не тут :)',
-                    color: 'warning',
-                    duration: 1500,
-                });
-                await toast.present();
-                return;
-            }
+            // if (!atPlace(place)) {
+            //     const toast = await toastController.create({
+            //         message: 'Вы не тут :)',
+            //         color: 'warning',
+            //         duration: 1500,
+            //     });
+            //     await toast.present();
+            //     return;
+            // }
 
             this.nextQuestPlace(this.quest);
             await Haptics.impact({ style: ImpactStyle.Light });
@@ -390,6 +404,10 @@ export default {
         }
     }
 
+    &.can-open {
+        opacity: 1;
+    }
+
     .image {
         display: flex;
         justify-content: center;
@@ -456,5 +474,12 @@ export default {
 
 ion-modal {
     --height: auto;
+}
+
+ion-progress-bar {
+    --background: var(--black-light);
+    --progress-background: var(--pink);
+    height: 10px;
+    border-radius: 5px;
 }
 </style>

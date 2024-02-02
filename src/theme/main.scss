@@ -142,3 +142,22 @@ ion-modal.auto-height {
     text-align: center;
     margin-bottom: 30px;
 }
+
+.pulse {
+    transform: scale(1);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1.5);
+    }
+
+    75% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.5);
+    }
+}
