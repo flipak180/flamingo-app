@@ -46,24 +46,18 @@
                     </div>
                     <PropsList :bordered="true" />
                     <div>
-                        <div class="content-section">
-                            <div class="content-section__title">Описание</div>
-                            <CollapsedText>
-                                <div v-html="quest.description"></div>
-                            </CollapsedText>
-                        </div>
-                        <div class="content-section">
+                        <!--<div class="content-section">
                             <div class="content-section__title">Активное задание</div>
                             <div class="places-grid">
-                                <div class="place" v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place, i)" :class="{ closed: (step < i || !userQuest), 'can-open': step === i }">
-                                    <div class="image" :style="{ background: place.image }">
+                                <div class="place" @click="handlePlaceClick(activePlace, step)" :class="{ closed: (step < i || !userQuest), 'can-open': step === i }">
+                                    <div class="image" :style="{ background: activePlace.image }">
                                         <ion-icon aria-hidden="true" :icon="step === i ? key : lockClosed" v-if="(step < i || !userQuest)" :class="{ pulse: step === i }" />
                                         <span v-else>{{ i + 1 }}</span>
                                     </div>
                                     <div class="content">
-                                        <div class="title">{{ place.title }}</div>
+                                        <div class="title">{{ activePlace.title }}</div>
                                         <div class="buttons">
-                                            <ion-button size="small" @click.stop="imHere(place)" v-if="step <= i">Я тут</ion-button>
+                                            <ion-button size="small" @click.stop="imHere(activePlace)" v-if="step <= i">Я тут</ion-button>
                                             <ion-button size="small" color="success" v-else>
                                                 <ion-icon slot="icon-only" :icon="checkmarkOutline"></ion-icon>
                                             </ion-button>
@@ -74,9 +68,15 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>-->
+                        <div class="content-section">
+                            <div class="content-section__title">Описание</div>
+                            <CollapsedText>
+                                <div v-html="quest.description"></div>
+                            </CollapsedText>
                         </div>
                         <div class="content-section">
-                            <div class="content-section__title">Задания</div>
+                            <div class="content-section__title">Все задания</div>
                             <div class="places-grid">
                                 <div class="place" v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place, i)" :class="{ closed: (step < i || !userQuest), 'can-open': step === i }">
                                     <div class="image" :style="{ background: place.image }">
@@ -240,7 +240,7 @@ export default {
             return this.userQuest?.step || 0;
         },
         activePlace() {
-            return this.quest.places[0];
+            return this.quest.places[this.step];
         }
     },
     mounted() {
