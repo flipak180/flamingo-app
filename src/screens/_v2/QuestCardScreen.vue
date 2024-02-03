@@ -185,7 +185,7 @@ import Quiz from "@/components/_v2/Quiz.vue";
 import api from "@/plugins/api";
 import {mapActions, mapState} from "pinia";
 import {useUserQuestsStore} from "@/store/userQuests";
-import {Haptics, ImpactStyle} from "@capacitor/haptics";
+import {Haptics, ImpactStyle, NotificationType} from "@capacitor/haptics";
 
 export default {
     name: "HomeScreen",
@@ -331,13 +331,16 @@ export default {
             this.nextQuestPlace(this.quest);
             await Haptics.impact({ style: ImpactStyle.Light });
         },
-        answer(answer) {
+        async answer(answer) {
             this.answers.push(answer);
             if (answer === 2) {
+                await Haptics.notification({ type: NotificationType.Success });
                 setTimeout(() => {
                     this.start(true);
                     this.isQuizOpen = false;
                 }, 500);
+            } else {
+                await Haptics.notification({ type: NotificationType.Error });
             }
         }
     }
