@@ -24,7 +24,7 @@
                             <div class="quest-card__category">{{ quest.type }}</div>
                             <div class="quest-card__actions">
                                 <ion-button size="small" @click="start" v-if="!userQuest">Начать</ion-button>
-                                <ion-progress-bar :value="step / 100 * quest.total_places" style="margin-top: 5px;" v-else></ion-progress-bar>
+                                <ion-progress-bar :value="(step - 1) / 100 * quest.total_places" style="margin-top: 5px;" v-else></ion-progress-bar>
 <!--                                <div class="quest-card__actions-left">-->
 <!--                                    <ion-button size="small" @click="start(false)" v-if="!userQuest">Начать</ion-button>-->
 <!--                                    <div v-if="userQuest" class="quest-card__actions-left">-->
