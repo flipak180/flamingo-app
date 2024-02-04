@@ -10,20 +10,39 @@ export const useUserQuestsStore = defineStore('user-quests', {
                 return;
             }
 
+            const firstPlace = quest.places[0];
+            if (!firstPlace) {
+                return;
+            }
+
             this.userQuests.push({
                 id: quest.id,
-                step: 0,
+                step: firstPlace.number,
+                opened_places: firstPlace.quiz ? [] : [firstPlace.number],
             });
         },
         resetQuest(quest) {
             this.userQuests = this.userQuests.filter(item => item.id !== quest.id);
         },
+        openQuestPlace(quest) {
+            this.userQuests = this.userQuests.map(item => {
+                if (item.id === quest.id) {
+                    item.opened_places.push(item.step)
+                }
+                return item;
+            });
+        },
         nextQuestPlace(quest) {
-            this.userQuests = this.userQuests.map(item =>
-                item.id === quest.id ? { ...item, step: item.step + 1 } : item
-            );
-            console.log(quest);
-            console.log(this.userQuests);
+            this.userQuests = this.userQuests.map(item => {
+                if (item.id === quest.id) {
+                    item.step += 1;
+                }
+                const nextPlace = quest.places[item.step - 1];
+                if (nextPlace && !nextPlace.quiz) {
+                    item.opened_places.push(nextPlace.number);
+                }
+                return item;
+            });
         }
     },
     persist: {

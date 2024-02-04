@@ -23,7 +23,8 @@
                             <div class="quest-card__title" id="present-alert">{{ quest.title }}</div>
                             <div class="quest-card__category">{{ quest.type }}</div>
                             <div class="quest-card__actions">
-                                <ion-progress-bar :value="step / 100 * quest.total_places" style="margin-top: 5px;"></ion-progress-bar>
+                                <ion-button size="small" @click="start" v-if="!userQuest">Начать</ion-button>
+                                <ion-progress-bar :value="step / 100 * quest.total_places" style="margin-top: 5px;" v-else></ion-progress-bar>
 <!--                                <div class="quest-card__actions-left">-->
 <!--                                    <ion-button size="small" @click="start(false)" v-if="!userQuest">Начать</ion-button>-->
 <!--                                    <div v-if="userQuest" class="quest-card__actions-left">-->
@@ -76,17 +77,17 @@
                             </CollapsedText>
                         </div>
                         <div class="content-section">
-                            <div class="content-section__title">Все задания</div>
+                            <div class="content-section__title">Места</div>
                             <div class="places-grid">
-                                <div class="place" v-for="(place, i) in quest.places" :key="place.id" @click="handlePlaceClick(place, i)" :class="{ closed: (step < i || !userQuest), 'can-open': step === i }">
+                                <div class="place" v-for="place in quest.places" :key="place.id" @click="handlePlaceClick(place)" :class="{ closed: (step <= place.number && !isOpened(place)), 'can-open': (step === place.number && !isOpened(place)) }">
                                     <div class="image" :style="{ background: place.image }">
-                                        <ion-icon aria-hidden="true" :icon="step === i ? key : lockClosed" v-if="(step < i || !userQuest)" :class="{ pulse: step === i }" />
-                                        <span v-else>{{ i + 1 }}</span>
+                                        <ion-icon aria-hidden="true" :icon="step === place.number ? key : lockClosed" v-if="(step <= place.number && !isOpened(place))" :class="{ pulse: step === place.number }" />
+                                        <span v-else>{{ place.number }}</span>
                                     </div>
                                     <div class="content">
                                         <div class="title">{{ place.title }}</div>
                                         <div class="buttons">
-                                            <ion-button size="small" @click.stop="imHere(place)" v-if="step <= i">Я тут</ion-button>
+                                            <ion-button size="small" @click.stop="imHere(place)" v-if="step <= place.number">Я тут</ion-button>
                                             <ion-button size="small" color="success" v-else>
                                                 <ion-icon slot="icon-only" :icon="checkmarkOutline"></ion-icon>
                                             </ion-button>
@@ -126,11 +127,13 @@
 <!--                    </ion-button>-->
 <!--                </div>-->
                 <div class="quiz__answers" v-if="quiz.type === 1">
-                    <ion-button v-for="answer in quiz.answer" :key="answer.id" color="light">{{ answer.text }}</ion-button>
-<!--                    <ion-button :color="answers.includes(1) ? 'danger' : 'light'" @click="answer(1)">Помещика</ion-button>-->
-<!--                    <ion-button :color="answers.includes(2) ? 'success' : 'light'" @click="answer(2)">Старуху</ion-button>-->
-<!--                    <ion-button :color="answers.includes(3) ? 'danger' : 'light'" @click="answer(3)">Жену</ion-button>-->
-<!--                    <ion-button :color="answers.includes(4) ? 'danger' : 'light'" @click="answer(4)">Марка</ion-button>-->
+                    <ion-button v-for="answer in quiz.answer" :key="answer.id" @click="onAnswer(quiz, answer)"
+                                :color="answers.includes(answer.id) ? (answer.is_correct ? 'success' : 'danger') : 'light'">
+                        {{ answer.text }}
+                    </ion-button>
+                </div>
+                <div class="quiz__location-btn" v-if="quiz.type === 2">
+                    <ion-button @click="onAnswer(quiz)" expand="block">Я на месте</ion-button>
                 </div>
             </div>
         </ion-modal>
@@ -249,7 +252,7 @@ export default {
         this.fetch();
     },
     methods: {
-        ...mapActions(useUserQuestsStore, ['startQuest', 'resetQuest', 'nextQuestPlace']),
+        ...mapActions(useUserQuestsStore, ['startQuest', 'resetQuest', 'nextQuestPlace', 'openQuestPlace']),
         fetch() {
             this.isLoading = true;
             return api.get(`/quests/details?id=${this.quest_id}`).then(res => {
@@ -279,31 +282,25 @@ export default {
 
             modal.present();
         },
-        handlePlaceClick(place, index) {
-            if (place.quiz) {
+        handlePlaceClick(place) {
+            if (this.step === place.number) {
+                // this.start()
+            }
+
+            if (this.step < place.number || !this.userQuest) {
+                return;
+            }
+
+            if (place.quiz && !this.isOpened(place)) {
                 this.quiz = place.quiz;
                 this.isQuizOpen = true;
                 return;
             }
 
-            if (this.step === index) {
-                // this.start()
-            }
-
-            if (this.step < index || !this.userQuest) {
-                return;
-            }
-
             this.$router.push({ name: 'questPlace', params: { quest_id: this.quest_id, place_id: place.id } });
         },
-        async start(skipQuiz = false) {
-            if (!skipQuiz) {
-                this.isQuizOpen = true;
-                return;
-            }
-
+        async start() {
             this.startQuest(this.quest);
-
             await Haptics.impact({ style: ImpactStyle.Light });
 
             // const token = '100-token';
@@ -339,17 +336,30 @@ export default {
             this.nextQuestPlace(this.quest);
             await Haptics.impact({ style: ImpactStyle.Light });
         },
-        async answer(answer) {
-            this.answers.push(answer);
-            if (answer === 2) {
+        async onAnswer(quiz, answer = null) {
+            if (quiz.type === 1 && answer) {
+                this.answers.push(answer.id);
+                if (answer.is_correct) {
+                    await Haptics.notification({ type: NotificationType.Success });
+                    setTimeout(() => {
+                        this.openQuestPlace(this.quest);
+                        this.isQuizOpen = false;
+                    }, 500);
+                } else {
+                    await Haptics.notification({ type: NotificationType.Error });
+                }
+            }
+
+            if (quiz.type === 2) {
                 await Haptics.notification({ type: NotificationType.Success });
                 setTimeout(() => {
-                    this.start(true);
+                    this.openQuestPlace(this.quest);
                     this.isQuizOpen = false;
                 }, 500);
-            } else {
-                await Haptics.notification({ type: NotificationType.Error });
             }
+        },
+        isOpened(place) {
+            return this.userQuest?.opened_places?.includes(place.number);
         }
     }
 }
