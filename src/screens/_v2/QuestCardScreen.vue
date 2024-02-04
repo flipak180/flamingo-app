@@ -113,8 +113,8 @@
         </ion-content>
 
         <ion-modal :is-open="isQuizOpen" :initial-breakpoint="1" :breakpoints="[0, 1]" @didDismiss="onQuizClose()">
-            <div class="quiz ion-padding">
-                <div class="quiz__question">Кого убил Раскольников?</div>
+            <div class="quiz ion-padding" v-show="quiz">
+                <div class="quiz__question">{{ quiz.question }}</div>
 <!--                <div class="quiz__answer-row">-->
 <!--                    <ion-list>-->
 <!--                        <ion-item lines="none">-->
@@ -125,11 +125,12 @@
 <!--                        <ion-icon slot="icon-only" :icon="checkmarkOutline"></ion-icon>-->
 <!--                    </ion-button>-->
 <!--                </div>-->
-                <div class="quiz__answers">
-                    <ion-button :color="answers.includes(1) ? 'danger' : 'light'" @click="answer(1)">Помещика</ion-button>
-                    <ion-button :color="answers.includes(2) ? 'success' : 'light'" @click="answer(2)">Старуху</ion-button>
-                    <ion-button :color="answers.includes(3) ? 'danger' : 'light'" @click="answer(3)">Жену</ion-button>
-                    <ion-button :color="answers.includes(4) ? 'danger' : 'light'" @click="answer(4)">Марка</ion-button>
+                <div class="quiz__answers" v-if="quiz.type === 1">
+                    <ion-button v-for="answer in quiz.answer" :key="answer.id" color="light">{{ answer.text }}</ion-button>
+<!--                    <ion-button :color="answers.includes(1) ? 'danger' : 'light'" @click="answer(1)">Помещика</ion-button>-->
+<!--                    <ion-button :color="answers.includes(2) ? 'success' : 'light'" @click="answer(2)">Старуху</ion-button>-->
+<!--                    <ion-button :color="answers.includes(3) ? 'danger' : 'light'" @click="answer(3)">Жену</ion-button>-->
+<!--                    <ion-button :color="answers.includes(4) ? 'danger' : 'light'" @click="answer(4)">Марка</ion-button>-->
                 </div>
             </div>
         </ion-modal>
@@ -214,6 +215,7 @@ export default {
             checkmarkOutline,
 
             isQuizOpen: false,
+            quiz: null,
             answers: [],
 
             alertButtons: [
@@ -278,8 +280,14 @@ export default {
             modal.present();
         },
         handlePlaceClick(place, index) {
+            if (place.quiz) {
+                this.quiz = place.quiz;
+                this.isQuizOpen = true;
+                return;
+            }
+
             if (this.step === index) {
-                this.start()
+                // this.start()
             }
 
             if (this.step < index || !this.userQuest) {
