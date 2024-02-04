@@ -526,8 +526,13 @@ ion-modal {
 }
 
 ion-progress-bar {
-    --background: var(--black-light);
+    --background: var(--grey);
     --progress-background: var(--pink);
+
+    @media (prefers-color-scheme: dark) {
+        --background: var(--black-light);
+    }
+
     height: 10px;
     border-radius: 5px;
 }
