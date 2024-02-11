@@ -22,10 +22,13 @@
             <div class="ion-margin-top ion-text-center" v-if="isLoading">
                 <ion-spinner />
             </div>
-            <div v-else>
+            <div>
                 <!--<h2>Актуальное</h2>-->
                 <CardsList :articles="articles" />
-                <p class="the-end">На этом пока всё</p>
+                <ion-infinite-scroll @ionInfinite="loadMore" :disabled="scrolledToEnd">
+                    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+                <p class="the-end" v-if="scrolledToEnd">На этом пока всё</p>
             </div>
         </ion-content>
         <CardModal />
@@ -39,6 +42,8 @@ import {
     IonContent,
     IonHeader,
     IonIcon,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
     IonPage,
     IonRefresher,
     IonRefresherContent,
@@ -66,11 +71,15 @@ export default {
         IonButtons, BackButton, IonIcon, IonButton,
         IonSpinner, IonRefresher, IonRefresherContent,
         MyCoordinates, CategoriesGrid, CardModal, PlacesFilter,
-        CatalogCategory, RouteCategory, QuestCategory, CardsList
+        CatalogCategory, RouteCategory, QuestCategory, CardsList,
+        IonInfiniteScroll, IonInfiniteScrollContent
     },
     data() {
         return {
             articles: [],
+            pageSize: 10,
+            currentPage: 0,
+            scrolledToEnd: false,
             isLoading: false,
             filtersVisible: true,
             lastScrollTop: null,
@@ -89,8 +98,11 @@ export default {
     methods: {
         fetch() {
             this.isLoading = true;
-            return api.get(`/articles/list`).then(res => {
-                this.articles = res.data;
+            return api.get(`/articles/list?limit=${this.pageSize}&offset=${this.currentPage * this.pageSize}`).then(res => {
+                this.articles.push(...res.data);
+                if (res.data.length < this.pageSize) {
+                    this.scrolledToEnd = true;
+                }
             }).finally(() => this.isLoading = false);
         },
         refresh(event) {
@@ -98,6 +110,10 @@ export default {
                 event.target.complete();
             });
         },
+        loadMore(ev) {
+            this.currentPage++;
+            this.fetch().then(() => ev.target.complete());
+        }
     }
 }
 </script>
