@@ -1,13 +1,19 @@
 <script>
 import PropsList from "@/components/common/PropsList/PropsList.vue";
-import {IonProgressBar} from "@ionic/vue";
+import {IonIcon, IonProgressBar} from "@ionic/vue";
 import {mapState} from "pinia";
 import {useUserQuestsStore} from "@/store/userQuests";
+import {checkmark} from "ionicons/icons";
 
 export default {
     name: "QuestListItem",
-    components: {IonProgressBar, PropsList},
+    components: {IonProgressBar, PropsList, IonIcon},
     props: ['quest'],
+    data() {
+        return {
+            checkmark
+        }
+    },
     computed: {
         ...mapState(useUserQuestsStore, ['userQuests']),
         userQuest() {
@@ -22,6 +28,9 @@ export default {
 
 <template>
     <div class="card-item" @click="$router.push({ name: 'quest', params: { quest_id: quest.id } })">
+<!--        <div class="card-item__status">-->
+<!--            <ion-icon :icon="checkmark" color="primary"></ion-icon>-->
+<!--        </div>-->
         <div class="card-item__header">
             <div class="card-item__type">{{ quest.type }}</div>
             <div class="card-item__title">{{ quest.title }}</div>
@@ -47,6 +56,7 @@ export default {
     box-shadow: rgba(0, 0, 0, 0.12) 0 4px 16px;
     overflow: hidden;
     transition: transform 0.4s;
+    position: relative;
 
     @media (prefers-color-scheme: dark) {
         box-shadow: none;
@@ -54,6 +64,18 @@ export default {
 
     &_active {
         transform: scale(0.97);
+    }
+
+    &__status {
+        position: absolute;
+        right: -5px;
+        top: -5px;
+        border-radius: 10px;
+        padding: 5px;
+        background: var(--black);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     &__header {
