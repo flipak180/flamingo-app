@@ -16,20 +16,19 @@
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-            <ion-refresher slot="fixed" @ionRefresh="refresh($event)">
-                <ion-refresher-content />
-            </ion-refresher>
+<!--            <ion-refresher slot="fixed" @ionRefresh="refresh($event)">-->
+<!--                <ion-refresher-content />-->
+<!--            </ion-refresher>-->
+
             <div class="ion-margin-top ion-text-center" v-if="isLoading">
                 <ion-spinner />
             </div>
-            <div>
-                <!--<h2>Актуальное</h2>-->
-                <CardsList :articles="articles" />
-                <ion-infinite-scroll @ionInfinite="loadMore" :disabled="scrolledToEnd">
-                    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-                </ion-infinite-scroll>
-                <p class="the-end" v-if="scrolledToEnd">На этом пока всё</p>
-            </div>
+
+            <CardsList :articles="articles" />
+            <ion-infinite-scroll @ionInfinite="loadMore" :disabled="scrolledToEnd">
+                <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+            <p class="the-end" v-if="scrolledToEnd">На этом пока всё</p>
         </ion-content>
         <CardModal />
     </ion-page>
@@ -81,8 +80,6 @@ export default {
             currentPage: 0,
             scrolledToEnd: false,
             isLoading: false,
-            filtersVisible: true,
-            lastScrollTop: null,
 
             shuffleOutline,
             optionsOutline,
@@ -99,16 +96,25 @@ export default {
         fetch() {
             this.isLoading = true;
             return api.get(`/articles/list?limit=${this.pageSize}&offset=${this.currentPage * this.pageSize}`).then(res => {
-                this.articles.push(...res.data);
+                if (this.currentPage) {
+                    this.articles.push(...res.data)
+                } else {
+                    this.articles = res.data;
+                }
                 if (res.data.length < this.pageSize) {
                     this.scrolledToEnd = true;
                 }
             }).finally(() => this.isLoading = false);
         },
         refresh(event) {
-            this.fetch(false).then(() => {
+            this.resetPager();
+            this.fetch().then(() => {
                 event.target.complete();
             });
+        },
+        resetPager() {
+            this.currentPage = 0;
+            this.scrolledToEnd = false;
         },
         loadMore(ev) {
             this.currentPage++;
