@@ -45,7 +45,7 @@
                             </div>
                         </div>
                     </div>
-                    <PropsList :bordered="true" />
+                    <PropsList :bordered="true" :items="props" />
                     <div>
                         <!--<div class="content-section">
                             <div class="content-section__title">Активное задание</div>
@@ -246,6 +246,13 @@ export default {
         },
         activePlace() {
             return this.quest.places[this.step];
+        },
+        props() {
+            return [
+                { name: 'Дистанция', value: this.quest.distance },
+                { name: 'Длительность', value: this.quest.time },
+                { name: 'Заданий', value: this.quest.total_places },
+            ];
         }
     },
     mounted() {

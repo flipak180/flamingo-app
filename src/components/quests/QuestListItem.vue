@@ -21,6 +21,13 @@ export default {
         },
         progress() {
             return (this.userQuest.step - 1) / 100 * this.quest.total_places;
+        },
+        props() {
+            return [
+                { name: 'Дистанция', value: this.quest.distance },
+                { name: 'Длительность', value: this.quest.time },
+                { name: 'Заданий', value: this.quest.total_places },
+            ];
         }
     }
 }
@@ -43,7 +50,7 @@ export default {
             <ion-progress-bar :value="progress" v-if="userQuest"></ion-progress-bar>
         </div>
         <div class="card-item__footer">
-            <PropsList />
+            <PropsList :items="props" />
         </div>
     </div>
 </template>
