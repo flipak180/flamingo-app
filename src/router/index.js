@@ -104,10 +104,10 @@ const routes = [
             },
 
 
-            // {
-            //     path: 'profile',
-            //     component: () => import('@/screens/profile/ProfileScreen')
-            // },
+            {
+                path: 'profile',
+                component: () => import('@/screens/profile/ProfileScreen')
+            },
             // {
             //     path: 'profile/visits',
             //     component: () => import('@/screens/profile/VisitsScreen')
@@ -140,6 +140,8 @@ const router = createRouter({
 // router.beforeEach(async (to, from, next) => {
 //     const profileStore = useProfileStore();
 //     const mainStore = useMainStore();
+//
+//     console.log(mainStore.onBoardingComplete);
 //
 //     if (!mainStore.onBoardingComplete && !to.path.startsWith('/onboarding')) {
 //         next({ name: 'onboarding' });

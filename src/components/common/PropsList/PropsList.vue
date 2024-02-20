@@ -4,12 +4,12 @@
 <!--            <div class="props-list__name">Награда</div>-->
 <!--            <div class="props-list__value">500</div>-->
 <!--        </div>-->
-        <div class="props-list__item" @click="$router.push({ name: 'map' });">
-            <div class="props-list__name">Локация</div>
-            <div class="props-list__value">
-                <ion-icon :icon="mapOutline"></ion-icon>
-            </div>
-        </div>
+<!--        <div class="props-list__item" @click="$router.push({ name: 'map' });">-->
+<!--            <div class="props-list__name">Локация</div>-->
+<!--            <div class="props-list__value">-->
+<!--                <ion-icon :icon="mapOutline"></ion-icon>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="props-list__item">
             <div class="props-list__name">Дистанция</div>
             <div class="props-list__value">3.2 км</div>
