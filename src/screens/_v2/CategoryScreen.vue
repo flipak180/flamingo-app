@@ -6,6 +6,11 @@
                     <BackButton />
                 </ion-buttons>
                 <ion-title>{{ category?.title || '' }}</ion-title>
+                <ion-buttons slot="primary">
+                    <ion-button @click="onFilterBtnClick">
+                        <ion-icon slot="icon-only" :icon="filterOutline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding" :fullscreen="true">
@@ -35,7 +40,8 @@ import {
     IonRefresherContent,
     IonSpinner,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    modalController
 } from "@ionic/vue";
 import BackButton from "@/components/BackButton";
 import CardModal from "@/components/CardModal.vue";
@@ -43,6 +49,8 @@ import CardsList from "@/components/_v2/ArticlesList.vue";
 import api from "@/plugins/api";
 import CategoryItem from "@/components/_v2/CategoryItem.vue";
 import PlacesList from "@/components/_v2/PlacesList.vue";
+import TagsFilterModal from "@/components/_v2/TagsFilterModal.vue";
+import {filterOutline} from "ionicons/icons";
 
 export default {
     name: "HomeScreen",
@@ -59,6 +67,8 @@ export default {
             category: null,
             places: [],
             isLoading: false,
+
+            filterOutline
         }
     },
     mounted() {
@@ -82,10 +92,29 @@ export default {
                 event.target.complete();
             });
         },
+        async onFilterBtnClick() {
+            const modal = await modalController.create({
+                component: TagsFilterModal,
+                initialBreakpoint: 1,
+                breakpoints: [0, 1],
+                cssClass: 'auto-height',
+                handle: false
+            });
+
+            modal.present();
+
+            const { data, role } = await modal.onWillDismiss();
+
+            if (role === 'confirm') {
+                message.value = `Hello, ${data}!`;
+            }
+        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-
+ion-modal {
+    --height: auto;
+}
 </style>
