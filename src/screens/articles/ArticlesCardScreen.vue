@@ -28,7 +28,7 @@
 
                     <div class="single-place__map">
                         <yandex-map v-model="map" :settings="{location: {center: [30.251378, 59.932160], zoom: 17}}" width="100%" height="200px">
-                            <yandex-map-default-scheme-layer :settings="{ theme: isDarkMode ? 'dark' : 'light' }" />
+                            <yandex-map-default-scheme-layer :settings="{ theme: mainStore.isDarkMode ? 'dark' : 'light' }" />
                             <yandex-map-default-features-layer/>
                             <yandex-map-marker :settings="{coordinates: [30.251378, 59.932160], onClick: handleClick}"
                             >
@@ -51,121 +51,108 @@
     </ion-page>
 </template>
 
-<script>
+<script setup>
 import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import 'swiper/css/pagination';
 import {
     IonButton,
-    IonButtons,
     IonContent,
-    IonHeader,
     IonIcon,
     IonicSlides,
     IonPage,
     IonSpinner,
-    IonTitle,
-    IonToolbar
+    onIonViewWillEnter,
+    onIonViewWillLeave
 } from "@ionic/vue";
-import BackButton from "@/components/BackButton.vue";
 import {StatusBar} from "@capacitor/status-bar";
 import {Capacitor} from "@capacitor/core";
 import {Swiper, SwiperSlide} from "swiper/vue";
 import CloseButton from "@/components/CloseButton.vue";
 import {Pagination} from "swiper/modules";
 import api from "@/plugins/api";
-import CollapsedText from "@/components/common/CollapsedText.vue";
-import ArticlePlaceItem from "@/components/_v2/ArticlePlaceItem.vue";
-import {YMAP_API_KEY} from "@/constants";
 import {YandexMap, YandexMapDefaultFeaturesLayer, YandexMapDefaultSchemeLayer, YandexMapMarker} from "vue-yandex-maps";
-import {mapState} from "pinia";
-import {useMainStore} from "@/store";
 import {shareOutline} from "ionicons/icons";
 import {Share} from "@capacitor/share";
+import {onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
+import {useMainStore} from "@/store";
+import mitt from "mitt";
 
-export default {
-    name: "ArticlesCardScreen",
-    components: {
-        IonSpinner,
-        CloseButton, Swiper, SwiperSlide,
-        IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
-        IonButtons, BackButton, IonIcon, IonButton,
-        CollapsedText, ArticlePlaceItem,
-        YandexMap, YandexMapDefaultSchemeLayer, YandexMapMarker, YandexMapDefaultFeaturesLayer
-    },
-    ionViewWillEnter() {
-        if (Capacitor.isNativePlatform()) {
-            StatusBar.hide();
-        }
-    },
-    ionViewWillLeave() {
-        if (Capacitor.isNativePlatform()) {
-            StatusBar.show();
-        }
-    },
-    data() {
-        return {
-            id: this.$route.params.id,
-            article: null,
-            isLoading: false,
-            slider: null,
-            modules: [IonicSlides, Pagination],
-            shareOutline,
+const route = useRoute()
+const mainStore = useMainStore()
+const emitter = mitt()
 
-            YMAP_API_KEY,
-            map: null,
-            markers: [
-                {
-                    coordinates: [51.789682128109, 55.140428698122],
-                    onClick: this.handleClick,
-                },
-                {
-                    coordinates: [54.76778893634, 57.108481458691],
-                    onClick: this.handleClick,
-                },
-            ]
-        }
-    },
-    computed: {
-        ...mapState(useMainStore, ['isDarkMode']),
-        place() {
-            return this.article.places.length > 0 ? this.article.places[0] : null
-        }
-    },
-    mounted() {
-        this.fetch();
-    },
-    methods: {
-        handleScroll(e) {
-            this.emitter.emit('scroll', e.detail);
-        },
-        fetch() {
-            this.isLoading = true;
-            return api.get(`/articles/details?id=${this.id}`).then(res => {
-                this.article = res.data;
-            }).finally(() => this.isLoading = false);
-        },
-        refresh(event) {
-            this.fetch(false).then(() => {
-                event.target.complete();
-            });
-        },
-        setSwiperInstance(swiper){
-            this.slider = swiper;
-        },
-        handleClick(event) {
-            console.log(event);
-        },
-        async share() {
-            await Share.share({
-                title: this.article.title,
-                text: this.article.type,
-                url: `https://flamingo.spb.ru/tabs/articles/${this.id}`,
-                dialogTitle: 'Поделиться с друзьями',
-            });
-        },
-    }
+const id = ref(route.params.id)
+const article = ref(null)
+const isLoading = ref(false)
+const slider = ref(null)
+const modules = ref([IonicSlides, Pagination])
+const map = ref(null)
+// const markers = ref([
+//     {
+//         coordinates: [51.789682128109, 55.140428698122],
+//         onClick: handleClick,
+//     },
+//     {
+//         coordinates: [54.76778893634, 57.108481458691],
+//         onClick: handleClick,
+//     },
+// ])
+
+// const place = computed(() => {
+//     return article.value.places.length > 0 ? article.value.places[0] : null
+// })
+
+function handleScroll(e) {
+    emitter.emit('scroll', e.detail);
 }
+
+function fetch() {
+    isLoading.value = true;
+    return api.get(`/articles/details?id=${id.value}`).then(res => {
+        article.value = res.data;
+    }).finally(() => isLoading.value = false);
+}
+
+function refresh(event) {
+    fetch(false).then(() => {
+        event.target.complete();
+    });
+}
+
+function setSwiperInstance(swiper){
+    slider.value = swiper;
+}
+
+function handleClick(event) {
+    console.log(event);
+}
+
+async function share() {
+    await Share.share({
+        title: article.value.title,
+        text: article.value.type,
+        url: `https://flamingo.spb.ru/tabs/articles/${id.value}`,
+        dialogTitle: 'Поделиться с друзьями',
+    });
+}
+
+onMounted(() => {
+    fetch();
+})
+
+onIonViewWillEnter(() => {
+    if (Capacitor.isNativePlatform()) {
+        StatusBar.hide();
+    }
+});
+
+onIonViewWillLeave(() => {
+    if (Capacitor.isNativePlatform()) {
+        StatusBar.show();
+    }
+});
 </script>
 
 <style scoped lang="scss">

@@ -34,12 +34,12 @@ const routes: Array<RouteRecordRaw> = [
             {
                 name: 'articles',
                 path: 'articles',
-                component: () => import('@/screens/_v2/ArticlesListScreen.vue'),
+                component: () => import('@/screens/articles/ArticlesListScreen.vue'),
             },
             {
                 name: 'article',
                 path: 'articles/:id',
-                component: () => import('@/screens/_v2/ArticlesCardScreen.vue'),
+                component: () => import('@/screens/articles/ArticlesCardScreen.vue'),
             },
             // {
             //     name: 'expand',
