@@ -32,7 +32,7 @@ import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import 'swiper/css/pagination';
 import {IonButtons, IonContent, IonHeader, IonicSlides, IonPage, IonSpinner, IonTitle, IonToolbar} from "@ionic/vue";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/BackButton.vue";
 import {StatusBar} from "@capacitor/status-bar";
 import {heartOutline, shareOutline} from "ionicons/icons";
 import {Capacitor} from "@capacitor/core";

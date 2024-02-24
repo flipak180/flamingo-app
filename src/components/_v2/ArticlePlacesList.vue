@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ArticlePlaceItem from "@/components/_v2/ArticlePlaceItem";
+import ArticlePlaceItem from "@/components/_v2/ArticlePlaceItem.vue";
 
 export default {
     name: "ArticlePlacesList",

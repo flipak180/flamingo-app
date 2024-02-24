@@ -33,9 +33,9 @@
 <script>
 import {shareOutline} from "ionicons/icons";
 import {IonButton, IonIcon} from "@ionic/vue";
-import PropsList from "@/components/common/PropsList/PropsList";
-import CollapsedText from "@/components/common/CollapsedText";
-import PlacesGrid from "@/components/places/PlacesGrid";
+import PropsList from "@/components/common/PropsList/PropsList.vue";
+import CollapsedText from "@/components/common/CollapsedText.vue";
+import PlacesGrid from "@/components/places/PlacesGrid.vue";
 import Cards from "@/utils/data/Cards";
 import {Share} from "@capacitor/share";
 

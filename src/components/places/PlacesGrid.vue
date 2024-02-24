@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import PlacesGridItem from "@/components/places/PlacesGridItem";
+import PlacesGridItem from "@/components/places/PlacesGridItem.vue";
 import {mapOutline} from "ionicons/icons";
 
 export default {

@@ -62,7 +62,7 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/vue";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/BackButton.vue";
 import {StatusBar} from "@capacitor/status-bar";
 import {heartOutline, shareOutline} from "ionicons/icons";
 import {Capacitor} from "@capacitor/core";

@@ -16,7 +16,7 @@
 
 <script>
 import {IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/BackButton.vue";
 
 export default {
     name: "PlanningScreen",

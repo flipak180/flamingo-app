@@ -15,8 +15,8 @@
 
 <script>
 import {IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
-import BackButton from "@/components/BackButton";
-import CompilationCard from "@/components/compilations/CompilationCard/CompilationCard";
+import BackButton from "@/components/BackButton.vue";
+import CompilationCard from "@/components/compilations/CompilationCard/CompilationCard.vue";
 import {StatusBar} from "@capacitor/status-bar";
 
 export default {

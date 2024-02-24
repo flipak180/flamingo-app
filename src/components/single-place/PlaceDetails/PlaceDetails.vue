@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import CloseButton from "@/components/CloseButton";
-import PlacesGrid from "@/components/places/PlacesGrid";
-import CollapsedText from "@/components/common/CollapsedText";
+import CloseButton from "@/components/CloseButton.vue";
+import PlacesGrid from "@/components/places/PlacesGrid.vue";
+import CollapsedText from "@/components/common/CollapsedText.vue";
 import api from "@/plugins/api";
 
 let map;

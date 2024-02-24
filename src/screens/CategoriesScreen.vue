@@ -22,7 +22,7 @@
 
 <script>
 import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/BackButton.vue";
 
 export default {
     name: "HomeScreen",

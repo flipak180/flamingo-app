@@ -15,9 +15,9 @@
 
 <script>
 import {IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/BackButton.vue";
 import {StatusBar} from "@capacitor/status-bar";
-import SinglePlace from "@/components/_v2/SinglePlace";
+import SinglePlace from "@/components/_v2/SinglePlace.vue";
 import {Capacitor} from "@capacitor/core";
 
 export default {

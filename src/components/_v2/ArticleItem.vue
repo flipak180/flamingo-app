@@ -17,7 +17,7 @@
 
 <script>
 import {IonButton, IonIcon} from "@ionic/vue";
-import ArticlePlacesList from "@/components/_v2/ArticlePlacesList";
+import ArticlePlacesList from "@/components/_v2/ArticlePlacesList.vue";
 
 export default {
     name: "ArticleItem",

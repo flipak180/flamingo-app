@@ -17,7 +17,7 @@
 <script>
 import {IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
 import {YmapSettings} from "@/models/Ymap";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/BackButton.vue";
 import {mapState} from "pinia";
 import {useMainStore} from "@/store";
 import api from "@/plugins/api";

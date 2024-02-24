@@ -51,17 +51,17 @@ import {
     IonToolbar
 } from "@ionic/vue";
 import {optionsOutline, shuffleOutline} from 'ionicons/icons';
-import MyCoordinates from "@/components/MyCoordinates";
-import BackButton from "@/components/BackButton";
-import CategoriesGrid from "@/components/categories/CategoriesGrid";
+import MyCoordinates from "@/components/MyCoordinates.vue";
+import BackButton from "@/components/BackButton.vue";
+import CategoriesGrid from "@/components/categories/CategoriesGrid.vue";
 import api from "@/plugins/api";
 import {TYPE_CATALOG, TYPE_QUEST, TYPE_ROUTE} from "@/models/Category";
-import CatalogCategory from "@/components/categories/CatalogCategory";
-import RouteCategory from "@/components/categories/RouteCategory";
-import QuestCategory from "@/components/categories/QuestCategory";
-import CardModal from "@/components/CardModal";
+import CatalogCategory from "@/components/categories/CatalogCategory.vue";
+import RouteCategory from "@/components/categories/RouteCategory.vue";
+import QuestCategory from "@/components/categories/QuestCategory.vue";
+import CardModal from "@/components/CardModal.vue";
 import CardsList from "@/components/_v2/ArticlesList.vue";
-import PlacesFilter from "@/components/_v2/PlacesFilter";
+import PlacesFilter from "@/components/_v2/PlacesFilter.vue";
 
 export default {
     name: "HomeScreen",

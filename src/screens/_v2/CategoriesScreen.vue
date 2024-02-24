@@ -56,7 +56,7 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/vue";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/BackButton.vue";
 import CardModal from "@/components/CardModal.vue";
 import CardsList from "@/components/_v2/ArticlesList.vue";
 import api from "@/plugins/api";

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import PlacesGrid from "@/components/places/PlacesGrid";
+import PlacesGrid from "@/components/places/PlacesGrid.vue";
 
 export default {
     name: "QuestCategory",

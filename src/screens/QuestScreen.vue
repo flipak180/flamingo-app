@@ -15,8 +15,8 @@
 
 <script>
 import {IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
-import BackButton from "@/components/BackButton";
-import QuestCard from "@/components/quests/QuestCard/QuestCard";
+import BackButton from "@/components/BackButton.vue";
+import QuestCard from "@/components/quests/QuestCard/QuestCard.vue";
 
 export default {
     name: "QuestScreen",

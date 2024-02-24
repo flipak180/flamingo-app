@@ -14,8 +14,8 @@
 
 <script>
 import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
-import Profile from "@/components/profile/Profile";
-import LogoutButton from "@/components/LogoutButton";
+import Profile from "@/components/profile/Profile.vue";
+import LogoutButton from "@/components/LogoutButton.vue";
 
 export default {
     components: {

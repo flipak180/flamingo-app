@@ -24,11 +24,11 @@
 
 <script>
 import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
-import BackButton from "@/components/BackButton";
-import PlacesGrid from "@/components/places/PlacesGrid";
+import BackButton from "@/components/BackButton.vue";
+import PlacesGrid from "@/components/places/PlacesGrid.vue";
 import PlacesMock from "@/utils/data/PlacesMock";
 import {filterOutline} from 'ionicons/icons';
-import FiltersModal from "@/components/catalog/FiltersModal";
+import FiltersModal from "@/components/catalog/FiltersModal.vue";
 
 export default {
     components: {

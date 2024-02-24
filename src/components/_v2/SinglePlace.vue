@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import CloseButton from "@/components/CloseButton";
-import CollapsedText from "@/components/common/CollapsedText";
-import ArticlePlaceItem from "@/components/_v2/ArticlePlaceItem";
+import CloseButton from "@/components/CloseButton.vue";
+import CollapsedText from "@/components/common/CollapsedText.vue";
+import ArticlePlaceItem from "@/components/_v2/ArticlePlaceItem.vue";
 import api from "@/plugins/api";
 import {Swiper, SwiperSlide} from "swiper/vue";
 import 'swiper/css';

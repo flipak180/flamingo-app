@@ -66,7 +66,7 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/vue";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/BackButton.vue";
 import {StatusBar} from "@capacitor/status-bar";
 import {Capacitor} from "@capacitor/core";
 import {Swiper, SwiperSlide} from "swiper/vue";

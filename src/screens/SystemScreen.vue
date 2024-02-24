@@ -44,8 +44,8 @@ import {
     IonToggle,
     IonToolbar
 } from "@ionic/vue";
-import BackButton from "@/components/BackButton";
-import MyCoordinates from "@/components/MyCoordinates";
+import BackButton from "@/components/BackButton.vue";
+import MyCoordinates from "@/components/MyCoordinates.vue";
 import {mapStores} from "pinia";
 import {useSettingsStore} from "@/store/settings";
 import {useMainStore} from "@/store";

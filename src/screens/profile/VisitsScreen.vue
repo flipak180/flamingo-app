@@ -16,8 +16,8 @@
 
 <script>
 import {IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
-import Visits from "@/components/Visits";
-import BackButton from "@/components/BackButton";
+import Visits from "@/components/Visits.vue";
+import BackButton from "@/components/BackButton.vue";
 
 export default {
     components: {

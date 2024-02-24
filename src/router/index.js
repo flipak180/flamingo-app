@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from '@ionic/vue-router';
-import Tabs from "@/components/Tabs";
+import Tabs from "@/components/Tabs.vue";
 
 const routes = [
     {
@@ -10,17 +10,17 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: () => import('@/screens/auth/LoginScreen')
+        component: () => import('@/screens/auth/LoginScreen.vue')
     },
     {
         path: '/onboarding',
         name: 'onboarding',
-        component: () => import('@/screens/OnboardingScreen')
+        component: () => import('@/screens/OnboardingScreen.vue')
     },
     {
         path: '/system',
         name: 'system',
-        component: () => import('@/screens/SystemScreen')
+        component: () => import('@/screens/SystemScreen.vue')
     },
     {
         path: '/tabs/',
@@ -33,12 +33,12 @@ const routes = [
             {
                 name: 'home',
                 path: 'home',
-                component: () => import('@/screens/_v2/HomeScreen'),
+                component: () => import('@/screens/_v2/HomeScreen.vue'),
             },
             {
                 name: 'article',
                 path: 'home/single-article/:id',
-                component: () => import('@/screens/_v2/SingleArticleScreen'),
+                component: () => import('@/screens/_v2/SingleArticleScreen.vue'),
             },
             // {
             //     name: 'expand',
@@ -90,50 +90,50 @@ const routes = [
             {
                 path: 'places',
                 name: 'categories',
-                component: () => import('@/screens/_v2/CategoriesScreen'),
+                component: () => import('@/screens/_v2/CategoriesScreen.vue'),
             },
             {
                 path: 'places/categories/:category_id',
                 name: 'category',
-                component: () => import('@/screens/_v2/CategoryScreen'),
+                component: () => import('@/screens/_v2/CategoryScreen.vue'),
             },
             {
                 path: 'places/place/:place_id',
                 name: 'placeDetails',
-                component: () => import('@/screens/_v2/PlaceDetailsScreen'),
+                component: () => import('@/screens/_v2/PlaceDetailsScreen.vue'),
             },
 
 
             {
                 path: 'profile',
-                component: () => import('@/screens/profile/ProfileScreen')
+                component: () => import('@/screens/profile/ProfileScreen.vue')
             },
             // {
             //     path: 'profile/visits',
-            //     component: () => import('@/screens/profile/VisitsScreen')
+            //     component: () => import('@/screens/profile/VisitsScreen.vue')
             // },
             // {
             //     path: 'profile/planning',
             //     name: 'planning',
-            //     component: () => import('@/screens/profile/PlanningScreen')
+            //     component: () => import('@/screens/profile/PlanningScreen.vue')
             // },
             //
             // {
             //     path: 'catalog',
             //     name: 'catalog',
-            //     component: () => import('@/screens/places/CatalogScreen')
+            //     component: () => import('@/screens/places/CatalogScreen.vue')
             // },
         ]
     },
     {
         path: '/map/:place_id?',
         name: 'map',
-        component: () => import('@/screens/places/PlaceMapScreen'),
+        component: () => import('@/screens/places/PlaceMapScreen.vue'),
     },
 ]
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes
 })
 

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Loader from "@/components/Loader";
+import Loader from "@/components/Loader.vue";
 import {mapState} from "pinia";
 import {useSettingsStore} from "@/store/settings";
 

@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import CategoriesGrid from "@/components/categories/CategoriesGrid";
-import PlacesGrid from "@/components/places/PlacesGrid";
+import CategoriesGrid from "@/components/categories/CategoriesGrid.vue";
+import PlacesGrid from "@/components/places/PlacesGrid.vue";
 
 export default {
     name: "CatalogCategory",

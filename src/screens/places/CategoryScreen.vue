@@ -38,13 +38,13 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/vue";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/BackButton.vue";
 import api from "@/plugins/api";
 import {TYPE_CATALOG, TYPE_QUEST, TYPE_ROUTE} from "@/models/Category";
-import CatalogCategory from "@/components/categories/CatalogCategory";
-import RouteCategory from "@/components/categories/RouteCategory";
-import QuestCategory from "@/components/categories/QuestCategory";
-import CardModal from "@/components/CardModal";
+import CatalogCategory from "@/components/categories/CatalogCategory.vue";
+import RouteCategory from "@/components/categories/RouteCategory.vue";
+import QuestCategory from "@/components/categories/QuestCategory.vue";
+import CardModal from "@/components/CardModal.vue";
 
 export default {
     components: {
