@@ -115,11 +115,11 @@ function fetch() {
     }).finally(() => isLoading.value = false);
 }
 
-function refresh(event) {
-    fetch(false).then(() => {
-        event.target.complete();
-    });
-}
+// function refresh(event) {
+//     fetch(false).then(() => {
+//         event.target.complete();
+//     });
+// }
 
 function setSwiperInstance(swiper){
     slider.value = swiper;
