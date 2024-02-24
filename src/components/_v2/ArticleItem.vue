@@ -38,23 +38,7 @@ export default {
             this.isActive = false;
         },
         onClick() {
-            this.$router.push('/tabs/home/single-article/' + this.article.id);
-            return;
-
-            if (this.article.type === 'Квест') {
-                this.$router.push('/tabs/home/quest');
-                return;
-            }
-            if (this.article.type === 'Подборка') {
-                this.$router.push('/tabs/home/compilation');
-                return;
-            }
-            if (this.article.type === 'Достопримечательность') {
-                this.$router.push('/tabs/home/single-place');
-                return;
-            }
-
-            this.$router.push('/tabs/categories/2');
+            this.$router.push('/tabs/articles/' + this.article.id);
         }
     }
 }

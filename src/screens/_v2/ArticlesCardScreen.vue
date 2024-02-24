@@ -56,6 +56,7 @@ import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import 'swiper/css/pagination';
 import {
+    IonButton,
     IonButtons,
     IonContent,
     IonHeader,
@@ -83,12 +84,12 @@ import {shareOutline} from "ionicons/icons";
 import {Share} from "@capacitor/share";
 
 export default {
-    name: "SingleArticleScreen",
+    name: "ArticlesCardScreen",
     components: {
         IonSpinner,
         CloseButton, Swiper, SwiperSlide,
         IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
-        IonButtons, BackButton, IonIcon,
+        IonButtons, BackButton, IonIcon, IonButton,
         CollapsedText, ArticlePlaceItem,
         YandexMap, YandexMapDefaultSchemeLayer, YandexMapMarker, YandexMapDefaultFeaturesLayer
     },
@@ -159,7 +160,7 @@ export default {
             await Share.share({
                 title: this.article.title,
                 text: this.article.type,
-                url: `https://flamingo.spb.ru/tabs/home/single-article/${this.id}`,
+                url: `https://flamingo.spb.ru/tabs/articles/${this.id}`,
                 dialogTitle: 'Поделиться с друзьями',
             });
         },

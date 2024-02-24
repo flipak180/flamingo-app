@@ -8,7 +8,7 @@ import {flameOutline, footstepsOutline, listOutline} from "ionicons/icons";
         <ion-tabs>
             <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar slot="bottom">
-                <ion-tab-button tab="tab-home" href="/tabs/home">
+                <ion-tab-button tab="tab-home" href="/tabs/articles">
                     <ion-icon aria-hidden="true" :icon="flameOutline"/>
                 </ion-tab-button>
                 <ion-tab-button tab="tab-quests" href="/tabs/quests">

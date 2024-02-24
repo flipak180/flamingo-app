@@ -9,7 +9,7 @@ import {albumsOutline, copyOutline, footstepsOutline} from 'ionicons/icons';
         <ion-tabs>
             <ion-router-outlet></ion-router-outlet>
             <ion-tab-bar slot="bottom">
-                <ion-tab-button tab="tab-home" href="/tabs/home">
+                <ion-tab-button tab="tab-home" href="/tabs/articles">
                     <ion-icon aria-hidden="true" :icon="albumsOutline"/>
                 </ion-tab-button>
                 <ion-tab-button tab="tab-quests" href="/tabs/quests">
@@ -23,7 +23,7 @@ import {albumsOutline, copyOutline, footstepsOutline} from 'ionicons/icons';
 <!--                </ion-tab-button>-->
             </ion-tab-bar>
             <!-- <ion-tab-bar slot="bottom">
-                <ion-tab-button tab="tab-home" href="/tabs/home">
+                <ion-tab-button tab="tab-home" href="/tabs/articles">
                     <ion-icon aria-hidden="true" :icon="homeOutline"/>
                     <ion-label>Главная</ion-label>
                 </ion-tab-button>

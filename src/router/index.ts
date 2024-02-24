@@ -6,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
         //redirect: '/onboarding'
-        redirect: '/tabs/home'
+        redirect: '/tabs/articles'
     },
     {
         path: '/login',
@@ -29,17 +29,17 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             {
                 path: '',
-                redirect: '/tabs/home'
+                redirect: '/tabs/articles'
             },
             {
-                name: 'home',
-                path: 'home',
-                component: () => import('@/screens/_v2/HomeScreen.vue'),
+                name: 'articles',
+                path: 'articles',
+                component: () => import('@/screens/_v2/ArticlesListScreen.vue'),
             },
             {
                 name: 'article',
-                path: 'home/single-article/:id',
-                component: () => import('@/screens/_v2/SingleArticleScreen.vue'),
+                path: 'articles/:id',
+                component: () => import('@/screens/_v2/ArticlesCardScreen.vue'),
             },
             // {
             //     name: 'expand',
@@ -160,7 +160,7 @@ const router = createRouter({
 //     }
 //
 //     if (profileStore.phone && to.name === 'login') {
-//         next({ name: 'home' });
+//         next({ name: 'articles' });
 //         return;
 //     }
 //

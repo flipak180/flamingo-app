@@ -53,7 +53,7 @@ export default {
             await Share.share({
                 title: 'Король и Шут. Между Купчино и Ржевкой',
                 text: 'Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться',
-                url: 'https://flamingo.spb.ru/tabs/home/quest',
+                url: 'https://flamingo.spb.ru/tabs/articles/quest',
                 dialogTitle: 'Поделиться с друзьями',
             });
         }
