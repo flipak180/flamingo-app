@@ -77,11 +77,11 @@ import {Share} from "@capacitor/share";
 import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import {useMainStore} from "@/store";
-import mitt from "mitt";
+import {useEmitter} from "@/plugins/emitter";
 
 const route = useRoute()
 const mainStore = useMainStore()
-const emitter = mitt()
+const { emitter } = useEmitter()
 
 const id = ref(route.params.id)
 const article = ref(null)

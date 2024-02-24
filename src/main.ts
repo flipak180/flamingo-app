@@ -27,12 +27,12 @@ import './theme/variables.css';
 import './theme/main.scss';
 import storage from "@/plugins/storage";
 import {useProfileStore} from "@/store/profile";
-import mitt from "mitt";
 import {useMainStore} from "@/store";
 import {piniaCapacitorPersist} from "pinia-plugin-capacitor-persist";
 import {useSettingsStore} from "@/store/settings";
 import {createYmaps} from "vue-yandex-maps";
 import {useUserQuestsStore} from "@/store/userQuests";
+import {emitter} from "@/plugins/emitter";
 
 //
 (async function () {
@@ -42,8 +42,6 @@ import {useUserQuestsStore} from "@/store/userQuests";
 
     const pinia = createPinia()
     pinia.use(piniaCapacitorPersist);
-
-    const emitter = mitt()
 
     const phone = await storage.get('phone');
     const onBoardingComplete = await storage.get('onboarding');

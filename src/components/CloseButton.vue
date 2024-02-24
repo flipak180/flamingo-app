@@ -4,29 +4,19 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import {closeOutline} from "ionicons/icons";
 import {IonIcon} from "@ionic/vue";
+import {onMounted, ref} from "vue";
+import {emitter} from "@/plugins/emitter";
 
-export default {
-    name: "BackButton",
-    components: {IonIcon},
-    data() {
-        return {
-            inverted: false,
-            closeOutline,
-        }
-    },
-    mounted() {
-        this.emitter.on('scroll', (e) => {
-            if (e.scrollTop >= 275) {
-                this.inverted = true;
-            } else {
-                this.inverted = false;
-            }
-        });
-    },
-}
+const inverted = ref(false)
+
+onMounted(() => {
+    emitter.on('scroll', (e) => {
+        inverted.value = e.scrollTop >= 275;
+    });
+})
 </script>
 
 <style scoped lang="scss">
