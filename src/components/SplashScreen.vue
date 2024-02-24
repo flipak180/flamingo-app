@@ -1,12 +1,13 @@
 <template>
     <div class="splash" v-show="!hideSplash">
-        <div class="logo"><img :src="require('@/assets/flamingo2x.png')" alt=""></div>
+        <div class="logo"><img :src="flamingo2x" alt=""></div>
         <div class="title">Flamin<span>GO</span></div>
         <Loader />
     </div>
 </template>
 
 <script>
+import flamingo2x from "@/assets/flamingo2x.png"
 import Loader from "@/components/Loader.vue";
 import {mapState} from "pinia";
 import {useSettingsStore} from "@/store/settings";
@@ -15,6 +16,11 @@ export default {
     name: "SplashScreen",
     components: {
         Loader
+    },
+    data() {
+        return {
+            flamingo2x
+        }
     },
     computed: {
         ...mapState(useSettingsStore, ['hideSplash'])
