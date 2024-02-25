@@ -1,18 +1,10 @@
 <script setup>
-import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonRefresher,
-    IonRefresherContent,
-    IonSpinner,
-    IonTitle,
-    IonToolbar
-} from "@ionic/vue";
+import {IonContent, IonHeader, IonPage, IonRefresher, IonRefresherContent, IonSpinner, IonToolbar} from "@ionic/vue";
 import CardModal from "@/components/CardModal.vue";
 import api from "@/plugins/api";
 import QuestListItem from "@/components/quests/QuestListItem.vue";
 import {onMounted, ref} from "vue";
+import FlamingoTitle from "@/components/FlamingoTitle.vue";
 
 const quests = ref([])
 const isLoading = ref(false)
@@ -39,7 +31,7 @@ onMounted(() => {
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
+                <FlamingoTitle />
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">

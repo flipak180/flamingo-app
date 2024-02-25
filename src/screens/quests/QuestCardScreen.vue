@@ -5,7 +5,7 @@
                 <ion-buttons slot="secondary">
                     <BackButton />
                 </ion-buttons>
-                <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
+                <FlamingoTitle />
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
@@ -140,236 +140,198 @@
     </ion-page>
 </template>
 
-<script>
+<script setup>
 import {
     IonAlert,
-    IonBadge,
     IonButton,
     IonButtons,
     IonContent,
     IonHeader,
     IonIcon,
-    IonInput,
-    IonItem,
-    IonList,
     IonModal,
     IonPage,
     IonProgressBar,
-    IonRefresher,
-    IonRefresherContent,
     IonSpinner,
-    IonTitle,
     IonToolbar,
     modalController
 } from "@ionic/vue";
-import {
-    checkmarkOutline,
-    helpCircleOutline,
-    key,
-    lockClosed,
-    mapOutline,
-    optionsOutline,
-    refreshOutline,
-    shareOutline
-} from 'ionicons/icons';
-import MyCoordinates from "@/components/MyCoordinates.vue";
+import {checkmarkOutline, key, lockClosed, mapOutline, shareOutline} from 'ionicons/icons';
 import BackButton from "@/components/BackButton.vue";
-import CategoriesGrid from "@/components/categories/CategoriesGrid.vue";
-import CatalogCategory from "@/components/categories/CatalogCategory.vue";
-import RouteCategory from "@/components/categories/RouteCategory.vue";
-import QuestCategory from "@/components/categories/QuestCategory.vue";
-import CardModal from "@/components/CardModal.vue";
-import PlacesFilter from "@/components/_v2/PlacesFilter.vue";
 import PropsList from "@/components/common/PropsList/PropsList.vue";
 import CollapsedText from "@/components/common/CollapsedText.vue";
-import PlacesGrid from "@/components/places/PlacesGrid.vue";
 import {Share} from "@capacitor/share";
-import PlacesGridItem from "@/components/places/PlacesGridItem.vue";
 import Quiz from "@/components/_v2/Quiz.vue";
 import api from "@/plugins/api";
-import {mapActions, mapState} from "pinia";
-import {useUserQuestsStore} from "@/store/userQuests";
 import {Haptics, ImpactStyle, NotificationType} from "@capacitor/haptics";
+import {computed, onMounted, ref} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {useUserQuestsStore} from "@/store/userQuests";
+import FlamingoTitle from "@/components/FlamingoTitle.vue";
 
-export default {
-    name: "HomeScreen",
-    components: {
-        PlacesGridItem, PlacesGrid, CollapsedText, PropsList,
-        IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
-        IonButtons, BackButton, IonIcon, IonButton, IonModal,
-        IonSpinner, IonRefresher, IonRefresherContent, IonAlert,
-        MyCoordinates, CategoriesGrid, CardModal, PlacesFilter,
-        CatalogCategory, RouteCategory, QuestCategory, IonBadge,
-        IonInput, IonList, IonItem, IonProgressBar
+const route = useRoute()
+const router = useRouter()
+const userQuestsStore = useUserQuestsStore()
+
+const quest_id = ref(+route.params.quest_id)
+const quest = ref(null)
+const isLoading = ref(false)
+const isQuizOpen = ref(false)
+const quiz = ref(null)
+const answers = ref([])
+const alertButtons = ref([
+    {
+        text: 'Нет',
+        role: 'cancel',
     },
-    data() {
-        return {
-            quest_id: +this.$route.params.quest_id,
-            quest: null,
-            isLoading: false,
-
-            optionsOutline,
-            shareOutline,
-            mapOutline,
-            lockClosed,
-            helpCircleOutline,
-            key,
-            refreshOutline,
-            checkmarkOutline,
-
-            isQuizOpen: false,
-            quiz: null,
-            answers: [],
-
-            alertButtons: [
-                {
-                    text: 'Нет',
-                    role: 'cancel',
-                },
-                {
-                    text: 'Да',
-                    role: 'confirm',
-                    handler: () => {
-                        this.reset();
-                    },
-                },
-            ],
-        }
+    {
+        text: 'Да',
+        role: 'confirm',
+        handler: () => {
+            reset();
+        },
     },
-    computed: {
-        ...mapState(useUserQuestsStore, ['userQuests']),
-        userQuest() {
-            return this.userQuests.find(item => item.id === this.quest_id);
-        },
-        step() {
-            return this.userQuest?.step || 0;
-        },
-        activePlace() {
-            return this.quest.places[this.step];
-        },
-        props() {
-            return [
-                { name: 'Дистанция', value: this.quest.distance },
-                { name: 'Длительность', value: this.quest.time },
-                { name: 'Заданий', value: this.quest.total_places },
-            ];
-        }
-    },
-    mounted() {
-        this.fetch();
-    },
-    methods: {
-        ...mapActions(useUserQuestsStore, ['startQuest', 'resetQuest', 'nextQuestPlace', 'openQuestPlace']),
-        fetch() {
-            this.isLoading = true;
-            return api.get(`/quests/details?id=${this.quest_id}`).then(res => {
-                this.quest = res.data;
-            }).finally(() => this.isLoading = false);
-        },
-        refresh(event) {
-            this.fetch(false).then(() => {
-                event.target.complete();
-            });
-        },
-        async share() {
-            await Share.share({
-                title: this.quest.title,
-                text: this.quest.type,
-                url: `https://flamingo.spb.ru/tabs/quests/${this.quest_id}`,
-                dialogTitle: 'Поделиться с друзьями',
-            });
-        },
-        async openModal() {
-            const modal = await modalController.create({
-                component: Quiz,
-                initialBreakpoint: 1,
-                breakpoints: [0, 1],
-                cssClass: 'auto-height'
-            });
+])
 
-            modal.present();
-        },
-        handlePlaceClick(place) {
-            if (this.step === place.number) {
-                // this.start()
-            }
+const userQuest = computed(() => {
+    return userQuestsStore.userQuests.find(item => item.id === quest_id.value);
+})
+const step = computed(() => {
+    return userQuest.value?.step || 0;
+})
+// const activePlace = computed(() => {
+//     return quest.value.places[step];
+// })
+const props = computed(() => {
+    return [
+        { name: 'Дистанция', value: quest.value.distance },
+        { name: 'Длительность', value: quest.value.time },
+        { name: 'Заданий', value: quest.value.total_places },
+    ];
+})
 
-            if (this.step < place.number || !this.userQuest) {
-                return;
-            }
+function fetch() {
+    isLoading.value = true;
+    return api.get(`/quests/details?id=${quest_id.value}`).then(res => {
+        quest.value = res.data;
+    }).finally(() => isLoading.value = false);
+}
 
-            if (place.quiz && !this.isOpened(place)) {
-                this.quiz = place.quiz;
-                this.isQuizOpen = true;
-                return;
-            }
+// function refresh(event) {
+//     fetch(false).then(() => {
+//         event.target.complete();
+//     });
+// }
 
-            this.$router.push({ name: 'questPlace', params: { quest_id: this.quest_id, place_id: place.id } });
-        },
-        async start() {
-            this.startQuest(this.quest);
-            await Haptics.impact({ style: ImpactStyle.Light });
+async function share() {
+    if (!quest.value) {
+        return;
+    }
 
-            // const token = '100-token';
-            // api.post('/quests/start', {
-            //
-            // }, {
-            //     headers: { Authorization: `Bearer ${token}` }
-            // }).then(res => {
-            //     console.log(res);
-            // });
-        },
-        onQuizClose() {
-            this.isQuizOpen = false;
-        },
-        isPlaceOpened(place) {
+    await Share.share({
+        title: quest.value.title,
+        text: quest.value.type,
+        url: `https://flamingo.spb.ru/tabs/quests/${quest_id.value}`,
+        dialogTitle: 'Поделиться с друзьями',
+    });
+}
 
-        },
-        reset() {
-            this.resetQuest(this.quest);
-            this.answers = [];
-        },
-        async imHere(place) {
-            // if (!atPlace(place)) {
-            //     const toast = await toastController.create({
-            //         message: 'Вы не тут :)',
-            //         color: 'warning',
-            //         duration: 1500,
-            //     });
-            //     await toast.present();
-            //     return;
-            // }
+async function openModal() {
+    const modal = await modalController.create({
+        component: Quiz,
+        initialBreakpoint: 1,
+        breakpoints: [0, 1],
+        cssClass: 'auto-height'
+    });
 
-            this.nextQuestPlace(this.quest);
-            await Haptics.impact({ style: ImpactStyle.Light });
-        },
-        async onAnswer(quiz, answer = null) {
-            if (quiz.type === 1 && answer) {
-                this.answers.push(answer.id);
-                if (answer.is_correct) {
-                    await Haptics.notification({ type: NotificationType.Success });
-                    setTimeout(() => {
-                        this.openQuestPlace(this.quest);
-                        this.isQuizOpen = false;
-                    }, 500);
-                } else {
-                    await Haptics.notification({ type: NotificationType.Error });
-                }
-            }
+    modal.present();
+}
 
-            if (quiz.type === 2) {
-                await Haptics.notification({ type: NotificationType.Success });
-                setTimeout(() => {
-                    this.openQuestPlace(this.quest);
-                    this.isQuizOpen = false;
-                }, 500);
-            }
-        },
-        isOpened(place) {
-            return this.userQuest?.opened_places?.includes(place.number);
+function handlePlaceClick(place) {
+    if (step.value === place.number) {
+        // start()
+    }
+
+    if (step.value < place.number || !userQuest.value) {
+        return;
+    }
+
+    if (place.quiz && !isOpened(place)) {
+        quiz.value = place.quiz;
+        isQuizOpen.value = true;
+        return;
+    }
+
+    router.push({ name: 'questPlace', params: { quest_id: quest_id, place_id: place.id } });
+}
+
+async function start() {
+    userQuestsStore.startQuest(this.quest);
+    await Haptics.impact({ style: ImpactStyle.Light });
+
+    // const token = '100-token';
+    // api.post('/quests/start', {
+    //
+    // }, {
+    //     headers: { Authorization: `Bearer ${token}` }
+    // }).then(res => {
+    //     console.log(res);
+    // });
+}
+
+function onQuizClose() {
+    isQuizOpen.value = false;
+}
+
+function reset() {
+    userQuestsStore.resetQuest(quest);
+    answers.value = [];
+}
+
+async function imHere(place) {
+    // if (!atPlace(place)) {
+    //     const toast = await toastController.create({
+    //         message: 'Вы не тут :)',
+    //         color: 'warning',
+    //         duration: 1500,
+    //     });
+    //     await toast.present();
+    //     return;
+    // }
+
+    userQuestsStore.nextQuestPlace(quest.value);
+    await Haptics.impact({ style: ImpactStyle.Light });
+}
+
+async function onAnswer(quiz, answer = null) {
+    if (quiz.type === 1 && answer) {
+        answers.value.push(answer.id);
+        if (answer.is_correct) {
+            await Haptics.notification({ type: NotificationType.Success });
+            setTimeout(() => {
+                userQuestsStore.openQuestPlace(quest.value);
+                isQuizOpen.value = false;
+            }, 500);
+        } else {
+            await Haptics.notification({ type: NotificationType.Error });
         }
     }
+
+    if (quiz.type === 2) {
+        await Haptics.notification({ type: NotificationType.Success });
+        setTimeout(() => {
+            openQuestPlace(quest.value);
+            isQuizOpen.value = false;
+        }, 500);
+    }
 }
+
+function isOpened(place) {
+    return userQuest.value?.opened_places?.includes(place.number);
+}
+
+onMounted(() => {
+    fetch();
+})
 </script>
 
 <style lang="scss" scoped>

@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Flamin<span class="highlighted">GO</span></ion-title>
+                <FlamingoTitle />
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
@@ -31,12 +31,12 @@ import {
     IonInfiniteScrollContent,
     IonPage,
     IonSpinner,
-    IonTitle,
     IonToolbar
 } from "@ionic/vue";
 import api from "@/plugins/api";
 import ArticlesList from "@/components/_v2/ArticlesList.vue";
 import {onMounted, ref} from "vue";
+import FlamingoTitle from "@/components/FlamingoTitle.vue";
 
 const articles = ref([]);
 const pageSize = ref(10);
