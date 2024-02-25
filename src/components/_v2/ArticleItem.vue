@@ -3,7 +3,7 @@
          @mousedown="startTouch" @mouseup="endTouch" @mouseout="endTouch"
          @touchstart="startTouch" @touchend="endTouch" @touchmove="endTouch"  >
         <div class="article-item__header">
-            <div class="article-item__type">{{ article.type }}</div>
+            <div class="article-item__type" v-if="article.type">{{ article.type }}</div>
             <div class="article-item__title">{{ article.title }}</div>
         </div>
         <div class="article-item__content">

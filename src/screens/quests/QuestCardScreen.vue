@@ -16,9 +16,7 @@
                 <div class="quest-card" v-if="quest">
                     <ion-alert trigger="present-alert" header="Начать заново?" :buttons="alertButtons"></ion-alert>
                     <div class="quest-card__header">
-                        <div class="quest-card__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${quest.image})` }">
-
-                        </div>
+                        <div class="quest-card__image" :style="{ backgroundImage: `url(https://flamingo.spb.ru/${quest.image})` }"></div>
                         <div class="quest-card__heading">
                             <div class="quest-card__title" id="present-alert">{{ quest.title }}</div>
                             <div class="quest-card__category">{{ quest.type }}</div>
@@ -30,13 +28,13 @@
                     </div>
                     <PropsList :bordered="true" :items="props" />
                     <div>
-                        <div class="content-section">
+                        <div class="content-section" v-if="quest.description">
                             <div class="content-section__title">Описание</div>
                             <CollapsedText>
                                 <div v-html="quest.description"></div>
                             </CollapsedText>
                         </div>
-                        <div class="content-section">
+                        <div class="content-section" v-if="quest.places.length">
                             <div class="content-section__title">Места</div>
                             <div class="places-grid">
                                 <div class="place" v-for="place in quest.places" :key="place.id" @click="handlePlaceClick(place)" :class="{ closed: (step <= place.number && !isOpened(place)), 'can-open': (step === place.number && !isOpened(place)) }">
@@ -289,7 +287,6 @@ onMounted(() => {
 .quest-card {
     &__header {
         display: flex;
-        justify-content: space-between;
         gap: 15px;
     }
 

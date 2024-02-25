@@ -11,14 +11,15 @@ export const useUserQuestsStore = defineStore('user-quests', {
             }
 
             const firstPlace = quest.places[0];
-            if (!firstPlace) {
-                return;
-            }
+            const step = firstPlace?.number || 1;
+            // if (!firstPlace) {
+            //     return;
+            // }
 
             this.userQuests.push({
                 id: quest.id,
-                step: firstPlace.number,
-                opened_places: firstPlace.quiz ? [] : [firstPlace.number],
+                step: step,
+                opened_places: firstPlace?.quiz ? [] : [step],
             });
         },
         resetQuest(quest) {
