@@ -25,51 +25,11 @@
                             <div class="quest-card__actions">
                                 <ion-button size="small" @click="start" v-if="!userQuest">Начать</ion-button>
                                 <ion-progress-bar :value="(step - 1) / 100 * quest.total_places" style="margin-top: 5px;" v-else></ion-progress-bar>
-<!--                                <div class="quest-card__actions-left">-->
-<!--                                    <ion-button size="small" @click="start(false)" v-if="!userQuest">Начать</ion-button>-->
-<!--                                    <div v-if="userQuest" class="quest-card__actions-left">-->
-<!--                                        <ion-badge color="primary" v-if="step < quest.total_places">{{ step }} из {{ quest.total_places }}</ion-badge>-->
-<!--                                        <ion-badge color="success" v-else>Завершен</ion-badge>-->
-<!--&lt;!&ndash;                                        <div class="quest-card__progress" v-if="step <= quest.total_places">{{ step }} из {{ quest.total_places }}</div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <div class="quest-card__progress" v-else>Завершен</div>&ndash;&gt;-->
-<!--                                        <ion-button size="small" color="light" id="present-alert">-->
-<!--                                            <ion-icon slot="icon-only" :icon="refreshOutline" />-->
-<!--                                        </ion-button>-->
-<!--                                        <ion-alert trigger="present-alert" header="Начать заново?" :buttons="alertButtons"></ion-alert>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                &lt;!&ndash; <ion-icon :icon="shareOutline"></ion-icon> &ndash;&gt;-->
-<!--&lt;!&ndash;                                <ion-button size="small" color="light" @click="share">&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <ion-icon slot="icon-only" :icon="shareOutline" />&ndash;&gt;-->
-<!--&lt;!&ndash;                                </ion-button>&ndash;&gt;-->
                             </div>
                         </div>
                     </div>
                     <PropsList :bordered="true" :items="props" />
                     <div>
-                        <!--<div class="content-section">
-                            <div class="content-section__title">Активное задание</div>
-                            <div class="places-grid">
-                                <div class="place" @click="handlePlaceClick(activePlace, step)" :class="{ closed: (step < i || !userQuest), 'can-open': step === i }">
-                                    <div class="image" :style="{ background: activePlace.image }">
-                                        <ion-icon aria-hidden="true" :icon="step === i ? key : lockClosed" v-if="(step < i || !userQuest)" :class="{ pulse: step === i }" />
-                                        <span v-else>{{ i + 1 }}</span>
-                                    </div>
-                                    <div class="content">
-                                        <div class="title">{{ activePlace.title }}</div>
-                                        <div class="buttons">
-                                            <ion-button size="small" @click.stop="imHere(activePlace)" v-if="step <= i">Я тут</ion-button>
-                                            <ion-button size="small" color="success" v-else>
-                                                <ion-icon slot="icon-only" :icon="checkmarkOutline"></ion-icon>
-                                            </ion-button>
-                                            <ion-button size="small">
-                                                <ion-icon slot="icon-only" :icon="mapOutline"></ion-icon>
-                                            </ion-button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
                         <div class="content-section">
                             <div class="content-section__title">Описание</div>
                             <CollapsedText>
@@ -91,9 +51,9 @@
                                             <ion-button size="small" color="success" v-else>
                                                 <ion-icon slot="icon-only" :icon="checkmarkOutline"></ion-icon>
                                             </ion-button>
-                                            <ion-button size="small">
+                                            <!--<ion-button size="small">
                                                 <ion-icon slot="icon-only" :icon="mapOutline"></ion-icon>
-                                            </ion-button>
+                                            </ion-button>-->
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +115,7 @@ import {
     IonToolbar,
     modalController
 } from "@ionic/vue";
-import {checkmarkOutline, key, lockClosed, mapOutline, shareOutline} from 'ionicons/icons';
+import {checkmarkOutline, key, lockClosed, shareOutline} from 'ionicons/icons';
 import BackButton from "@/components/BackButton.vue";
 import PropsList from "@/components/common/PropsList/PropsList.vue";
 import CollapsedText from "@/components/common/CollapsedText.vue";
@@ -261,11 +221,11 @@ function handlePlaceClick(place) {
         return;
     }
 
-    router.push({ name: 'questPlace', params: { quest_id: quest_id, place_id: place.id } });
+    router.push({ name: 'questPlace', params: { quest_id: quest_id.value, place_id: place.id } });
 }
 
 async function start() {
-    userQuestsStore.startQuest(this.quest);
+    userQuestsStore.startQuest(quest.value);
     await Haptics.impact({ style: ImpactStyle.Light });
 
     // const token = '100-token';
@@ -319,7 +279,7 @@ async function onAnswer(quiz, answer = null) {
     if (quiz.type === 2) {
         await Haptics.notification({ type: NotificationType.Success });
         setTimeout(() => {
-            openQuestPlace(quest.value);
+            userQuestsStore.openQuestPlace(quest.value);
             isQuizOpen.value = false;
         }, 500);
     }
