@@ -51,7 +51,7 @@
     </ion-page>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 import 'swiper/css/pagination';
@@ -74,21 +74,22 @@ import api from "@/plugins/api";
 import {YandexMap, YandexMapDefaultFeaturesLayer, YandexMapDefaultSchemeLayer, YandexMapMarker} from "vue-yandex-maps";
 import {shareOutline} from "ionicons/icons";
 import {Share} from "@capacitor/share";
-import {onMounted, ref} from "vue";
+import {onMounted, ref, Ref} from "vue";
 import {useRoute} from "vue-router";
 import {useMainStore} from "@/store";
 import {useEmitter} from "@/plugins/emitter";
+import {ArticleDetailsInterface} from "@/interfaces/ArticleInterfaces";
 
 const route = useRoute()
 const mainStore = useMainStore()
 const { emitter } = useEmitter()
 
 const id = ref(route.params.id)
-const article = ref(null)
+const article: Ref<ArticleDetailsInterface | undefined> = ref()
 const isLoading = ref(false)
-const slider = ref(null)
+const slider = ref()
 const modules = ref([IonicSlides, Pagination])
-const map = ref(null)
+const map = ref()
 // const markers = ref([
 //     {
 //         coordinates: [51.789682128109, 55.140428698122],
@@ -130,6 +131,10 @@ function handleClick(event) {
 }
 
 async function share() {
+    if (!article.value) {
+        return;
+    }
+
     await Share.share({
         title: article.value.title,
         text: article.value.type,

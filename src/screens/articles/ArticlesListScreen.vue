@@ -14,13 +14,12 @@
                 <ion-spinner />
             </div>
 
-            <CardsList :articles="articles" />
+            <ArticlesList :articles="articles" />
             <ion-infinite-scroll @ionInfinite="loadMore" :disabled="scrolledToEnd">
                 <ion-infinite-scroll-content></ion-infinite-scroll-content>
             </ion-infinite-scroll>
             <p class="the-end" v-if="scrolledToEnd">На этом пока всё</p>
         </ion-content>
-        <CardModal />
     </ion-page>
 </template>
 
@@ -36,8 +35,7 @@ import {
     IonToolbar
 } from "@ionic/vue";
 import api from "@/plugins/api";
-import CardModal from "@/components/CardModal.vue";
-import CardsList from "@/components/_v2/ArticlesList.vue";
+import ArticlesList from "@/components/_v2/ArticlesList.vue";
 import {onMounted, ref} from "vue";
 
 const articles = ref([]);

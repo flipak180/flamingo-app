@@ -4,19 +4,15 @@
     </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import ArticleItem from "@/components/_v2/ArticleItem.vue";
+import {ArticleListItemInterface} from "@/interfaces/ArticleInterfaces";
 
-export default {
-    name: "ArticlesList",
-    props: ['articles'],
-    components: { ArticleItem },
-    data() {
-        return {
-
-        }
-    },
+interface Props {
+    articles: ArticleListItemInterface[]
 }
+
+defineProps<Props>();
 </script>
 
 <style lang="scss">
