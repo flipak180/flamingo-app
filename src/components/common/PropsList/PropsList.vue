@@ -10,7 +10,7 @@
 <!--                <ion-icon :icon="mapOutline"></ion-icon>-->
 <!--            </div>-->
 <!--        </div>-->
-        <div class="props-list__item" v-for="item in items">
+        <div class="props-list__item" v-for="item in items" :key="item.name">
             <div class="props-list__name">{{ item.name }}</div>
             <div class="props-list__value">{{ item.value }}</div>
         </div>
@@ -21,20 +21,8 @@
     </div>
 </template>
 
-<script>
-import {mapOutline} from "ionicons/icons";
-import {IonButton, IonIcon} from "@ionic/vue";
-
-export default {
-    name: "PropsList",
-    props: ['bordered', 'items'],
-    components: {IonButton, IonIcon },
-    data() {
-        return {
-            mapOutline
-        }
-    }
-}
+<script setup>
+defineProps(['bordered', 'items'])
 </script>
 
 <style scoped lang="scss">

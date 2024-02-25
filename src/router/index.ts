@@ -59,17 +59,17 @@ const routes: Array<RouteRecordRaw> = [
             {
                 name: 'quests',
                 path: 'quests',
-                component: () => import('@/screens/_v2/QuestsScreen.vue'),
+                component: () => import('@/screens/quests/QuestsListScreen.vue'),
             },
             {
                 name: 'quest',
                 path: 'quests/:quest_id',
-                component: () => import('@/screens/_v2/QuestCardScreen.vue'),
+                component: () => import('@/screens/quests/QuestCardScreen.vue'),
             },
             {
                 name: 'questPlace',
                 path: 'quests/:quest_id/places/:place_id',
-                component: () => import('@/screens/_v2/QuestPlaceScreen.vue'),
+                component: () => import('@/screens/quests/QuestPlaceScreen.vue'),
             },
             // {
             //     path: 'home/quest',

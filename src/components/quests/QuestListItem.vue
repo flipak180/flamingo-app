@@ -1,36 +1,29 @@
-<script>
+<script setup>
 import PropsList from "@/components/common/PropsList/PropsList.vue";
-import {IonIcon, IonProgressBar} from "@ionic/vue";
-import {mapState} from "pinia";
+import {IonProgressBar} from "@ionic/vue";
 import {useUserQuestsStore} from "@/store/userQuests";
-import {checkmark} from "ionicons/icons";
+import {computed} from "vue";
 
-export default {
-    name: "QuestListItem",
-    components: {IonProgressBar, PropsList, IonIcon},
-    props: ['quest'],
-    data() {
-        return {
-            checkmark
-        }
-    },
-    computed: {
-        ...mapState(useUserQuestsStore, ['userQuests']),
-        userQuest() {
-            return this.userQuests.find(item => item.id === this.quest.id);
-        },
-        progress() {
-            return (this.userQuest.step - 1) / 100 * this.quest.total_places;
-        },
-        props() {
-            return [
-                { name: 'Дистанция', value: this.quest.distance },
-                { name: 'Длительность', value: this.quest.time },
-                { name: 'Заданий', value: this.quest.total_places },
-            ];
-        }
-    }
-}
+const props = defineProps(['quest'])
+
+const userQuestsStore = useUserQuestsStore();
+const userQuests = userQuestsStore.userQuests;
+
+const userQuest = computed(() => {
+    return userQuests.find(item => item.id === props.quest.id);
+})
+
+const progress = computed(() => {
+    return (userQuest.value.step - 1) / 100 * props.quest.total_places;
+})
+
+const properties = computed(() => {
+    return [
+        { name: 'Дистанция', value: props.quest.distance },
+        { name: 'Длительность', value: props.quest.time },
+        { name: 'Заданий', value: props.quest.total_places },
+    ];
+})
 </script>
 
 <template>
@@ -50,7 +43,7 @@ export default {
             <ion-progress-bar :value="progress" v-if="userQuest"></ion-progress-bar>
         </div>
         <div class="card-item__footer">
-            <PropsList :items="props" />
+            <PropsList :items="properties" />
         </div>
     </div>
 </template>
