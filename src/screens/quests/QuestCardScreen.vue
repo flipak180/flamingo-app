@@ -158,9 +158,6 @@ const userQuest = computed(() => {
 const step = computed(() => {
     return userQuest.value?.step || 0;
 })
-// const activePlace = computed(() => {
-//     return quest.value.places[step];
-// })
 const props = computed(() => {
     return [
         { name: 'Дистанция', value: quest.value.distance },
@@ -175,12 +172,6 @@ function fetch() {
         quest.value = res.data;
     }).finally(() => isLoading.value = false);
 }
-
-// function refresh(event) {
-//     fetch(false).then(() => {
-//         event.target.complete();
-//     });
-// }
 
 async function share() {
     if (!quest.value) {
@@ -243,7 +234,7 @@ function onQuizClose() {
 }
 
 function reset() {
-    userQuestsStore.resetQuest(quest);
+    userQuestsStore.resetQuest(quest.value);
     answers.value = [];
 }
 
