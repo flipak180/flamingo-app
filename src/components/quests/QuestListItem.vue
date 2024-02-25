@@ -14,7 +14,9 @@ const userQuest = computed(() => {
 })
 
 const progress = computed(() => {
-    return (userQuest.value.step - 1) / 100 * props.quest.total_places;
+    return userQuest.value
+        ? (userQuest.value.step - 1) / 100 * props.quest.total_places
+        : 0;
 })
 
 const properties = computed(() => {
