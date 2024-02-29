@@ -6,21 +6,21 @@
                     <div class="onboarding__content">
                         <div class="h1 text-center">Знакомьтесь, Flamin<span class="color-pink">GO</span></div>
                         <div class="onboarding__text">
-                            <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
+                            <p>Здесь ты найдёшь множество интересных мест, маршрутов и событий.</p>
                         </div>
                     </div>
                 </swiper-slide>
                 <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${onboarding1})` }">
                     <div class="onboarding__content">
-                        <div class="h1 text-center">Парки</div>
+                        <div class="h1 text-center">Актуальные события</div>
                         <div class="onboarding__text">
-                            <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
+                            <p>И просто блог об интересных местах, который обязательно стоит посетить!</p>
                         </div>
                     </div>
                 </swiper-slide>
                 <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${onboarding2})` }">
                     <div class="onboarding__content">
-                        <div class="h1 text-center">Достопримечательности</div>
+                        <div class="h1 text-center">Пешеходные квесты</div>
                         <div class="onboarding__text">
                             <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
                         </div>
@@ -28,7 +28,7 @@
                 </swiper-slide>
                 <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${onboarding3})` }">
                     <div class="onboarding__content">
-                        <div class="h1 text-center">Рестораны, кафе, бары</div>
+                        <div class="h1 text-center">Каталог мест</div>
                         <div class="onboarding__text">
                             <p>Здесь я придумаю какой-то текст, который в двух словах расскажет об этом направлении</p>
                         </div>
