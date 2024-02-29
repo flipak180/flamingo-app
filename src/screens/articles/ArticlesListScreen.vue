@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <FlamingoTitle />
+                <FlamingoTitle @click="onTitleClick" />
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
@@ -37,10 +37,14 @@ import api from "@/plugins/api";
 import ArticlesList from "@/components/_v2/ArticlesList.vue";
 import {onMounted, ref} from "vue";
 import FlamingoTitle from "@/components/FlamingoTitle.vue";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
 
 const articles = ref([]);
 const pageSize = ref(10);
 const currentPage = ref(0);
+const titleClicked = ref(0);
 const scrolledToEnd = ref(false);
 const isLoading = ref(false);
 
@@ -56,6 +60,17 @@ function fetch() {
             scrolledToEnd.value = true;
         }
     }).finally(() => isLoading.value = false);
+}
+
+function onTitleClick() {
+    titleClicked.value++;
+    if (titleClicked.value === 5) {
+        router.push({ name: 'system' });
+    }
+
+    setTimeout(() => {
+        titleClicked.value = 0;
+    }, 2000)
 }
 
 // function refresh(event) {

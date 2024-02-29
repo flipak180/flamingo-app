@@ -6,7 +6,7 @@
                     <div class="onboarding__content">
                         <div class="h1 text-center">Знакомьтесь, Flamin<span class="color-pink">GO</span></div>
                         <div class="onboarding__text">
-                            <p>Здесь ты найдёшь множество интересных мест, маршрутов и событий.</p>
+                            <p>Тут ты найдёшь множество интересных мест, маршрутов и событий.</p>
                         </div>
                     </div>
                 </swiper-slide>

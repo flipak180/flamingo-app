@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from '@ionic/vue-router';
 import Tabs from "@/components/Tabs.vue";
 import {RouteRecordRaw} from "vue-router";
+import {useMainStore} from "@/store";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -138,33 +139,31 @@ const router = createRouter({
     routes
 })
 
-// router.beforeEach(async (to, from, next) => {
-//     const profileStore = useProfileStore();
-//     const mainStore = useMainStore();
-//
-//     console.log(mainStore.onBoardingComplete);
-//
-//     if (!mainStore.onBoardingComplete && !to.path.startsWith('/onboarding')) {
-//         next({ name: 'onboarding' });
-//         return;
-//     }
-//
-//     if (mainStore.onBoardingComplete && to.name === 'onboarding') {
-//         next({ name: 'login' });
-//         return;
-//     }
-//
-//     if (!profileStore.phone && to.name !== 'login' && !to.path.startsWith('/onboarding')) {
-//         next({ name: 'login' });
-//         return;
-//     }
-//
-//     if (profileStore.phone && to.name === 'login') {
-//         next({ name: 'articles' });
-//         return;
-//     }
-//
-//     next();
-// });
+router.beforeEach(async (to, from, next) => {
+    //const profileStore = useProfileStore();
+    const mainStore = useMainStore();
+
+    if (!mainStore.onBoardingComplete && !to.path.startsWith('/onboarding')) {
+        next({ name: 'onboarding' });
+        return;
+    }
+
+    if (mainStore.onBoardingComplete && to.name === 'onboarding') {
+        next({ name: 'login' });
+        return;
+    }
+
+    // if (!profileStore.phone && to.name !== 'login' && !to.path.startsWith('/onboarding')) {
+    //     next({ name: 'login' });
+    //     return;
+    // }
+    //
+    // if (profileStore.phone && to.name === 'login') {
+    //     next({ name: 'articles' });
+    //     return;
+    // }
+
+    next();
+});
 
 export default router
