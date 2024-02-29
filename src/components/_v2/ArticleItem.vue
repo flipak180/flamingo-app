@@ -15,32 +15,25 @@
     </div>
 </template>
 
-<script>
-import {IonButton, IonIcon} from "@ionic/vue";
-import ArticlePlacesList from "@/components/_v2/ArticlePlacesList.vue";
+<script setup lang="ts">
+import {ref} from "vue";
+import {useRouter} from "vue-router";
 
-export default {
-    name: "ArticleItem",
-    props: ['article'],
-    data() {
-        return {
-            isActive: false,
-        }
-    },
-    components: {
-        IonIcon, IonButton, ArticlePlacesList
-    },
-    methods: {
-        startTouch() {
-            this.isActive = true;
-        },
-        endTouch() {
-            this.isActive = false;
-        },
-        onClick() {
-            this.$router.push('/tabs/articles/' + this.article.id);
-        }
-    }
+const props = defineProps(['article'])
+
+const router = useRouter()
+const isActive = ref(false)
+
+function startTouch() {
+    isActive.value = true;
+}
+
+function endTouch() {
+    isActive.value = false;
+}
+
+function onClick() {
+    router.push('/tabs/articles/' + props.article.id);
 }
 </script>
 

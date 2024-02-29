@@ -1,8 +1,8 @@
 <template>
     <ion-page class="onboarding">
         <ion-content>
-            <swiper class="onboarding__slider" @swiper="onSwiper" :allowTouchMove="false" @slidesLengthChange="onSlidesChange">
-                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${require('@/assets/onboarding-pink.png')})` }">
+            <Swiper class="onboarding__slider" @swiper="setSwiperInstance" :allowTouchMove="false" @slidesLengthChange="onSlidesChange">
+                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${onboardingPink})` }">
                     <div class="onboarding__content">
                         <div class="h1 text-center">Знакомьтесь, Flamin<span class="color-pink">GO</span></div>
                         <div class="onboarding__text">
@@ -10,7 +10,7 @@
                         </div>
                     </div>
                 </swiper-slide>
-                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${require('@/assets/onboarding1.png')})` }">
+                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${onboarding1})` }">
                     <div class="onboarding__content">
                         <div class="h1 text-center">Парки</div>
                         <div class="onboarding__text">
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                 </swiper-slide>
-                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${require('@/assets/onboarding2.png')})` }">
+                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${onboarding2})` }">
                     <div class="onboarding__content">
                         <div class="h1 text-center">Достопримечательности</div>
                         <div class="onboarding__text">
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </swiper-slide>
-                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${require('@/assets/onboarding3.png')})` }">
+                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${onboarding3})` }">
                     <div class="onboarding__content">
                         <div class="h1 text-center">Рестораны, кафе, бары</div>
                         <div class="onboarding__text">
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </swiper-slide>
-                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${require('@/assets/onboarding-blue.png')})` }">
+                <swiper-slide class="onboarding__slide" :style="{ backgroundImage: `url(${onboardingBlue})` }">
                     <div class="onboarding__content">
                         <div class="h1 text-center">Выходи гулять!</div>
                         <div class="onboarding__text">
@@ -42,11 +42,11 @@
                         </div>
                     </div>
                 </swiper-slide>
-            </swiper>
+            </Swiper>
             <div class="onboarding__controls" v-if="swiper">
                 <div>
-                    <ion-button fill="clear" color="dark" size="small" @click="skip" v-if="activeSlide === 1">Пропустить</ion-button>
-                    <ion-button fill="clear" color="dark" size="small" @click="prev" v-else>Назад</ion-button>
+                    <ion-button fill="clear" color="light" size="small" @click="skip" v-if="activeSlide === 1">Пропустить</ion-button>
+                    <ion-button fill="clear" color="light" size="small" @click="prev" v-else>Назад</ion-button>
                 </div>
                 <div>
                     <div v-if="activeSlide < totalSlides" class="onboarding__next-wrap">
@@ -65,7 +65,7 @@
     </ion-page>
 </template>
 
-<script>
+<script setup lang="ts">
 import {IonButton, IonContent, IonIcon, IonPage, useIonRouter} from "@ionic/vue";
 import {Swiper, SwiperSlide} from "swiper/vue";
 import 'swiper/css';
@@ -73,60 +73,59 @@ import '@ionic/vue/css/ionic-swiper.css';
 import {chevronForward} from "ionicons/icons";
 import {useMainStore} from "@/store";
 import storage from "@/plugins/storage";
+import {ref} from "vue";
+import onboardingPink from "@/assets/onboarding-pink.png";
+import onboardingBlue from "@/assets/onboarding-blue.png";
+import onboarding1 from "@/assets/onboarding1.png";
+import onboarding2 from "@/assets/onboarding1.png";
+import onboarding3 from "@/assets/onboarding1.png";
+import {Swiper as _Swiper} from 'swiper/types';
 
-export default {
-    name: "OnboardingScreen",
-    components: { IonPage, IonContent, IonButton, IonIcon, Swiper, SwiperSlide },
-    data() {
-        return {
-            chevronForward,
-            swiper: null,
-            activeSlide: 1,
-            totalSlides: 0,
-        }
-    },
-    setup() {
-        const ionRouter = useIonRouter();
+const ionRouter = useIonRouter();
 
-        const skip = async () => {
-            const mainStore = useMainStore();
-            mainStore.onBoardingComplete = 1;
-            await storage.set('onboarding', '1');
-            ionRouter.navigate({ name: 'login' }, 'forward', 'replace');
-        }
+const swiper = ref<_Swiper>()
+const activeSlide = ref(1)
+const totalSlides = ref(0)
 
-        return {
-            skip,
-        }
-    },
-    methods: {
-        onSwiper(swiper) {
-            this.swiper = swiper;
-        },
-        onSlidesChange(swiper) {
-            this.totalSlides = swiper.slides.length;
-        },
-        next() {
-            if (this.activeSlide === this.totalSlides) {
-                this.skip();
-            }
+function setSwiperInstance(instance: _Swiper) {
+    swiper.value = instance;
+}
 
-            this.swiper.slideNext();
-            this.activeSlide = this.swiper.activeIndex + 1;
-        },
-        prev() {
-            this.swiper.slidePrev();
-            this.activeSlide = this.swiper.activeIndex + 1;
-        }
+function onSlidesChange(instance: _Swiper) {
+    totalSlides.value = instance ? instance.slides.length : 0;
+}
+
+function next() {
+    if (activeSlide.value === totalSlides.value) {
+        skip();
     }
+
+    swiper.value!.slideNext();
+    activeSlide.value = swiper.value!.activeIndex + 1;
+}
+
+function prev() {
+    swiper.value!.slidePrev();
+    activeSlide.value = swiper.value!.activeIndex + 1;
+}
+
+async function skip() {
+    const mainStore = useMainStore();
+    mainStore.onBoardingComplete = 1;
+    await storage.set('onboarding', '1');
+    ionRouter.navigate({ name: 'login' }, 'forward', 'replace');
 }
 </script>
 
 <style lang="scss" scoped>
 .onboarding {
 
+    ion-content {
+        --overflow: hidden;
+    }
+
     &__slider {
-        height: 100%;
+        height: 100vh;
     }
 
     &__slide {
@@ -135,6 +134,7 @@ export default {
 
     &__content {
         background: #FFFFFF;
+        color: var(--black);
         border-radius: 25px 25px 0 0;
         position: fixed;
         bottom: 0;
