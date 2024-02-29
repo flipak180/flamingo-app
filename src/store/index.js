@@ -6,7 +6,7 @@ export const useMainStore = () => {
         state: () => ({
             coords: { latitude: 59.938784, longitude: 30.314997 },
             init: false,
-            onBoardingComplete: null,
+            onBoardingComplete: false,
             isDarkMode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
         }),
         actions: {

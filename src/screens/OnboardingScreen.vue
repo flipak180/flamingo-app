@@ -111,7 +111,7 @@ function prev() {
 
 async function skip() {
     const mainStore = useMainStore();
-    mainStore.onBoardingComplete = 1;
+    mainStore.onBoardingComplete = true;
     await storage.set('onboarding', '1');
     ionRouter.navigate({ name: 'login' }, 'forward', 'replace');
 }
