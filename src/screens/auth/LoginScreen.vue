@@ -24,7 +24,7 @@
     </ion-page>
 </template>
 
-<script>
+<script setup>
 import {
     IonButton,
     IonCol,
@@ -38,55 +38,54 @@ import {
     IonRow,
     IonTitle,
     IonToolbar,
+    onIonViewDidEnter,
     toastController
 } from "@ionic/vue";
 import {useProfileStore} from "@/store/profile";
 import storage from "@/plugins/storage";
 import api from "@/plugins/api";
+import {ref} from "vue";
+import {useRouter} from "vue-router";
 
-export default {
-    name: "LoginScreen",
-    components: {IonHeader, IonToolbar, IonTitle, IonPage, IonContent, IonButton, IonGrid, IonCol, IonRow, IonItem, IonLabel, IonInput},
-    data() {
-        return {
-            phone: ' ',
-        }
-    },
-    ionViewDidEnter() {
-        this.phone = ' ';
-    },
-    methods: {
-        async phoneSubmit() {
-            if (this.phone.length !== 18) {
-                const toast = await toastController
-                    .create({
-                        message: 'Неверно указан номер телефона.',
-                        color: 'warning',
-                        duration: 2000
-                    })
-                return toast.present();
-            }
+const store = useProfileStore()
+const router = useRouter()
 
-            this.auth();
-        },
-        auth() {
-            api.post('/users/login', {
-                phone: this.phone,
-            }).then((res) => {
-                const store = useProfileStore()
-                store.phone = res.data.phone;
-                storage.set('phone', res.data.phone);
-                this.$router.replace({ name: 'home' });
-            }).catch(err => {
-                toastController.create({
-                    message: 'Номер не зарегистрирован.',
-                    color: 'danger',
-                    duration: 2000
-                }).then(toast => toast.present());
+const phone = ref(' ');
+
+async function phoneSubmit() {
+    if (phone.value.length !== 18) {
+        const toast = await toastController
+            .create({
+                message: 'Неверно указан номер телефона.',
+                color: 'warning',
+                duration: 2000
             })
-        },
+        return toast.present();
     }
+
+    auth();
 }
+
+function auth() {
+    api.post('/users/login', {
+        phone: phone.value,
+    }).then((res) => {
+        console.log(res);
+        store.phone = res.data.phone;
+        storage.set('phone', res.data.phone);
+        router.replace({ name: 'home' });
+    }).catch(err => {
+        toastController.create({
+            message: 'Номер не зарегистрирован.',
+            color: 'danger',
+            duration: 2000
+        }).then(toast => toast.present());
+    })
+}
+
+onIonViewDidEnter(() => {
+    phone.value = ' ';
+})
 </script>
 
 <style scoped>
