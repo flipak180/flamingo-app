@@ -6,6 +6,7 @@ import {useMainStore} from "@/store";
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
+        name: 'home',
         //redirect: '/onboarding'
         redirect: '/tabs/articles'
     },
