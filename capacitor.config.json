@@ -1,0 +1,14 @@
+{
+    "appId": "com.app.flamingo",
+    "appName": "Фламинго",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "dist",
+    "plugins": {
+        "SplashScreen": {
+            "launchShowDuration": 1000
+        }
+    },
+    "cordova": {}
+}
+
