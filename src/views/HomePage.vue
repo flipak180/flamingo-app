@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Tab 1</ion-title>
+                <flamingo-title />
             </ion-toolbar>
         </ion-header>
         <ion-content>
@@ -12,5 +12,13 @@
 </template>
 
 <script setup>
-import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/vue';
+import {IonContent, IonHeader, IonPage, IonToolbar} from '@ionic/vue';
+import FlamingoTitle from "@/components/FlamingoTitle.vue";
 </script>
+
+<style scoped>
+flamingo-title {
+    --color: #fff;
+    font-size: 24px;
+}
+</style>

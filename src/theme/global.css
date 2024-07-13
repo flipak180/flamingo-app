@@ -1,0 +1,16 @@
+ion-toolbar {
+	--background: var(--ion-background-color)
+}
+
+ion-title {
+	--color: var(--black);
+	font-size: 24px;
+
+	@media (prefers-color-scheme: dark) {
+		--color: #FFFFFF;
+	}
+}
+
+ion-title .highlighted {
+	color: var(--pink);
+}
