@@ -1,6 +1,6 @@
 const config = {
-  appId: 'io.ionic.starter',
-  appName: 'flamingo',
+  appId: 'com.app.flamingo',
+  appName: 'Фламинго',
   webDir: 'dist'
 };
 
