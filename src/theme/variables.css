@@ -1,2 +1,32 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+
+@font-face {
+    font-family: Rubik;
+    font-weight: 300;
+    src: url(./fonts/Rubik-Light.ttf);
+}
+@font-face {
+    font-family: Rubik;
+    font-weight: 400;
+    src: url(./fonts/Rubik-Regular.ttf);
+}
+@font-face {
+    font-family: Rubik;
+    font-weight: 500;
+    src: url(./fonts/Rubik-Medium.ttf);
+}
+@font-face {
+    font-family: Rubik;
+    font-weight: 700;
+    src: url(./fonts/Rubik-Medium.ttf);
+}
+
+:root,
+:root.ios,
+:root.md {
+    --ion-font-family: 'Rubik';
+
+    --ion-background-color: #181A1F;
+    --ion-background-color-rgb: 24, 26, 31;
+}
