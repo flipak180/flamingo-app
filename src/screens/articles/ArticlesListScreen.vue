@@ -14,6 +14,17 @@
                 <ion-spinner />
             </div>
 
+            <div class="filter-wrap">
+                <ion-button color="light" expand="block" @click="onTitleClick">
+                    <ion-icon slot="start" :icon="filterOutline"></ion-icon>
+                    Фильтровать
+                </ion-button>
+                <ion-button color="light" expand="block" @click="onTitleClick">
+                    <ion-icon slot="start" :icon="swapVerticalOutline"></ion-icon>
+                    Сортировать
+                </ion-button>
+            </div>
+
             <ArticlesList :articles="articles" />
             <ion-infinite-scroll @ionInfinite="loadMore" :disabled="scrolledToEnd">
                 <ion-infinite-scroll-content></ion-infinite-scroll-content>
@@ -25,8 +36,10 @@
 
 <script setup>
 import {
+    IonButton,
     IonContent,
     IonHeader,
+    IonIcon,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     IonPage,
@@ -38,6 +51,7 @@ import ArticlesList from "@/components/_v2/ArticlesList.vue";
 import {onMounted, ref} from "vue";
 import FlamingoTitle from "@/components/FlamingoTitle.vue";
 import {useRouter} from "vue-router";
+import {filterOutline, swapVerticalOutline} from "ionicons/icons";
 
 const router = useRouter()
 
@@ -99,4 +113,10 @@ onMounted(() => {
 //ion-content {
 //    --padding-top: calc(var(--ion-padding, 16px) + var(--ion-safe-area-top));
 //}
+
+.filter-wrap {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
 </style>

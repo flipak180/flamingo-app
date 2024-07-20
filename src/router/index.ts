@@ -34,6 +34,11 @@ const routes: Array<RouteRecordRaw> = [
                 redirect: '/tabs/articles'
             },
             {
+                name: 'dashboard',
+                path: 'dashboard',
+                component: () => import('@/screens/DashboardScreen.vue'),
+            },
+            {
                 name: 'articles',
                 path: 'articles',
                 component: () => import('@/screens/articles/ArticlesListScreen.vue'),
