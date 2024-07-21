@@ -1,5 +1,5 @@
 {
-    "appId": "com.app.flamingo",
+    "appId": "flamin.go.app",
     "appName": "Фламинго",
     "bundledWebRuntime": false,
     "npmClient": "npm",

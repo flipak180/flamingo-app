@@ -6,4 +6,6 @@
 
 <script setup>
 import {IonApp, IonRouterOutlet} from '@ionic/vue';
+
+// npx @capacitor/assets generate --iconBackgroundColor '#FFDCEC' --iconBackgroundColorDark '#FFDCEC' --splashBackgroundColor '#FFDCEC' --splashBackgroundColorDark '#FFDCEC'
 </script>

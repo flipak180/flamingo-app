@@ -27,9 +27,6 @@ http://ionicframework.com/docs/theming/ */
 :root.md {
     --ion-font-family: 'Rubik';
 
-    --ion-background-color: #181A1F;
-    --ion-background-color-rgb: 24, 26, 31;
-
     /* colors */
     --black: #171717;
     --black-light: #232323;
