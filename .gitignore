@@ -34,3 +34,6 @@ npm-debug.log*
 /ios
 /resources/ios
 /src/assets/images/*
+/icons
+/public/assets
+/public/manifest.webmanifest
